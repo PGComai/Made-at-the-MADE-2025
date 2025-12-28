@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dt5qjdujym0go" path="res://scenes/checkpoint/checkpoint.gd" id="1_w77t2"]
 
-[node name="Checkpoint" type="Area2D"]
+[node name="Checkpoint" type="Area2D" groups=["checkpoint"]]
 collision_layer = 4
 collision_mask = 2
 input_pickable = false

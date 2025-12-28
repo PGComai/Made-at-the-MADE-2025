@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://ewlgm45y3f0x"]
+
+[ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_c5lvn"]
+[ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://assets/Racetrack2.png" id="1_r7t7g"]
+[ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="2_c5lvn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8q4o"]
+size = Vector2(150, 20)
+
+[node name="Racetrack2" type="Node2D"]
+
+[node name="CheckpointRecorder" type="Node" parent="."]
+script = ExtResource("1_c5lvn")
+metadata/_custom_type_script = "uid://bilbkxg3fr8ac"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_r7t7g")
+
+[node name="Checkpoint" parent="." instance=ExtResource("2_c5lvn")]
+position = Vector2(414.00006, -378)
+rotation = -0.7853982
+shape = SubResource("RectangleShape2D_s8q4o")
+
+[node name="Checkpoint2" parent="." instance=ExtResource("2_c5lvn")]
+position = Vector2(340, 401.00003)
+rotation = 0.7853982
+shape = SubResource("RectangleShape2D_s8q4o")
+
+[node name="Checkpoint3" parent="." instance=ExtResource("2_c5lvn")]
+position = Vector2(-358.99994, -385)
+rotation = 0.7853982
+shape = SubResource("RectangleShape2D_s8q4o")
+
+[node name="Checkpoint4" parent="." instance=ExtResource("2_c5lvn")]
+position = Vector2(-374, 361.00003)
+rotation = 2.3561945
+shape = SubResource("RectangleShape2D_s8q4o")
