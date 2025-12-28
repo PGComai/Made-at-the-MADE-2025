@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8cygi4lw5m0h"]
+
+[ext_resource type="Script" uid="uid://crgc0bfagata1" path="res://car/car_camera.gd" id="1_yis6x"]
+
+[node name="ChaseCam" type="Camera2D"]
+script = ExtResource("1_yis6x")

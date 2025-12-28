@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Car
 
 
-const INITIAL_SPEED: float = 200.0
+const INITIAL_SPEED: float = 50.0
 
 
 var wheel_angle: float = 0.0
@@ -63,3 +63,7 @@ func _physics_process(delta: float) -> void:
 #func _draw() -> void:
 	#var thrust_dir: Vector2 = -global_transform.y
 	#draw_line(Vector2.ZERO, (thrust_dir * 100.0), Color.RED)
+
+
+func _on_checkpoint_recorder_seen_all_checkpoints(body: Node2D) -> void:
+	print("lap!")
