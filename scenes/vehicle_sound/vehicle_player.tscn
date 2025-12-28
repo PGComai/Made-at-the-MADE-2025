@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://30gtxo2tdg4p"]
+[gd_scene load_steps=5 format=3 uid="uid://30gtxo2tdg4p"]
 
 [ext_resource type="Script" uid="uid://5xk1tdej57h6" path="res://scenes/vehicle_sound/vehicle_player.gd" id="1_24muu"]
+[ext_resource type="AudioStream" uid="uid://bc4ava7x7e6ad" path="res://sfx/revving1.wav" id="2_od1vo"]
+[ext_resource type="AudioStream" uid="uid://rkss4bsq30un" path="res://sfx/honk.wav" id="3_bpxy6"]
+[ext_resource type="AudioStream" uid="uid://pehd1d0ry1fx" path="res://sfx/shiftinggears.wav" id="3_ktljl"]
 
 [node name="VehiclePlayer" type="Node2D"]
 script = ExtResource("1_24muu")
@@ -11,9 +14,12 @@ unique_name_in_owner = true
 
 [node name="EnginePlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
+stream = ExtResource("2_od1vo")
 
 [node name="GearPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
+stream = ExtResource("3_ktljl")
 
 [node name="HonkPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
+stream = ExtResource("3_bpxy6")

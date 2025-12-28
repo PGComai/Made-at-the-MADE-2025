@@ -41,9 +41,13 @@ func _physics_process(delta: float) -> void:
 	if gear == 0:
 		engine_player.volume_linear = \
 			clampf(engine_player.volume_linear - delta * 2, 0, 1)
+		engine_player.pitch_scale = \
+			clampf(engine_player.volume_linear + delta, 0.5, 1 + 0.2 * gear)
 	else:
 		engine_player.volume_linear = \
 			clampf(engine_player.volume_linear + delta * 2, 0, 1)
+		engine_player.pitch_scale = \
+			clampf(engine_player.volume_linear + delta, 0.5, 1 + 0.2 * gear)
 
 #endregion
 
@@ -56,11 +60,12 @@ func collide() -> void:
 ## Plays the gear shift sound effect. This is normally played automatically by
 ## the [VehiclePlayer] when the velocity changes.
 func gear_shift() -> void:
-	gear_player.play()
+	gear_player.play(0.22)
+	engine_player.pitch_scale = 0.5
 	engine_player.volume_linear = 0
 
 ## Plays the honk sound effect.
 func honk() -> void:
-	honk_player.play()
+	honk_player.play(0.54)
 
 #endregion
