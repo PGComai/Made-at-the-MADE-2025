@@ -1,11 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://d0o2qlnyynrd1"]
 
 [ext_resource type="Script" uid="uid://ql5fgk7fubbe" path="res://car/car.gd" id="1_2gitb"]
+[ext_resource type="Texture2D" uid="uid://n0bwebqbpi3r" path="res://Sprites/car.png" id="2_dxy33"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2gitb"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dxy33"]
-size = Vector2(16, 32)
 
 [node name="Car" type="CharacterBody2D"]
 script = ExtResource("1_2gitb")
@@ -14,7 +12,7 @@ script = ExtResource("1_2gitb")
 shape = SubResource("CircleShape2D_2gitb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_dxy33")
+texture = ExtResource("2_dxy33")
 
 [node name="LabelGrip" type="Label" parent="."]
 offset_right = 40.0
