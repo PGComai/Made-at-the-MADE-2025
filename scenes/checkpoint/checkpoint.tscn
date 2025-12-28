@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://baup2npo25ut2"]
+
+[ext_resource type="Script" uid="uid://dt5qjdujym0go" path="res://scenes/checkpoint/checkpoint.gd" id="1_w77t2"]
+
+[node name="Checkpoint" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+input_pickable = false
+script = ExtResource("1_w77t2")
+metadata/_custom_type_script = "uid://dt5qjdujym0go"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
