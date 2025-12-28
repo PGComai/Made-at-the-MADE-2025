@@ -1,5 +1,5 @@
 class_name VehiclePlayer
-extends Node3D
+extends Node2D
 
 ## The velocity of the car.
 @export var velocity: Vector2:
@@ -26,10 +26,10 @@ var gear: int = 0:
 			gear = value
 			gear_shift()
 
-@onready var collision_player: AudioStreamPlayer3D = %CollisionPlayer
-@onready var engine_player: AudioStreamPlayer3D = %EnginePlayer
-@onready var honk_player: AudioStreamPlayer3D = %HonkPlayer
-@onready var gear_player: AudioStreamPlayer3D = %GearPlayer
+@onready var collision_player: AudioStreamPlayer2D = %CollisionPlayer
+@onready var engine_player: AudioStreamPlayer2D = %EnginePlayer
+@onready var honk_player: AudioStreamPlayer2D = %HonkPlayer
+@onready var gear_player: AudioStreamPlayer2D = %GearPlayer
 
 #region Node
 

@@ -2,18 +2,18 @@
 
 [ext_resource type="Script" uid="uid://5xk1tdej57h6" path="res://scenes/vehicle_sound/vehicle_player.gd" id="1_24muu"]
 
-[node name="VehiclePlayer" type="Node3D"]
+[node name="VehiclePlayer" type="Node2D"]
 script = ExtResource("1_24muu")
 metadata/_custom_type_script = "uid://5xk1tdej57h6"
 
-[node name="CollisionPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="CollisionPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 
-[node name="EnginePlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="EnginePlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 
-[node name="GearPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="GearPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 
-[node name="HonkPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="HonkPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
