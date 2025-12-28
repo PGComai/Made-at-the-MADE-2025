@@ -7,8 +7,8 @@ signal car_exited(car: Node2D)
 
 @export var width: float = 0:
 	set(value):
-		if width != value:
-			width = value
+		if width != maxf(0, value):
+			width = maxf(0, value)
 			if is_node_ready():
 				var shape := RectangleShape2D.new()
 				shape.size = Vector2(width, 20)
