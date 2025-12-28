@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://30gtxo2tdg4p"]
+
+[ext_resource type="Script" uid="uid://5xk1tdej57h6" path="res://scenes/vehicle_sound/vehicle_player.gd" id="1_24muu"]
+
+[node name="VehiclePlayer" type="Node3D"]
+script = ExtResource("1_24muu")
+metadata/_custom_type_script = "uid://5xk1tdej57h6"
+
+[node name="CollisionPlayer" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+
+[node name="EnginePlayer" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+
+[node name="GearPlayer" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+
+[node name="HonkPlayer" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
