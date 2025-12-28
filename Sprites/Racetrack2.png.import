@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://n0bwebqbpi3r"
-path="res://.godot/imported/car.png-d32f5b1402097a8b34a6ade6a9b7d527.ctex"
+uid="uid://dqkmflcw0qvth"
+path="res://.godot/imported/Racetrack2.png-e635dc3447d73dbbac0654941701c300.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/car.png"
-dest_files=["res://.godot/imported/car.png-d32f5b1402097a8b34a6ade6a9b7d527.ctex"]
+source_file="res://Sprites/Racetrack2.png"
+dest_files=["res://.godot/imported/Racetrack2.png-e635dc3447d73dbbac0654941701c300.ctex"]
 
 [params]
 
