@@ -1,9 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0o2qlnyynrd1"]
+[gd_scene load_steps=12 format=3 uid="uid://d0o2qlnyynrd1"]
 
 [ext_resource type="Script" uid="uid://ql5fgk7fubbe" path="res://car/car.gd" id="1_2gitb"]
-[ext_resource type="Texture2D" uid="uid://n0bwebqbpi3r" path="res://Sprites/car.png" id="2_dxy33"]
+[ext_resource type="Texture2D" uid="uid://cl2qi4xf1y5vs" path="res://Sprites/Car/body_concept1.png" id="2_dxy33"]
+[ext_resource type="PackedScene" uid="uid://sy7cihov55fu" path="res://scenes/vehicle/wheel.tscn" id="3_hkabp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2gitb"]
+
+[sub_resource type="Gradient" id="Gradient_hkabp"]
+offsets = PackedFloat32Array(0, 0.8)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jpe8o"]
+gradient = SubResource("Gradient_hkabp")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_hkabp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.38085106, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jpe8o"]
+curve = SubResource("Curve_hkabp")
+
+[sub_resource type="Curve" id="Curve_h3fet"]
+_limits = [0.0, 5.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.23191488, 1), 0.0, 0.0, 0, 0, Vector2(1, 5), 15.557326, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bkrhx"]
+curve = SubResource("Curve_h3fet")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h3fet"]
+particle_flag_disable_z = true
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_bkrhx")
+alpha_curve = SubResource("CurveTexture_jpe8o")
 
 [node name="Car" type="CharacterBody2D"]
 script = ExtResource("1_2gitb")
@@ -12,9 +51,46 @@ script = ExtResource("1_2gitb")
 shape = SubResource("CircleShape2D_2gitb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 texture = ExtResource("2_dxy33")
 
 [node name="LabelGrip" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
 text = "GRIP: 1.0"
+
+[node name="WheelFL" parent="." instance=ExtResource("3_hkabp")]
+position = Vector2(-9, -8)
+frame_progress = 0.60218227
+
+[node name="WheelFR" parent="." instance=ExtResource("3_hkabp")]
+position = Vector2(8, -8)
+frame_progress = 0.60218227
+
+[node name="WheelBL" parent="." instance=ExtResource("3_hkabp")]
+position = Vector2(-9, 12)
+frame_progress = 0.60218227
+
+[node name="WheelBR" parent="." instance=ExtResource("3_hkabp")]
+position = Vector2(8, 12)
+frame_progress = 0.60218227
+
+[node name="SmokeLeft" type="GPUParticles2D" parent="."]
+position = Vector2(-8, 13)
+emitting = false
+amount = 32
+texture = SubResource("GradientTexture2D_jpe8o")
+lifetime = 0.6
+fixed_fps = 60
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_h3fet")
+
+[node name="SmokeRight" type="GPUParticles2D" parent="."]
+position = Vector2(8, 13)
+emitting = false
+amount = 32
+texture = SubResource("GradientTexture2D_jpe8o")
+lifetime = 0.6
+fixed_fps = 60
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_h3fet")
