@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://ewlgm45y3f0x"]
+[gd_scene load_steps=8 format=3 uid="uid://ewlgm45y3f0x"]
 
 [ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_c5lvn"]
 [ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="2_c5lvn"]
-[ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://Sprites/Racetrack2.png" id="2_q0spc"]
+[ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://Sprites/Racetrack2.png" id="2_ddnrx"]
 [ext_resource type="PackedScene" uid="uid://d0o2qlnyynrd1" path="res://car/car.tscn" id="4_q0spc"]
 [ext_resource type="PackedScene" uid="uid://c8cygi4lw5m0h" path="res://car/chase_cam.tscn" id="5_ddnrx"]
+[ext_resource type="PackedScene" uid="uid://bivlmeywelyqy" path="res://scenes/finish_line/finish_line.tscn" id="6_ddnrx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s8q4o"]
 size = Vector2(150, 20)
@@ -16,7 +17,11 @@ script = ExtResource("1_c5lvn")
 metadata/_custom_type_script = "uid://bilbkxg3fr8ac"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_q0spc")
+texture = ExtResource("2_ddnrx")
+
+[node name="FinishLine" parent="." node_paths=PackedStringArray("checkpoint_recorder") instance=ExtResource("6_ddnrx")]
+position = Vector2(-341, -3)
+checkpoint_recorder = NodePath("../CheckpointRecorder")
 
 [node name="Checkpoint" parent="." instance=ExtResource("2_c5lvn")]
 position = Vector2(414.00006, -378)
@@ -47,3 +52,4 @@ position = Vector2(-315, 0)
 car = NodePath("../Car")
 
 [connection signal="seen_all_checkpoints" from="CheckpointRecorder" to="Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
+[connection signal="lap_finished" from="FinishLine" to="Car" method="_on_lap_finished"]

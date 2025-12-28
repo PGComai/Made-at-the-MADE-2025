@@ -13,7 +13,7 @@ var seen: Dictionary = {}
 
 func _ready() -> void:
 	all_checkpoints.clear()
-	reset()
+	seen.clear()
 
 	for node in get_tree().get_nodes_in_group("checkpoint"):
 		if node is not Checkpoint:
@@ -27,19 +27,25 @@ func _ready() -> void:
 
 		all_checkpoints.push_back(checkpoint)
 
-func reset() -> void:
-	seen.clear()
+## Resets the seen checkpoints for a specific body.
+func reset_for(body: Node2D) -> bool:
+	return seen.erase(body)
 
+## Records a checkpoint for a body.
 func record_checkpoint(body: Node2D, checkpoint: Checkpoint) -> void:
 	if not seen.has(body):
 		seen[body] = []
-	seen[body].push_back(checkpoint)
+	if not seen[body].has(checkpoint):
+		seen[body].push_back(checkpoint)
+
+	if has_seen_all(body):
+		seen_all_checkpoints.emit(body)
+
+func has_seen_all(body: Node2D) -> bool:
+	if not seen.has(body):
+		return false
 
 	var to_see := all_checkpoints.duplicate()
 	for seen_checkpoint in seen[body]:
 		to_see.erase(seen_checkpoint)
-	if to_see.size() == 0:
-		seen_all_checkpoints.emit(body)
-
-func reset_checkpoints(body: Node2D) -> bool:
-	return seen.erase(body)
+	return to_see.size() == 0

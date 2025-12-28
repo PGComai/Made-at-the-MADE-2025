@@ -28,9 +28,9 @@ var speed: float = INITIAL_SPEED
 
 func _physics_process(delta: float) -> void:
 	var turn: float = Input.get_axis("left", "right")
-	
+
 	wheel_angle = lerp_angle(wheel_angle, turn * PI/4.0, 0.1)
-	
+
 	grip = remap(velocity.normalized().dot(-global_transform.y),
 				-1.0,
 				1.0,
@@ -39,34 +39,34 @@ func _physics_process(delta: float) -> void:
 	grip = pow(grip, 8.0)
 	label_grip.text = "GRIP: %s" % snappedf(grip, 0.01)
 	label_grip.rotation = -rotation
-	
+
 	var real_vel: Vector2 = get_real_velocity()
 	var small_speed: float = clampf(real_vel.length(), 0.0, 1.0)
-	
+
 	var thrust_dir: Vector2 = -global_transform.y
-	
+
 	velocity += thrust_dir * speed * delta * grip
-	
+
 	var ideal_vel: Vector2 = -global_transform.y * velocity.length()
 	velocity = velocity.slerp(ideal_vel, 0.1 * grip)
-	
+
 	velocity *= drag
-	
+
 	var heading = velocity.rotated(wheel_angle * small_speed * turn_grip)
-	
+
 	var ang_diff: float = angle_difference(car_angle, heading.angle() + PI/2.0)
 	spin_momentum += absf(ang_diff) * 0.5 * small_speed
-	
+
 	spin = lerp(spin, ang_diff, 0.02 * grip)
-	
+
 	car_angle += spin * delta * 5.0 * spin_momentum * grip
-	
+
 	rotation = car_angle
-	
+
 	move_and_slide()
-	
+
 	spin_momentum *= 0.95
-	
+
 	#queue_redraw()
 
 
@@ -74,6 +74,5 @@ func _physics_process(delta: float) -> void:
 	#var thrust_dir: Vector2 = -global_transform.y
 	#draw_line(Vector2.ZERO, (thrust_dir * 100.0), Color.RED)
 
-
-func _on_checkpoint_recorder_seen_all_checkpoints(body: Node2D) -> void:
-	print("all checkpoints!")
+func _on_lap_finished(_body: Node2D) -> void:
+	print("lap!")

@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://bivlmeywelyqy"]
+
+[ext_resource type="Script" uid="uid://8jmqbmvshmbp" path="res://scenes/finish_line/finish_line.gd" id="1_fealu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fealu"]
+size = Vector2(120, 24)
+
+[sub_resource type="Gradient" id="Gradient_fealu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4f7n5"]
+gradient = SubResource("Gradient_fealu")
+width = 120
+height = 12
+
+[sub_resource type="Gradient" id="Gradient_4f7n5"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gnmbw"]
+gradient = SubResource("Gradient_4f7n5")
+width = 120
+height = 12
+
+[node name="FinishLine" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+gravity = 9.8
+angular_damp = 0.1
+script = ExtResource("1_fealu")
+metadata/_custom_type_script = "uid://8jmqbmvshmbp"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_fealu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_4f7n5")
+offset = Vector2(0, 6)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_gnmbw")
+offset = Vector2(0, -6)
