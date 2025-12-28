@@ -16,9 +16,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	engine_player.volume_linear = \
-		clampf(engine_player.volume_linear + delta, 0, 0.8)
+		clampf(engine_player.volume_linear + delta, 0, 0.5)
 	engine_player.pitch_scale = \
-		clampf(engine_player.volume_linear + delta, 0.5, 1 + 0.2 * gear)
+		clampf(engine_player.pitch_scale + delta, 0.5, 0.8 + 0.1 * gear)
 
 #endregion
 
@@ -34,7 +34,7 @@ func gear_shift(g: int) -> void:
 	gear = g
 	gear_player.play(0.22)
 	engine_player.pitch_scale = 0.5
-	engine_player.volume_linear = 0
+	engine_player.volume_linear = 0.5
 
 ## Plays the honk sound effect.
 func honk() -> void:
