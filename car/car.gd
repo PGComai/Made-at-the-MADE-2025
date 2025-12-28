@@ -26,7 +26,8 @@ var spin_momentum: float = 1.0:
 var speed: float = INITIAL_SPEED
 var wheels: Array[AnimatedSprite2D]
 var smoke_timer: float = 0.0
-
+## How many laps have been completed
+var completed_laps := 0
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var label_grip: Label = $LabelGrip
@@ -36,6 +37,7 @@ var smoke_timer: float = 0.0
 @onready var wheel_br: AnimatedSprite2D = $WheelBR
 @onready var smoke_left: GPUParticles2D = $SmokeLeft
 @onready var smoke_right: GPUParticles2D = $SmokeRight
+@onready var vehicle_player: VehiclePlayer = %VehiclePlayer
 
 
 func _ready() -> void:
@@ -43,7 +45,6 @@ func _ready() -> void:
 	for wheel in wheels:
 		wheel.play()
 		wheel.speed_scale = 0.0
-
 
 func _physics_process(delta: float) -> void:
 	var turn: float = Input.get_axis("left", "right")
@@ -94,13 +95,7 @@ func _physics_process(delta: float) -> void:
 	for wheel in wheels:
 		wheel.speed_scale = (real_vel.length() + randfn(0.0, 0.1)) * WHEEL_SPIN_SCALE
 
-	#queue_redraw()
-
-
-#func _draw() -> void:
-	#var thrust_dir: Vector2 = -global_transform.y
-	#draw_line(Vector2.ZERO, (thrust_dir * 100.0), Color.RED)
-
 func _on_lap_finished(_body: Node2D) -> void:
-	print("lap!")
+	completed_laps += 1
+	vehicle_player.gear_shift(completed_laps)
 	speed += 50.0
