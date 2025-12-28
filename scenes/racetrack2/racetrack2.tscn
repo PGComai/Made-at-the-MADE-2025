@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ewlgm45y3f0x"]
+[gd_scene load_steps=7 format=3 uid="uid://ewlgm45y3f0x"]
 
 [ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_c5lvn"]
 [ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="2_c5lvn"]
@@ -6,9 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://d0o2qlnyynrd1" path="res://car/car.tscn" id="4_q0spc"]
 [ext_resource type="PackedScene" uid="uid://c8cygi4lw5m0h" path="res://car/chase_cam.tscn" id="5_ddnrx"]
 [ext_resource type="PackedScene" uid="uid://bivlmeywelyqy" path="res://scenes/finish_line/finish_line.tscn" id="6_ddnrx"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8q4o"]
-size = Vector2(150, 20)
 
 [node name="Racetrack2" type="Node2D"]
 
@@ -26,22 +23,22 @@ checkpoint_recorder = NodePath("../CheckpointRecorder")
 [node name="Checkpoint" parent="." instance=ExtResource("2_c5lvn")]
 position = Vector2(414.00006, -378)
 rotation = -0.7853982
-shape = SubResource("RectangleShape2D_s8q4o")
+width = 150.0
 
 [node name="Checkpoint2" parent="." instance=ExtResource("2_c5lvn")]
 position = Vector2(340, 401.00003)
 rotation = 0.7853982
-shape = SubResource("RectangleShape2D_s8q4o")
+width = 150.0
 
 [node name="Checkpoint3" parent="." instance=ExtResource("2_c5lvn")]
 position = Vector2(-358.99994, -385)
 rotation = 0.7853982
-shape = SubResource("RectangleShape2D_s8q4o")
+width = 150.0
 
 [node name="Checkpoint4" parent="." instance=ExtResource("2_c5lvn")]
 position = Vector2(-374, 361.00003)
 rotation = 2.3561945
-shape = SubResource("RectangleShape2D_s8q4o")
+width = 150.0
 
 [node name="Car" parent="." groups=["car"] instance=ExtResource("4_q0spc")]
 position = Vector2(-315, 0)
