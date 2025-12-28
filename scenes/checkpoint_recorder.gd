@@ -35,7 +35,10 @@ func record_checkpoint(body: Node2D, checkpoint: Checkpoint) -> void:
 		seen[body] = []
 	seen[body].push_back(checkpoint)
 
-	if seen[body] == all_checkpoints:
+	var to_see := all_checkpoints.duplicate()
+	for seen_checkpoint in seen[body]:
+		to_see.erase(seen_checkpoint)
+	if to_see.size() == 0:
 		seen_all_checkpoints.emit(body)
 
 func reset_checkpoints(body: Node2D) -> bool:
