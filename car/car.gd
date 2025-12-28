@@ -3,13 +3,14 @@ class_name Car
 
 
 const INITIAL_SPEED: float = 50.0
+const MIN_GRIP: float = 0.05
 
 
 var wheel_angle: float = 0.0
 var car_angle: float = 0.0
 var grip: float = 1.0:
 	set(value):
-		grip = clampf(value, 0.0, 1.0)
+		grip = clampf(value, MIN_GRIP, 1.0)
 var turn_grip: float = 1.0:
 	set(value):
 		turn_grip = clampf(value, 0.0, 1.0)
@@ -18,9 +19,11 @@ var spin: float = 0.0
 var spin_momentum: float = 1.0:
 	set(value):
 		spin_momentum = clampf(value, 1.0, 2.0)
+var speed: float = INITIAL_SPEED
 
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var label_grip: Label = $LabelGrip
 
 
 func _physics_process(delta: float) -> void:
@@ -28,28 +31,35 @@ func _physics_process(delta: float) -> void:
 	
 	wheel_angle = lerp_angle(wheel_angle, turn * PI/4.0, 0.1)
 	
-	grip = remap(velocity.normalized().dot(-global_transform.y), -1.0, 1.0, 0.1, 1.0)
+	grip = remap(velocity.normalized().dot(-global_transform.y),
+				-1.0,
+				1.0,
+				MIN_GRIP,
+				1.0)
+	grip = pow(grip, 8.0)
+	label_grip.text = "GRIP: %s" % snappedf(grip, 0.01)
+	label_grip.rotation = -rotation
 	
 	var real_vel: Vector2 = get_real_velocity()
 	var small_speed: float = clampf(real_vel.length(), 0.0, 1.0)
 	
 	var thrust_dir: Vector2 = -global_transform.y
 	
-	velocity += thrust_dir * INITIAL_SPEED * delta * grip
+	velocity += thrust_dir * speed * delta * grip
 	
 	var ideal_vel: Vector2 = -global_transform.y * velocity.length()
-	velocity = velocity.slerp(ideal_vel, 0.02 * grip)
+	velocity = velocity.slerp(ideal_vel, 0.05 * grip)
 	
 	velocity *= drag
 	
 	var heading = velocity.rotated(wheel_angle * small_speed * turn_grip)
 	
 	var ang_diff: float = angle_difference(car_angle, heading.angle() + PI/2.0)
-	spin_momentum += absf(ang_diff) * 0.2 * small_speed
+	spin_momentum += absf(ang_diff) * 0.5 * small_speed
 	
 	spin = lerp(spin, ang_diff, 0.02 * grip)
 	
-	car_angle += spin * delta * 10.0 * spin_momentum
+	car_angle += spin * delta * 5.0 * spin_momentum * grip
 	
 	rotation = car_angle
 	
@@ -67,3 +77,5 @@ func _physics_process(delta: float) -> void:
 
 func _on_checkpoint_recorder_seen_all_checkpoints(body: Node2D) -> void:
 	print("lap!")
+	speed += 50.0
+	

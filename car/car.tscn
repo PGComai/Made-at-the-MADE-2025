@@ -15,3 +15,8 @@ shape = SubResource("CircleShape2D_2gitb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_dxy33")
+
+[node name="LabelGrip" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "GRIP: 1.0"
