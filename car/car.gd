@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	velocity += thrust_dir * speed * delta * grip
 	
 	var ideal_vel: Vector2 = -global_transform.y * velocity.length()
-	velocity = velocity.slerp(ideal_vel, 0.05 * grip)
+	velocity = velocity.slerp(ideal_vel, 0.1 * grip)
 	
 	velocity *= drag
 	
@@ -76,6 +76,4 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_checkpoint_recorder_seen_all_checkpoints(body: Node2D) -> void:
-	print("lap!")
-	speed += 50.0
-	
+	print("all checkpoints!")
