@@ -5,6 +5,7 @@ class_name Car
 signal i_died
 signal power_up_get(pup: PowerUp)
 signal power_up_used
+signal completed_lap(car: Car)
 
 
 enum PowerUp{BRAKE, JUMP}#, SHIELD, GHOST, AUTO}
@@ -194,6 +195,7 @@ func _on_lap_finished(_body: Node2D) -> void:
 	print(current_powerup)
 	toast.toast("PowerUp! %s" % PowerUp.keys()[current_powerup])
 
+	completed_lap.emit(self)
 
 func _on_stuff_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("terrain"):

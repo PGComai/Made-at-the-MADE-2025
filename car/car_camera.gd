@@ -7,7 +7,7 @@ var target_zoom: float = 2.0
 func _process(delta: float) -> void:
 	if car:
 		if car.is_dead:
-			target_zoom = lerpf(target_zoom, 8.0, delta)
+			target_zoom = lerpf(target_zoom, 8.0, delta * 0.5)
 		else:
 			target_zoom = lerp(target_zoom,
 							remap(-car.speed, -250.0, -car.INITIAL_SPEED, 1.0, 2.0),

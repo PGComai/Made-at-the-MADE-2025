@@ -1,7 +1,10 @@
+class_name GameOver
 extends CanvasLayer
 
 @onready var anchor: Control = %Anchor
+@onready var score_label: Label = %ScoreLabel
 
+var score: int
 var from_angle: float
 var to_angle: float
 
@@ -13,6 +16,7 @@ func _ready() -> void:
 		to_angle = from_angle + deg_to_rad(randf_range(5, 10))
 
 	anchor.rotation = from_angle
+	score_label.text = "(you scored %d points though)" % score
 
 func _enter_tree() -> void:
 	Engine.time_scale = 0.5
