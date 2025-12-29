@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2bb8tpx5ikj2"]
+[gd_scene load_steps=5 format=3 uid="uid://d2bb8tpx5ikj2"]
 
 [ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://scenes/main/main.gd" id="1_hyk8p"]
+[ext_resource type="AudioStream" uid="uid://dt21jvi8ch4mt" path="res://OST/racing game song draft 2.wav" id="2_iuonh"]
 
 [sub_resource type="SystemFont" id="SystemFont_wyggb"]
 font_names = PackedStringArray("monospace")
@@ -61,3 +62,7 @@ layout_mode = 2
 text = "Power Up: None"
 label_settings = SubResource("LabelSettings_gq24m")
 horizontal_alignment = 1
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_iuonh")
+autoplay = true
