@@ -39,7 +39,7 @@ position = Vector2(-374, 361.00003)
 rotation = 2.3561945
 width = 150.0
 
-[node name="Car" parent="." groups=["car"] instance=ExtResource("4_q0spc")]
+[node name="Car" parent="." instance=ExtResource("4_q0spc")]
 position = Vector2(-315, 0)
 
 [node name="ChaseCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("5_ddnrx")]

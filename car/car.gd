@@ -240,7 +240,7 @@ func set_smoke_color(clr: Color) -> void:
 func _on_checkpoint_entered(_body: Node2D, count: int, total: int) -> void:
 	toast.toast("Checkpoint %d/%d!" % [count, total])
 
-func _on_lap_finished(_body: Node2D) -> void:
+func _on_lap_finished(completed_laps: int) -> void:
 	completed_laps += 1
 	vehicle_player.gear_shift(completed_laps)
 	speed += 50.0 - clampf(float(completed_laps * 5), 5.0, 45.0)
