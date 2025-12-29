@@ -139,7 +139,25 @@ text = "10.00"
 label_settings = SubResource("LabelSettings_gq24m")
 horizontal_alignment = 1
 
+[node name="LabelPowerUp" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Power Up: None"
+label_settings = SubResource("LabelSettings_gq24m")
+horizontal_alignment = 1
+
 [connection signal="checkpoint_entered" from="TextureRect/SubViewport/Racetrack2/CheckpointRecorder" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_checkpoint_entered"]
 [connection signal="seen_all_checkpoints" from="TextureRect/SubViewport/Racetrack2/CheckpointRecorder" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
 [connection signal="lap_finished" from="TextureRect/SubViewport/Racetrack2/FinishLine" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_lap_finished"]
 [connection signal="i_died" from="TextureRect/SubViewport/Racetrack2/Car" to="." method="game_over"]
+[connection signal="power_up_get" from="TextureRect/SubViewport/Racetrack2/Car" to="." method="_on_car_power_up_get"]
+[connection signal="power_up_used" from="TextureRect/SubViewport/Racetrack2/Car" to="." method="_on_car_power_up_used"]

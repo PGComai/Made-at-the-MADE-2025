@@ -3,9 +3,11 @@ class_name Car
 
 
 signal i_died
+signal power_up_get(pup: PowerUp)
+signal power_up_used
 
 
-enum PowerUp{BRAKE, JUMP, SHIELD, GHOST, AUTO}
+enum PowerUp{BRAKE, JUMP}#, SHIELD, GHOST, AUTO}
 
 
 const INITIAL_SPEED: float = 50.0
@@ -16,6 +18,7 @@ const LIFE_TIME: float = 10.0
 
 
 @export var show_steer := true
+@export var jump_sprite_curve: Curve
 
 
 var current_powerup: PowerUp
@@ -39,7 +42,9 @@ var terrain_slip: float = 1.0
 var terrain_damp: float = 1.0
 var current_terrain: Terrain
 var braking := false
+var jumping := false
 var on_track := true
+var used_powerup := false
 var life: float = LIFE_TIME
 var is_dead: bool:
 	get:
@@ -50,18 +55,22 @@ var completed_laps := 0
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var label_grip: Label = $LabelGrip
-@onready var wheel_fl: AnimatedSprite2D = $WheelFL
-@onready var wheel_fr: AnimatedSprite2D = $WheelFR
-@onready var wheel_bl: AnimatedSprite2D = $WheelBL
-@onready var wheel_br: AnimatedSprite2D = $WheelBR
+@onready var wheel_fl: AnimatedSprite2D = $Sprite2D/WheelFL
+@onready var wheel_fr: AnimatedSprite2D = $Sprite2D/WheelFR
+@onready var wheel_bl: AnimatedSprite2D = $Sprite2D/WheelBL
+@onready var wheel_br: AnimatedSprite2D = $Sprite2D/WheelBR
 @onready var smoke_left: GPUParticles2D = $SmokeLeft
 @onready var smoke_right: GPUParticles2D = $SmokeRight
 @onready var vehicle_player: VehiclePlayer = %VehiclePlayer
 @onready var stuff_detector: Area2D = $StuffDetector
 @onready var toast: Toast = %Toast
+@onready var timer_power_up: Timer = $TimerPowerUp
+@onready var sprite_2d_shadow: Sprite2D = $Sprite2DShadow
 
 
 func _ready() -> void:
+	current_powerup = PowerUp[PowerUp.keys().pick_random()]
+	power_up_get.emit(current_powerup)
 	wheels = [wheel_fl, wheel_fr, wheel_bl, wheel_br]
 	for wheel in wheels:
 		wheel.play()
@@ -74,10 +83,40 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	if not on_track:
+	if not used_powerup:
+		if Input.is_action_just_pressed("a") and not used_powerup:
+			timer_power_up.start()
+			power_up_used.emit()
+			used_powerup = true
+			if current_powerup == PowerUp.BRAKE:
+				braking = true
+				toast.toast("brake")
+			elif current_powerup == PowerUp.JUMP:
+				jumping = true
+				toast.toast("jump")
+				stuff_detector.monitoring = false
+	if not (on_track or jumping):
 		life -= delta
 		if is_dead:
 			i_died.emit()
+
+	if jumping:
+		var jump_height: float = jump_sprite_curve.sample_baked(
+												remap(
+												-timer_power_up.time_left,
+												-timer_power_up.wait_time,
+												0.0,
+												0.0,
+												1.0)
+												) * 20.0
+		sprite_2d.global_position.y = global_position.y - jump_height
+		sprite_2d.global_position.x = global_position.x
+		var shadow_scale: float = remap(-jump_height,
+										-20.0,
+										0.0,
+										0.5,
+										1.0)
+		sprite_2d_shadow.scale = Vector2(shadow_scale, shadow_scale)
 
 	var turn: float = Input.get_axis("left", "right")
 
@@ -93,7 +132,7 @@ func _physics_process(delta: float) -> void:
 				MIN_GRIP,
 				1.0)
 	grip = pow(grip, 6.0)
-	var tire_smoke: bool = grip < 0.65
+	var tire_smoke: bool = (grip < 0.65 or braking) and not jumping
 	smoke_left.emitting = tire_smoke
 	smoke_right.emitting = tire_smoke
 	label_grip.text = "GRIP: %s" % snappedf(grip, 0.01)
@@ -105,8 +144,9 @@ func _physics_process(delta: float) -> void:
 	velocity += thrust_dir * speed * delta * grip
 	var ideal_vel: Vector2 = -global_transform.y * velocity.length()
 
-	velocity = velocity.slerp(ideal_vel, 0.08 * grip * terrain_slip)
-	velocity *= drag * remap(grip, MIN_GRIP, 1.0, 0.995, 1.0) * terrain_damp
+	if not jumping:
+		velocity = velocity.slerp(ideal_vel, 0.08 * grip * terrain_slip)
+		velocity *= drag * remap(grip, MIN_GRIP, 1.0, 0.995, 1.0) * terrain_damp
 	if braking:
 		velocity *= BRAKE_EFFECT
 
@@ -115,7 +155,8 @@ func _physics_process(delta: float) -> void:
 	var ang_diff: float = angle_difference(car_angle, heading.angle() + PI/2.0)
 
 	spin_momentum += absf(ang_diff) * 0.8 * small_speed
-	spin = lerp(spin, ang_diff, 0.02 * grip * terrain_slip)
+	if not jumping:
+		spin = lerp(spin, ang_diff, 0.02 * grip * terrain_slip)
 	var steer_strength: float = pow(speed, 0.95) * (3.0 / INITIAL_SPEED)
 
 	car_angle += spin * delta * steer_strength * spin_momentum * grip * terrain_slip
@@ -139,6 +180,9 @@ func _on_lap_finished(_body: Node2D) -> void:
 	speed += 50.0 - clampf(float(completed_laps * 5), 5.0, 45.0)
 	print("new accel: %s" % snappedf(speed, 1.0))
 	current_powerup = PowerUp[PowerUp.keys().pick_random()]
+	power_up_get.emit(current_powerup)
+	used_powerup = false
+	timer_power_up.wait_time = clampf(remap(-speed, -300.0, -50.0, 0.2, 1.0), 0.2, 1.0)
 	print(current_powerup)
 	toast.toast("PowerUp! %s" % PowerUp.keys()[current_powerup])
 
@@ -170,6 +214,15 @@ func _on_stuff_detector_area_exited(area: Area2D) -> void:
 			current_terrain = null
 			terrain_slip = 1.0
 			terrain_damp = 1.0
-	elif area.is_in_group("track"):
+	elif area.is_in_group("track") and not jumping:
 		on_track = false
 		toast.toast("Off track!")
+
+
+func _on_timer_power_up_timeout() -> void:
+	braking = false
+	jumping = false
+	stuff_detector.monitoring = true
+	sprite_2d.position.y = 0.0
+	sprite_2d.position.x = 0.0
+	sprite_2d_shadow.scale = Vector2.ONE
