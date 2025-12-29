@@ -50,8 +50,6 @@ var life: float = LIFE_TIME
 var is_dead: bool:
 	get:
 		return life <= 0
-## How many laps have been completed
-var completed_laps := 0
 var jump_grip_boost: float = 1.0:
 	set(value):
 		jump_grip_boost = clampf(value, 1.0, JUMP_GRIP)
@@ -178,10 +176,8 @@ func _physics_process(delta: float) -> void:
 	for wheel in wheels:
 		wheel.speed_scale = (real_vel.length() + randfn(0.0, 0.1)) * WHEEL_SPIN_SCALE
 
-func _on_lap_finished() -> void:
-	completed_laps += 1
+func _on_lap_finished(completed_laps: int) -> void:
 	vehicle_player.gear_shift(completed_laps)
-	toast.toast("Lap %d!" % [completed_laps + 1])
 	speed += 50.0 - clampf(float(completed_laps * 5), 5.0, 45.0)
 	print("new accel: %s" % snappedf(speed, 1.0))
 	current_powerup = PowerUp[PowerUp.keys().pick_random()]

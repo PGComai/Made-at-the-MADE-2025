@@ -10,6 +10,9 @@ const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 @onready var score_label: Label = %ScoreLabel
 @onready var power_up_label: Label = %PowerUpLabel
 
+## The number of completed laps.
+var completed_laps: int = 0
+
 ## The current score.
 var score: int = 0
 
@@ -84,9 +87,11 @@ func _on_finish_crossed(body: Node2D) -> void:
 
 	if has_seen_all_checkpoints():
 		if not car.is_dead:
-			score += floori(car.life * car.completed_laps)
+			completed_laps += 1
+			car._on_lap_finished(completed_laps)
+			car.toast.toast("Lap %d!" % [completed_laps])
+			score += floori(car.life * completed_laps)
 			point_cooldown = 0
-		car._on_lap_finished()
 		seen_checkpoints.clear()
 
 func _on_car_died() -> void:
