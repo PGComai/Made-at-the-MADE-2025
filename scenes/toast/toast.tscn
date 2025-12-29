@@ -27,3 +27,4 @@ layout_mode = 2
 [node name="NotifPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("2_hubc8")
+bus = &"Engine"
