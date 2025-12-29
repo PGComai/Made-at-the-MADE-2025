@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdmwdc4fob4s2"]
+[gd_scene load_steps=5 format=3 uid="uid://cdmwdc4fob4s2"]
 
 [ext_resource type="Script" uid="uid://dos4n1mqlsi8o" path="res://scenes/game_over/game_over.gd" id="1_3j056"]
 
@@ -8,7 +8,16 @@ font_size = 150
 outline_size = 50
 outline_color = Color(0.42, 0, 0, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_3j056"]
+font_names = PackedStringArray("monospace")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_sseyc"]
+font = SubResource("SystemFont_3j056")
+font_size = 30
+
 [node name="GameOver" type="CanvasLayer"]
+layer = 100
 script = ExtResource("1_3j056")
 
 [node name="Control" type="ColorRect" parent="."]
@@ -46,4 +55,21 @@ grow_vertical = 2
 text = "YOU
 WASTED"
 label_settings = SubResource("LabelSettings_pqlte")
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="CenterContainer/Anchor/Label"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.5
+offset_top = -23.0
+offset_right = 115.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "(you scored %d points though)"
+label_settings = SubResource("LabelSettings_sseyc")
 horizontal_alignment = 1
