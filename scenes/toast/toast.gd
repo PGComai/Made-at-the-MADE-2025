@@ -5,6 +5,7 @@ const TOAST_TIME: float = 2.0
 const MESSAGE = preload("uid://if4w5k74d5nj")
 
 @onready var right_anchor: Control = %RightAnchor
+@onready var notif_player: AudioStreamPlayer2D = %NotifPlayer
 
 var messages: Array[Control] = []
 var elapsed: Array[float] = []
@@ -32,3 +33,4 @@ func toast(text: String) -> void:
 
 	messages.push_back(msg)
 	elapsed.push_back(0)
+	notif_player.play(0.62)

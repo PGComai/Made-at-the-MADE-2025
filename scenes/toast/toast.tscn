@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cepc801q0224o"]
+[gd_scene load_steps=3 format=3 uid="uid://cepc801q0224o"]
 
 [ext_resource type="Script" uid="uid://larwbrfjalug" path="res://scenes/toast/toast.gd" id="1_2l50j"]
+[ext_resource type="AudioStream" uid="uid://dc7cbpeaefxyq" path="res://sfx/beep.wav" id="2_hubc8"]
 
 [node name="Toast" type="Control"]
 layout_mode = 3
@@ -22,3 +23,7 @@ grow_vertical = 2
 [node name="RightAnchor" type="Control" parent="CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="NotifPlayer" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_hubc8")
