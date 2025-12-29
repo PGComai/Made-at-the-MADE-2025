@@ -5,7 +5,6 @@ class_name Car
 signal i_died
 signal power_up_get(pup: PowerUp)
 signal power_up_used
-signal completed_lap(car: Car)
 
 
 enum PowerUp{BRAKE, JUMP}#, SHIELD, GHOST, AUTO}
@@ -179,10 +178,7 @@ func _physics_process(delta: float) -> void:
 	for wheel in wheels:
 		wheel.speed_scale = (real_vel.length() + randfn(0.0, 0.1)) * WHEEL_SPIN_SCALE
 
-func _on_checkpoint_entered(_body: Node2D, count: int, total: int) -> void:
-	toast.toast("Checkpoint %d/%d!" % [count, total])
-
-func _on_lap_finished(_body: Node2D) -> void:
+func _on_lap_finished() -> void:
 	completed_laps += 1
 	vehicle_player.gear_shift(completed_laps)
 	toast.toast("Lap %d!" % [completed_laps + 1])
@@ -194,8 +190,6 @@ func _on_lap_finished(_body: Node2D) -> void:
 	timer_power_up.wait_time = clampf(remap(-speed, -300.0, -50.0, 0.2, 1.0), 0.2, 1.0)
 	print(current_powerup)
 	toast.toast("PowerUp! %s" % PowerUp.keys()[current_powerup])
-
-	completed_lap.emit(self)
 
 func _on_stuff_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("terrain"):

@@ -25,7 +25,7 @@ gradient = SubResource("Gradient_4f7n5")
 width = 120
 height = 12
 
-[node name="FinishLine" type="Area2D"]
+[node name="FinishLine" type="Area2D" groups=["finish_line"]]
 collision_layer = 4
 collision_mask = 2
 gravity_point_center = Vector2(0, -1)

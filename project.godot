@@ -26,6 +26,7 @@ car="The automobile the player controls."
 checkpoint="Areas that the players must visit to complete a lap."
 terrain=""
 track=""
+finish_line=""
 
 [input]
 

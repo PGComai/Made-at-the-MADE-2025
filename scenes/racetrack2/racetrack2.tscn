@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://ewlgm45y3f0x"]
+[gd_scene load_steps=10 format=3 uid="uid://ewlgm45y3f0x"]
 
-[ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_c5lvn"]
 [ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://main.gd" id="1_gq24m"]
 [ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="2_c5lvn"]
 [ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://Sprites/Racetrack2.png" id="2_ddnrx"]
@@ -25,16 +24,11 @@ car = NodePath("Racetrack2/Car")
 
 [node name="Racetrack2" type="Node2D" parent="."]
 
-[node name="CheckpointRecorder" type="Node" parent="Racetrack2"]
-script = ExtResource("1_c5lvn")
-metadata/_custom_type_script = "uid://bilbkxg3fr8ac"
-
 [node name="Sprite2D" type="Sprite2D" parent="Racetrack2"]
 texture = ExtResource("2_ddnrx")
 
-[node name="FinishLine" parent="Racetrack2" node_paths=PackedStringArray("checkpoint_recorder") instance=ExtResource("6_ddnrx")]
+[node name="FinishLine" parent="Racetrack2" instance=ExtResource("6_ddnrx")]
 position = Vector2(-341, -3)
-checkpoint_recorder = NodePath("../CheckpointRecorder")
 
 [node name="Checkpoint" parent="Racetrack2" instance=ExtResource("2_c5lvn")]
 position = Vector2(414.00006, -378)
@@ -155,7 +149,3 @@ layout_mode = 2
 text = "Power Up: None"
 label_settings = SubResource("LabelSettings_gq24m")
 horizontal_alignment = 1
-
-[connection signal="checkpoint_entered" from="Racetrack2/CheckpointRecorder" to="Racetrack2/Car" method="_on_checkpoint_entered"]
-[connection signal="seen_all_checkpoints" from="Racetrack2/CheckpointRecorder" to="Racetrack2/Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
-[connection signal="lap_finished" from="Racetrack2/FinishLine" to="Racetrack2/Car" method="_on_lap_finished"]
