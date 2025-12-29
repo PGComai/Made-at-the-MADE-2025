@@ -1,6 +1,5 @@
 [gd_scene load_steps=23 format=3 uid="uid://w6m32vdyypca"]
 
-[ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_h475k"]
 [ext_resource type="PackedScene" uid="uid://8bme12g1d8x3" path="res://scenes/TrackTilemaps/track1_tilemap.tscn" id="2_2but6"]
 [ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://Sprites/Racetrack2.png" id="2_6tico"]
 [ext_resource type="PackedScene" uid="uid://bivlmeywelyqy" path="res://scenes/finish_line/finish_line.tscn" id="3_xypmq"]
@@ -12,6 +11,7 @@
 [ext_resource type="Script" uid="uid://duykyco6wqlc" path="res://terrain/terrain.gd" id="7_pojh3"]
 [ext_resource type="Texture2D" uid="uid://cl2qi4xf1y5vs" path="res://Sprites/Car/body_concept1.png" id="7_srfgw"]
 [ext_resource type="PackedScene" uid="uid://sy7cihov55fu" path="res://scenes/vehicle/wheel.tscn" id="8_cksj3"]
+[ext_resource type="PackedScene" uid="uid://d2bb8tpx5ikj2" path="res://scenes/main/main.tscn" id="12_2but6"]
 
 [sub_resource type="Curve" id="Curve_bkrhx"]
 _data = [Vector2(0, 0), 0.0, 4.9433246, 0, 0, Vector2(0.49665552, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.1777477, 0.0, 0, 0]
@@ -62,10 +62,6 @@ alpha_curve = SubResource("CurveTexture_jpe8o")
 [node name="Racetrack" type="Node2D"]
 z_as_relative = false
 y_sort_enabled = true
-
-[node name="CheckpointRecorder" type="Node" parent="."]
-script = ExtResource("1_h475k")
-metadata/_custom_type_script = "uid://bilbkxg3fr8ac"
 
 [node name="Track1" parent="." instance=ExtResource("2_2but6")]
 
@@ -175,10 +171,9 @@ one_shot = true
 visible = false
 texture = ExtResource("2_6tico")
 
-[node name="FinishLine" parent="." node_paths=PackedStringArray("checkpoint_recorder") instance=ExtResource("3_xypmq")]
+[node name="FinishLine" parent="." instance=ExtResource("3_xypmq")]
 z_index = -1
 position = Vector2(-445, 8)
-checkpoint_recorder = NodePath("../CheckpointRecorder")
 
 [node name="Checkpoint" parent="." instance=ExtResource("4_rnu2n")]
 position = Vector2(462.00003, -276.00003)
@@ -246,9 +241,9 @@ polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -
 color = Color(0.1361005, 0.1361005, 0.1361005, 1)
 polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -9, 47, 4, 40, 18, 20, 27, -15, 21, -35, 14, -68, 17, -78, 7)
 
-[connection signal="checkpoint_entered" from="CheckpointRecorder" to="Car" method="_on_checkpoint_entered"]
-[connection signal="seen_all_checkpoints" from="CheckpointRecorder" to="Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
+[node name="Main" parent="." node_paths=PackedStringArray("car") instance=ExtResource("12_2but6")]
+car = NodePath("../Car")
+
 [connection signal="area_entered" from="Car/StuffDetector" to="Car" method="_on_stuff_detector_area_entered"]
 [connection signal="area_exited" from="Car/StuffDetector" to="Car" method="_on_stuff_detector_area_exited"]
 [connection signal="timeout" from="Car/TimerPowerUp" to="Car" method="_on_timer_power_up_timeout"]
-[connection signal="lap_finished" from="FinishLine" to="Car" method="_on_lap_finished"]
