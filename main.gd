@@ -14,6 +14,9 @@ const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 
 func _ready() -> void:
 	car.completed_lap.connect(_on_completed_lap)
+	car.died.connect(_on_car_died)
+	car.power_up_get.connect(_on_car_power_up_get)
+	car.power_up_used.connect(_on_car_power_up_used)
 
 func _process(delta: float) -> void:
 	time_label.text = "%.2f" % car.life
@@ -31,7 +34,7 @@ func _on_completed_lap(c: Car) -> void:
 		score += floori(c.life * c.completed_laps)
 		point_cooldown = 0
 
-func game_over() -> void:
+func _on_car_died() -> void:
 	var new_game_over: GameOver = GAME_OVER.instantiate()
 	new_game_over.score = score
 	add_child(new_game_over)
