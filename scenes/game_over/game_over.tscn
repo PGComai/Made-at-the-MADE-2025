@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdmwdc4fob4s2"]
+[gd_scene load_steps=6 format=3 uid="uid://cdmwdc4fob4s2"]
 
 [ext_resource type="Script" uid="uid://dos4n1mqlsi8o" path="res://scenes/game_over/game_over.gd" id="1_3j056"]
 
@@ -15,6 +15,9 @@ subpixel_positioning = 0
 [sub_resource type="LabelSettings" id="LabelSettings_sseyc"]
 font = SubResource("SystemFont_3j056")
 font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_3j056"]
+font_size = 32
 
 [node name="GameOver" type="CanvasLayer"]
 layer = 100
@@ -73,3 +76,34 @@ grow_vertical = 0
 text = "(you scored %d points though)"
 label_settings = SubResource("LabelSettings_sseyc")
 horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/Anchor"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = 330.5
+offset_right = 136.0
+offset_bottom = 375.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press A to Restart"
+label_settings = SubResource("LabelSettings_3j056")
+horizontal_alignment = 1
+
+[node name="TimerMashProof" type="Timer" parent="."]
+one_shot = true
+autostart = true
+ignore_time_scale = true
+
+[node name="TimerMainMenu" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+ignore_time_scale = true
+
+[connection signal="timeout" from="TimerMashProof" to="." method="_on_timer_mash_proof_timeout"]
+[connection signal="timeout" from="TimerMainMenu" to="." method="_on_timer_main_menu_timeout"]

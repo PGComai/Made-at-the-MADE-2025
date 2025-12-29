@@ -87,6 +87,7 @@ var smoking := false:
 
 var current_skid_left: TireMark
 var current_skid_right: TireMark
+var queue_track_check := false
 
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -300,14 +301,27 @@ func _on_node_2d_exited(node_2d: Node2D) -> void:
 			terrain_damp = 1.0
 			smoke_threshold = SMOKE_THRESH_DEFAULT
 			smoke_target_color = Color.WHITE
-	elif node_2d.is_in_group("track") and not jumping:
-		on_track = false
-		toast.toast("Off track!")
+	elif node_2d.is_in_group("track"):
+		if not jumping:
+			on_track = false
+			toast.toast("Off track!")
+		else:
+			queue_track_check = true
 
 func _on_timer_power_up_timeout() -> void:
-	braking = false
-	jumping = false
 	stuff_detector.monitoring = true
+	braking = false
+	if jumping and queue_track_check:
+		var stuff_overlapping := stuff_detector.get_overlapping_bodies()
+		var landed_on_track := false
+		for so: Node2D in stuff_overlapping:
+			if so.is_in_group("track"):
+				landed_on_track = true
+		if not landed_on_track:
+			print("bug fixed")
+			on_track = false
+			toast.toast("Off track!")
+	jumping = false
 	sprite_2d.position.y = 0.0
 	sprite_2d.position.x = 0.0
 	sprite_2d_shadow.scale = Vector2.ONE
