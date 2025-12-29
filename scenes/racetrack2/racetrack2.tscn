@@ -141,3 +141,4 @@ horizontal_alignment = 1
 [connection signal="checkpoint_entered" from="TextureRect/SubViewport/Racetrack2/CheckpointRecorder" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_checkpoint_entered"]
 [connection signal="seen_all_checkpoints" from="TextureRect/SubViewport/Racetrack2/CheckpointRecorder" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
 [connection signal="lap_finished" from="TextureRect/SubViewport/Racetrack2/FinishLine" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_lap_finished"]
+[connection signal="i_died" from="TextureRect/SubViewport/Racetrack2/Car" to="." method="game_over"]

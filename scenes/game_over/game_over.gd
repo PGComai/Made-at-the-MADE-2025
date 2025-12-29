@@ -16,9 +16,11 @@ func _ready() -> void:
 
 func _enter_tree() -> void:
 	Engine.time_scale = 0.5
+	AudioServer.playback_speed_scale = 0.5
 
 func _exit_tree() -> void:
 	Engine.time_scale = 1
+	AudioServer.playback_speed_scale = 1
 
 func _process(delta: float) -> void:
 	anchor.rotation = lerpf(anchor.rotation, to_angle, delta)

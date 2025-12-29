@@ -41,6 +41,9 @@ var current_terrain: Terrain
 var braking := false
 var on_track := true
 var life: float = LIFE_TIME
+var is_dead: bool:
+	get:
+		return life <= 0
 ## How many laps have been completed
 var completed_laps := 0
 
@@ -65,9 +68,15 @@ func _ready() -> void:
 		wheel.speed_scale = 0.0
 
 func _physics_process(delta: float) -> void:
+	# Don't process any input if we are dead
+	if is_dead:
+		velocity = velocity.slerp(Vector2.ZERO, 0.1 * delta)
+		move_and_slide()
+		return
+
 	if not on_track:
 		life -= delta
-		if life <= 0.0:
+		if is_dead:
 			i_died.emit()
 
 	var turn: float = Input.get_axis("left", "right")
