@@ -37,9 +37,10 @@ func reset_for(body: Node2D) -> bool:
 func record_checkpoint(body: Node2D, checkpoint: Checkpoint) -> void:
 	if not seen.has(body):
 		seen[body] = []
-	if not seen[body].has(checkpoint):
-		seen[body].push_back(checkpoint)
+	if seen[body].has(checkpoint):
+		return
 
+	seen[body].push_back(checkpoint)
 	checkpoint_entered.emit(body, seen[body].size(), all_checkpoints.size())
 	if has_seen_all(body):
 		seen_all_checkpoints.emit(body)
