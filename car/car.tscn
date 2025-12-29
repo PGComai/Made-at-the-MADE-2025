@@ -143,6 +143,7 @@ interpolate = false
 process_material = SubResource("ParticleProcessMaterial_h3fet")
 
 [node name="StuffDetector" type="Area2D" parent="."]
+collision_mask = 9
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StuffDetector"]
@@ -154,4 +155,6 @@ one_shot = true
 
 [connection signal="area_entered" from="StuffDetector" to="." method="_on_stuff_detector_area_entered"]
 [connection signal="area_exited" from="StuffDetector" to="." method="_on_stuff_detector_area_exited"]
+[connection signal="body_entered" from="StuffDetector" to="." method="_on_stuff_detector_body_entered"]
+[connection signal="body_exited" from="StuffDetector" to="." method="_on_stuff_detector_body_exited"]
 [connection signal="timeout" from="TimerPowerUp" to="." method="_on_timer_power_up_timeout"]

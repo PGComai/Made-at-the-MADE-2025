@@ -188,8 +188,20 @@ func _on_lap_finished(completed_laps: int) -> void:
 	toast.toast("PowerUp! %s" % PowerUp.keys()[current_powerup])
 
 func _on_stuff_detector_area_entered(area: Area2D) -> void:
-	if area.is_in_group("terrain"):
-		var terrain_area: Terrain = area
+	_on_node_2d_entered(area)
+
+func _on_stuff_detector_area_exited(area: Area2D) -> void:
+	_on_node_2d_exited(area)
+
+func _on_stuff_detector_body_entered(body: Node2D) -> void:
+	_on_node_2d_entered(body)
+
+func _on_stuff_detector_body_exited(body: Node2D) -> void:
+	_on_node_2d_exited(body)
+
+func _on_node_2d_entered(node_2d: Node2D) -> void:
+	if node_2d.is_in_group("terrain"):
+		var terrain_area: Terrain = node_2d
 		current_terrain = terrain_area
 		if current_terrain.terrain_type == "oil":
 			terrain_slip = 0.4
@@ -203,21 +215,19 @@ func _on_stuff_detector_area_entered(area: Area2D) -> void:
 		elif current_terrain.terrain_type == "dirt":
 			terrain_slip = 0.8
 			terrain_damp = 0.995
-	elif area.is_in_group("track"):
+	elif node_2d.is_in_group("track"):
 		on_track = true
 
-
-func _on_stuff_detector_area_exited(area: Area2D) -> void:
-	if area.is_in_group("terrain"):
-		var terrain_area: Terrain = area
+func _on_node_2d_exited(node_2d: Node2D) -> void:
+	if node_2d.is_in_group("terrain"):
+		var terrain_area: Terrain = node_2d
 		if current_terrain == terrain_area:
 			current_terrain = null
 			terrain_slip = 1.0
 			terrain_damp = 1.0
-	elif area.is_in_group("track") and not jumping:
+	elif node_2d.is_in_group("track") and not jumping:
 		on_track = false
 		toast.toast("Off track!")
-
 
 func _on_timer_power_up_timeout() -> void:
 	braking = false

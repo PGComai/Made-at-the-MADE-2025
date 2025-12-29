@@ -71,6 +71,7 @@ b={
 
 2d_physics/layer_2="car"
 2d_physics/layer_3="checkpoint"
+2d_physics/layer_4="track"
 
 [physics]
 
