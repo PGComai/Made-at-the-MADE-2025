@@ -1,0 +1,254 @@
+[gd_scene load_steps=23 format=3 uid="uid://w6m32vdyypca"]
+
+[ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_h475k"]
+[ext_resource type="PackedScene" uid="uid://8bme12g1d8x3" path="res://scenes/TrackTilemaps/track1_tilemap.tscn" id="2_2but6"]
+[ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://Sprites/Racetrack2.png" id="2_6tico"]
+[ext_resource type="PackedScene" uid="uid://bivlmeywelyqy" path="res://scenes/finish_line/finish_line.tscn" id="3_xypmq"]
+[ext_resource type="Script" uid="uid://ql5fgk7fubbe" path="res://car/car.gd" id="4_pojh3"]
+[ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="4_rnu2n"]
+[ext_resource type="PackedScene" uid="uid://cepc801q0224o" path="res://scenes/toast/toast.tscn" id="5_kvrak"]
+[ext_resource type="PackedScene" uid="uid://30gtxo2tdg4p" path="res://scenes/vehicle_sound/vehicle_player.tscn" id="6_nlea7"]
+[ext_resource type="PackedScene" path="res://car/chase_cam.tscn" id="6_pulch"]
+[ext_resource type="Script" uid="uid://duykyco6wqlc" path="res://terrain/terrain.gd" id="7_pojh3"]
+[ext_resource type="Texture2D" uid="uid://cl2qi4xf1y5vs" path="res://Sprites/Car/body_concept1.png" id="7_srfgw"]
+[ext_resource type="PackedScene" uid="uid://sy7cihov55fu" path="res://scenes/vehicle/wheel.tscn" id="8_cksj3"]
+
+[sub_resource type="Curve" id="Curve_bkrhx"]
+_data = [Vector2(0, 0), 0.0, 4.9433246, 0, 0, Vector2(0.49665552, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.1777477, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2gitb"]
+
+[sub_resource type="Gradient" id="Gradient_hkabp"]
+offsets = PackedFloat32Array(0, 0.8)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jpe8o"]
+gradient = SubResource("Gradient_hkabp")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_hkabp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.38085106, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jpe8o"]
+curve = SubResource("Curve_hkabp")
+
+[sub_resource type="Curve" id="Curve_h3fet"]
+_limits = [0.0, 5.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.23191488, 1), 0.0, 0.0, 0, 0, Vector2(1, 5), 15.557326, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bkrhx"]
+curve = SubResource("Curve_h3fet")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h3fet"]
+particle_flag_disable_z = true
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_bkrhx")
+alpha_curve = SubResource("CurveTexture_jpe8o")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpe8o"]
+
+[node name="Racetrack" type="Node2D"]
+z_as_relative = false
+y_sort_enabled = true
+
+[node name="CheckpointRecorder" type="Node" parent="."]
+script = ExtResource("1_h475k")
+metadata/_custom_type_script = "uid://bilbkxg3fr8ac"
+
+[node name="Track1" parent="." instance=ExtResource("2_2but6")]
+
+[node name="Car" type="CharacterBody2D" parent="." groups=["car"]]
+position = Vector2(-452, 8)
+collision_layer = 2
+script = ExtResource("4_pojh3")
+jump_sprite_curve = SubResource("Curve_bkrhx")
+
+[node name="Toast" parent="Car" instance=ExtResource("5_kvrak")]
+unique_name_in_owner = true
+
+[node name="VehiclePlayer" parent="Car" instance=ExtResource("6_nlea7")]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Car"]
+shape = SubResource("CircleShape2D_2gitb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Car"]
+y_sort_enabled = true
+texture = ExtResource("7_srfgw")
+
+[node name="WheelFL" parent="Car/Sprite2D" instance=ExtResource("8_cksj3")]
+y_sort_enabled = true
+position = Vector2(-9, -8)
+frame_progress = 0.60218227
+
+[node name="WheelFR" parent="Car/Sprite2D" instance=ExtResource("8_cksj3")]
+y_sort_enabled = true
+position = Vector2(8, -8)
+frame_progress = 0.60218227
+
+[node name="WheelBL" parent="Car/Sprite2D" instance=ExtResource("8_cksj3")]
+y_sort_enabled = true
+position = Vector2(-9, 12)
+frame_progress = 0.60218227
+
+[node name="WheelBR" parent="Car/Sprite2D" instance=ExtResource("8_cksj3")]
+y_sort_enabled = true
+position = Vector2(8, 12)
+frame_progress = 0.60218227
+
+[node name="Sprite2DShadow" type="Sprite2D" parent="Car"]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+y_sort_enabled = true
+rotation = 0.010505824
+texture = ExtResource("7_srfgw")
+
+[node name="WheelFL" parent="Car/Sprite2DShadow" instance=ExtResource("8_cksj3")]
+z_index = 1
+position = Vector2(-9, -8)
+frame_progress = 0.60218227
+
+[node name="WheelFR" parent="Car/Sprite2DShadow" instance=ExtResource("8_cksj3")]
+z_index = 1
+position = Vector2(8, -8)
+frame_progress = 0.60218227
+
+[node name="WheelBL" parent="Car/Sprite2DShadow" instance=ExtResource("8_cksj3")]
+z_index = 1
+position = Vector2(-9, 12)
+frame_progress = 0.60218227
+
+[node name="WheelBR" parent="Car/Sprite2DShadow" instance=ExtResource("8_cksj3")]
+z_index = 1
+position = Vector2(8, 12)
+frame_progress = 0.60218227
+
+[node name="LabelGrip" type="Label" parent="Car"]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "GRIP: 1.0"
+
+[node name="SmokeLeft" type="GPUParticles2D" parent="Car"]
+position = Vector2(-8, 13)
+emitting = false
+amount = 32
+texture = SubResource("GradientTexture2D_jpe8o")
+lifetime = 0.6
+fixed_fps = 60
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_h3fet")
+
+[node name="SmokeRight" type="GPUParticles2D" parent="Car"]
+position = Vector2(8, 13)
+emitting = false
+amount = 32
+texture = SubResource("GradientTexture2D_jpe8o")
+lifetime = 0.6
+fixed_fps = 60
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_h3fet")
+
+[node name="StuffDetector" type="Area2D" parent="Car"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Car/StuffDetector"]
+shape = SubResource("CircleShape2D_jpe8o")
+
+[node name="TimerPowerUp" type="Timer" parent="Car"]
+process_callback = 0
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_6tico")
+
+[node name="FinishLine" parent="." node_paths=PackedStringArray("checkpoint_recorder") instance=ExtResource("3_xypmq")]
+z_index = -1
+position = Vector2(-445, 8)
+checkpoint_recorder = NodePath("../CheckpointRecorder")
+
+[node name="Checkpoint" parent="." instance=ExtResource("4_rnu2n")]
+position = Vector2(462.00003, -276.00003)
+rotation = -0.7853982
+width = 150.0
+
+[node name="Checkpoint2" parent="." instance=ExtResource("4_rnu2n")]
+position = Vector2(455.99997, 224.99997)
+rotation = 0.5235988
+width = 300.0
+
+[node name="Checkpoint3" parent="." instance=ExtResource("4_rnu2n")]
+position = Vector2(-232.00003, -230.00003)
+rotation = 0.7853982
+width = 150.0
+
+[node name="Checkpoint4" parent="." instance=ExtResource("4_rnu2n")]
+position = Vector2(-336, 209)
+rotation = 3.1415927
+width = 150.0
+
+[node name="ChaseCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("6_pulch")]
+position = Vector2(-315, 0)
+car = NodePath("../Car")
+
+[node name="TerrainSand" type="Area2D" parent="."]
+position = Vector2(-430, -174)
+script = ExtResource("7_pojh3")
+terrain_type = "sand"
+metadata/_custom_type_script = "uid://duykyco6wqlc"
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TerrainSand"]
+polygon = PackedVector2Array(226, 50, 176, 19, 203, -16, 238, -9, 291, 22, 315, 70, 301, 113, 248, 95)
+
+[node name="Polygon2D" type="Polygon2D" parent="TerrainSand"]
+color = Color(0.7594102, 0.6221743, 0.43064967, 1)
+polygon = PackedVector2Array(226, 50, 176, 19, 203, -16, 238, -9, 291, 22, 315, 70, 301, 113, 248, 95)
+
+[node name="TerrainDirt" type="Area2D" parent="."]
+position = Vector2(543, -135)
+script = ExtResource("7_pojh3")
+terrain_type = "dirt"
+metadata/_custom_type_script = "uid://duykyco6wqlc"
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TerrainDirt"]
+polygon = PackedVector2Array(31, -66, 31, 14, 59, 88, 52, 154, 63, 199, 93, 216, 125, 164, 138, 128, 125, 83, 117, 22, 118, -20, 112, -55, 98, -83, 49, -106)
+
+[node name="Polygon2D" type="Polygon2D" parent="TerrainDirt"]
+color = Color(0.47637045, 0.30216306, 0.17505264, 1)
+polygon = PackedVector2Array(31, -66, 31, 14, 59, 88, 52, 154, 63, 199, 93, 216, 125, 164, 138, 128, 125, 83, 117, 22, 118, -20, 112, -55, 98, -83, 49, -106)
+
+[node name="TerrainOil" type="Area2D" parent="."]
+position = Vector2(331, -398)
+script = ExtResource("7_pojh3")
+terrain_type = "oil"
+metadata/_custom_type_script = "uid://duykyco6wqlc"
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TerrainOil"]
+polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -9, 47, 4, 40, 18, 20, 27, -15, 21, -35, 14, -68, 17, -78, 7)
+
+[node name="Polygon2D" type="Polygon2D" parent="TerrainOil"]
+color = Color(0.1361005, 0.1361005, 0.1361005, 1)
+polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -9, 47, 4, 40, 18, 20, 27, -15, 21, -35, 14, -68, 17, -78, 7)
+
+[connection signal="checkpoint_entered" from="CheckpointRecorder" to="Car" method="_on_checkpoint_entered"]
+[connection signal="seen_all_checkpoints" from="CheckpointRecorder" to="Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
+[connection signal="area_entered" from="Car/StuffDetector" to="Car" method="_on_stuff_detector_area_entered"]
+[connection signal="area_exited" from="Car/StuffDetector" to="Car" method="_on_stuff_detector_area_exited"]
+[connection signal="timeout" from="Car/TimerPowerUp" to="Car" method="_on_timer_power_up_timeout"]
+[connection signal="lap_finished" from="FinishLine" to="Car" method="_on_lap_finished"]
