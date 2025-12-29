@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdmwdc4fob4s2"]
+
+[ext_resource type="Script" uid="uid://dos4n1mqlsi8o" path="res://scenes/game_over/game_over.gd" id="1_3j056"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pqlte"]
+line_spacing = -50.0
+font_size = 150
+outline_size = 50
+outline_color = Color(0.42, 0, 0, 1)
+
+[node name="GameOver" type="CanvasLayer"]
+script = ExtResource("1_3j056")
+
+[node name="Control" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.7, 0, 0, 0.78431374)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Anchor" type="Control" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/Anchor"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -301.0
+offset_top = -206.5
+offset_right = 301.0
+offset_bottom = 206.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "YOU
+WASTED"
+label_settings = SubResource("LabelSettings_pqlte")
+horizontal_alignment = 1
