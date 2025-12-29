@@ -8,9 +8,9 @@ var point_cooldown: float = POINT_TIME
 const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 
 @export var car: Car
-@onready var time_label: Label = %LabelTimeLeft
-@onready var score_label: Label = %Score
-@onready var label_power_up: Label = %LabelPowerUp
+@onready var time_label: Label = %TimeLabel
+@onready var score_label: Label = %ScoreLabel
+@onready var power_up_label: Label = %PowerUpLabel
 
 func _ready() -> void:
 	car.completed_lap.connect(_on_completed_lap)
@@ -37,9 +37,9 @@ func game_over() -> void:
 	add_child(new_game_over)
 
 func _on_car_power_up_get(pup: Car.PowerUp) -> void:
-	if not label_power_up:
+	if not power_up_label:
 		await ready
-	label_power_up.text = "Power Up: %s" % Car.PowerUp.keys()[pup]
+	power_up_label.text = "Power Up: %s" % Car.PowerUp.keys()[pup]
 
 func _on_car_power_up_used() -> void:
-	label_power_up.text = "Power Up: None"
+	power_up_label.text = "Power Up: None"

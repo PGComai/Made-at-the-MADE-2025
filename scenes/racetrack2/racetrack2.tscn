@@ -19,7 +19,7 @@ font_size = 40
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
-[node name="UX" type="Node" node_paths=PackedStringArray("car")]
+[node name="Main" type="Node" node_paths=PackedStringArray("car")]
 script = ExtResource("1_gq24m")
 car = NodePath("Racetrack2/Car")
 
@@ -110,7 +110,10 @@ polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Racetrack2/Track"]
 polygon = PackedVector2Array(-406, 13, -277, 16, -284, -93, -311, -179, -342, -263, -331, -327, -293, -358, -260, -356, -183, -313, -83, -292, -14, -311, 140, -362, 253, -367, 364, -343, 371, -330, 335, -202, 314, -149, 304, -95, 300, -60, 309, 14, 329, 73, 346, 88, 358, 136, 352, 215, 311, 333, 266, 368, 189, 320, 110, 291, -11, 290, -155, 311, -263, 327, -321, 317, -336, 297, -337, 243, -303, 145, -281, 68, -277, 16, -406, 13, -412, 60, -432, 119, -457, 191, -467, 243, -470, 287, -449, 376, -410, 414, -351, 447, -265, 461, -169, 447, -38, 427, 63, 419, 115, 429, 160, 454, 209, 484, 239, 496, 305, 491, 366, 461, 417, 406, 449, 344, 477, 246, 489, 147, 477, 77, 485, 52, 463, -18, 464, -72, 484, -151, 486, -195, 473, -200, 497, -292, 502, -338, 492, -382, 462, -430, 431, -451, 375, -474, 260, -498, 181, -498, 69, -481, -30, -444, -66, -433, -95, -426, -124, -430, -178, -457, -233, -484, -284, -492, -339, -482, -398, -448, -441, -397, -467, -331, -471, -261, -459, -196, -433, -133, -412, -68, -406, -19)
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="UI" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -121,23 +124,20 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="Control" type="Control" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="LabelTimeLeft" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="TimeLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "10.00"
 label_settings = SubResource("LabelSettings_gq24m")
 
-[node name="Score" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -145,19 +145,16 @@ text = "0"
 label_settings = SubResource("LabelSettings_gq24m")
 horizontal_alignment = 2
 
-[node name="Space" type="Control" parent="MarginContainer/VBoxContainer"]
+[node name="Space" type="Control" parent="CanvasLayer/UI/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LabelPowerUp" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="PowerUpLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Power Up: None"
 label_settings = SubResource("LabelSettings_gq24m")
 horizontal_alignment = 1
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
 
 [connection signal="checkpoint_entered" from="Racetrack2/CheckpointRecorder" to="Racetrack2/Car" method="_on_checkpoint_entered"]
 [connection signal="seen_all_checkpoints" from="Racetrack2/CheckpointRecorder" to="Racetrack2/Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
