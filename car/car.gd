@@ -11,10 +11,11 @@ enum PowerUp{BRAKE, JUMP}#, SHIELD, GHOST, AUTO}
 
 
 const INITIAL_SPEED: float = 50.0
-const MIN_GRIP: float = 0.05
+const MIN_GRIP: float = 0.4
 const WHEEL_SPIN_SCALE: float = 0.05
 const BRAKE_EFFECT: float = 0.99
 const LIFE_TIME: float = 10.0
+const JUMP_GRIP: float = 3.0
 
 
 @export var show_steer := true
@@ -51,6 +52,9 @@ var is_dead: bool:
 		return life <= 0
 ## How many laps have been completed
 var completed_laps := 0
+var jump_grip_boost: float = 1.0:
+	set(value):
+		jump_grip_boost = clampf(value, 1.0, JUMP_GRIP)
 
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -93,6 +97,7 @@ func _physics_process(delta: float) -> void:
 				toast.toast("brake")
 			elif current_powerup == PowerUp.JUMP:
 				jumping = true
+				jump_grip_boost = JUMP_GRIP
 				toast.toast("jump")
 				stuff_detector.monitoring = false
 	if not (on_track or jumping):
@@ -127,7 +132,7 @@ func _physics_process(delta: float) -> void:
 		wheel_fr.rotation = lerp_angle(wheel_fr.rotation, wheel_angle, 0.1)
 
 	grip = remap(velocity.normalized().dot(-global_transform.y),
-				-1.0,
+				0.0,
 				1.0,
 				MIN_GRIP,
 				1.0)
@@ -145,7 +150,7 @@ func _physics_process(delta: float) -> void:
 	var ideal_vel: Vector2 = -global_transform.y * velocity.length()
 
 	if not jumping:
-		velocity = velocity.slerp(ideal_vel, 0.08 * grip * terrain_slip)
+		velocity = velocity.slerp(ideal_vel, minf(0.3, 0.08 * grip * terrain_slip * jump_grip_boost))
 		velocity *= drag * remap(grip, MIN_GRIP, 1.0, 0.995, 1.0) * terrain_damp
 	if braking:
 		velocity *= BRAKE_EFFECT
@@ -156,7 +161,10 @@ func _physics_process(delta: float) -> void:
 
 	spin_momentum += absf(ang_diff) * 0.8 * small_speed
 	if not jumping:
+		jump_grip_boost -= delta * 10.0
 		spin = lerp(spin, ang_diff, 0.02 * grip * terrain_slip)
+	else:
+		spin = lerp(spin, turn * 0.4, 0.2)
 	var steer_strength: float = pow(speed, 0.95) * (3.0 / INITIAL_SPEED)
 
 	car_angle += spin * delta * steer_strength * spin_momentum * grip * terrain_slip
