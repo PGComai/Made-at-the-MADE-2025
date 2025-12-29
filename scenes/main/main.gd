@@ -1,3 +1,4 @@
+class_name Main
 extends Node
 
 const POINT_TIME := 0.1
