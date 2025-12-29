@@ -2,14 +2,18 @@ extends CharacterBody2D
 class_name Car
 
 
+enum PowerUp{BRAKE, JUMP, SHIELD, GHOST, AUTO}
+
 const INITIAL_SPEED: float = 50.0
 const MIN_GRIP: float = 0.05
 const WHEEL_SPIN_SCALE: float = 0.05
+const BRAKE_EFFECT: float = 0.99
 
 
 @export var show_steer := true
 
 
+var current_powerup: PowerUp
 var wheel_angle: float = 0.0
 var car_angle: float = 0.0
 var grip: float = 1.0:
@@ -29,6 +33,7 @@ var smoke_timer: float = 0.0
 var terrain_slip: float = 1.0
 var terrain_damp: float = 1.0
 var current_terrain: Terrain
+var braking := false
 ## How many laps have been completed
 var completed_laps := 0
 
@@ -81,6 +86,8 @@ func _physics_process(delta: float) -> void:
 
 	velocity = velocity.slerp(ideal_vel, 0.08 * grip * terrain_slip)
 	velocity *= drag * remap(grip, MIN_GRIP, 1.0, 0.995, 1.0) * terrain_damp
+	if braking:
+		velocity *= BRAKE_EFFECT
 
 	var heading = velocity.rotated(wheel_angle * small_speed)
 
@@ -107,8 +114,12 @@ func _on_checkpoint_entered(_body: Node2D, count: int, total: int) -> void:
 func _on_lap_finished(_body: Node2D) -> void:
 	completed_laps += 1
 	vehicle_player.gear_shift(completed_laps)
-	speed += 50.0
 	toast.toast("Lap %d!" % [completed_laps + 1])
+	speed += 50.0 - clampf(float(completed_laps * 5), 5.0, 45.0)
+	print("new accel: %s" % snappedf(speed, 1.0))
+	current_powerup = PowerUp[PowerUp.keys().pick_random()]
+	print(current_powerup)
+
 
 func _on_stuff_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("terrain"):

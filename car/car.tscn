@@ -66,6 +66,7 @@ z_index = 2
 texture = ExtResource("2_dxy33")
 
 [node name="LabelGrip" type="Label" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 text = "GRIP: 1.0"
