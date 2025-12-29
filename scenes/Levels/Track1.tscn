@@ -30,23 +30,23 @@ z_index = -1
 position = Vector2(-445, 8)
 
 [node name="Checkpoint" parent="." instance=ExtResource("4_rnu2n")]
-position = Vector2(462.00003, -276.00003)
-rotation = -0.7853982
+position = Vector2(425.00003, -277.99997)
+rotation = -1.57076
 width = 150.0
 
 [node name="Checkpoint2" parent="." instance=ExtResource("4_rnu2n")]
-position = Vector2(455.99997, 224.99997)
-rotation = 0.5235988
+position = Vector2(453.00003, 192)
+rotation = 0.31797296
 width = 300.0
 
 [node name="Checkpoint3" parent="." instance=ExtResource("4_rnu2n")]
-position = Vector2(-232.00003, -230.00003)
-rotation = 0.7853982
+position = Vector2(-246.00002, -234.00002)
+rotation = 1.144584
 width = 150.0
 
 [node name="Checkpoint4" parent="." instance=ExtResource("4_rnu2n")]
-position = Vector2(-336, 209)
-rotation = 3.1415927
+position = Vector2(-120, 348)
+rotation = 1.5707964
 width = 150.0
 
 [node name="ChaseCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("6_pulch")]
