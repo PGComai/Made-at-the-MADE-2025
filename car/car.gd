@@ -7,7 +7,7 @@ signal power_up_get(pup: PowerUp)
 signal power_up_used
 
 
-enum PowerUp{BRAKE, JUMP}#, SHIELD, GHOST, AUTO}
+enum PowerUp{BRAKE, JUMP}
 
 
 const INITIAL_SPEED: float = 50.0
@@ -16,12 +16,17 @@ const WHEEL_SPIN_SCALE: float = 0.05
 const BRAKE_EFFECT: float = 0.99
 const LIFE_TIME: float = 10.0
 const JUMP_GRIP: float = 3.0
+const SMOKE_THRESH_DEFAULT: float = 0.65
+const SMOKE_THRESH_DIRT: float = 0.85
+const SMOKE_THRESH_OIL: float = 0.0
+const SMOKE_THRESH_SAND: float = 1.0
 
 
 @export var show_steer := true
 @export var jump_sprite_curve: Curve
 
 
+var smoke_threshold: float = SMOKE_THRESH_DEFAULT
 var current_powerup: PowerUp
 var wheel_angle: float = 0.0
 var car_angle: float = 0.0
@@ -135,7 +140,7 @@ func _physics_process(delta: float) -> void:
 				MIN_GRIP,
 				1.0)
 	grip = pow(grip, 6.0)
-	var tire_smoke: bool = (grip < 0.65 or braking) and not jumping
+	var tire_smoke: bool = (grip <= smoke_threshold or braking) and not jumping
 	smoke_left.emitting = tire_smoke
 	smoke_right.emitting = tire_smoke
 	label_grip.text = "GRIP: %s" % snappedf(grip, 0.01)
@@ -176,7 +181,15 @@ func _physics_process(delta: float) -> void:
 	for wheel in wheels:
 		wheel.speed_scale = (real_vel.length() + randfn(0.0, 0.1)) * WHEEL_SPIN_SCALE
 
-func _on_lap_finished(completed_laps: int) -> void:
+func set_smoke_color(clr: Color) -> void:
+	smoke_left.modulate = clr
+	smoke_right.modulate = clr
+
+func _on_checkpoint_entered(_body: Node2D, count: int, total: int) -> void:
+	toast.toast("Checkpoint %d/%d!" % [count, total])
+
+func _on_lap_finished(_body: Node2D) -> void:
+	completed_laps += 1
 	vehicle_player.gear_shift(completed_laps)
 	speed += 50.0 - clampf(float(completed_laps * 5), 5.0, 45.0)
 	print("new accel: %s" % snappedf(speed, 1.0))
@@ -206,15 +219,23 @@ func _on_node_2d_entered(node_2d: Node2D) -> void:
 		if current_terrain.terrain_type == "oil":
 			terrain_slip = 0.4
 			terrain_damp = 1.0
+			smoke_threshold = SMOKE_THRESH_OIL
+			set_smoke_color(Color.WHITE)
 		elif current_terrain.terrain_type == "rough":
 			terrain_slip = 0.9
 			terrain_damp = 0.99
+			smoke_threshold = SMOKE_THRESH_DEFAULT
+			set_smoke_color(Color.WHITE)
 		elif current_terrain.terrain_type == "sand":
 			terrain_slip = 0.9
 			terrain_damp = 0.97
+			smoke_threshold = SMOKE_THRESH_SAND
+			set_smoke_color(Color.TAN)
 		elif current_terrain.terrain_type == "dirt":
 			terrain_slip = 0.8
 			terrain_damp = 0.995
+			smoke_threshold = SMOKE_THRESH_DIRT
+			set_smoke_color(Color.SADDLE_BROWN)
 	elif node_2d.is_in_group("track"):
 		on_track = true
 
@@ -225,6 +246,8 @@ func _on_node_2d_exited(node_2d: Node2D) -> void:
 			current_terrain = null
 			terrain_slip = 1.0
 			terrain_damp = 1.0
+			smoke_threshold = SMOKE_THRESH_DEFAULT
+			set_smoke_color(Color.WHITE)
 	elif node_2d.is_in_group("track") and not jumping:
 		on_track = false
 		toast.toast("Off track!")
