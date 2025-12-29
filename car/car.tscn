@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0o2qlnyynrd1"]
+[gd_scene load_steps=14 format=3 uid="uid://d0o2qlnyynrd1"]
 
 [ext_resource type="Script" uid="uid://ql5fgk7fubbe" path="res://car/car.gd" id="1_2gitb"]
 [ext_resource type="Texture2D" uid="uid://cl2qi4xf1y5vs" path="res://Sprites/Car/body_concept1.png" id="2_dxy33"]
@@ -45,7 +45,10 @@ gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_bkrhx")
 alpha_curve = SubResource("CurveTexture_jpe8o")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpe8o"]
+
 [node name="Car" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_2gitb")
 
 [node name="VehiclePlayer" parent="." instance=ExtResource("2_jpe8o")]
@@ -55,7 +58,7 @@ unique_name_in_owner = true
 shape = SubResource("CircleShape2D_2gitb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 2
 texture = ExtResource("2_dxy33")
 
 [node name="LabelGrip" type="Label" parent="."]
@@ -64,18 +67,22 @@ offset_bottom = 23.0
 text = "GRIP: 1.0"
 
 [node name="WheelFL" parent="." instance=ExtResource("3_hkabp")]
+z_index = 2
 position = Vector2(-9, -8)
 frame_progress = 0.60218227
 
 [node name="WheelFR" parent="." instance=ExtResource("3_hkabp")]
+z_index = 2
 position = Vector2(8, -8)
 frame_progress = 0.60218227
 
 [node name="WheelBL" parent="." instance=ExtResource("3_hkabp")]
+z_index = 2
 position = Vector2(-9, 12)
 frame_progress = 0.60218227
 
 [node name="WheelBR" parent="." instance=ExtResource("3_hkabp")]
+z_index = 2
 position = Vector2(8, 12)
 frame_progress = 0.60218227
 
@@ -98,3 +105,12 @@ lifetime = 0.6
 fixed_fps = 60
 interpolate = false
 process_material = SubResource("ParticleProcessMaterial_h3fet")
+
+[node name="StuffDetector" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StuffDetector"]
+shape = SubResource("CircleShape2D_jpe8o")
+
+[connection signal="area_entered" from="StuffDetector" to="." method="_on_stuff_detector_area_entered"]
+[connection signal="area_exited" from="StuffDetector" to="." method="_on_stuff_detector_area_exited"]

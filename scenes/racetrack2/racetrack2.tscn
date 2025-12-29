@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ewlgm45y3f0x"]
+[gd_scene load_steps=9 format=3 uid="uid://ewlgm45y3f0x"]
 
 [ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_c5lvn"]
 [ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="2_c5lvn"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d0o2qlnyynrd1" path="res://car/car.tscn" id="4_q0spc"]
 [ext_resource type="PackedScene" uid="uid://c8cygi4lw5m0h" path="res://car/chase_cam.tscn" id="5_ddnrx"]
 [ext_resource type="PackedScene" uid="uid://bivlmeywelyqy" path="res://scenes/finish_line/finish_line.tscn" id="6_ddnrx"]
+[ext_resource type="Script" uid="uid://duykyco6wqlc" path="res://terrain/terrain.gd" id="7_gr8d5"]
 
 [node name="Racetrack2" type="Node2D"]
 
@@ -42,11 +43,52 @@ width = 150.0
 
 [node name="Car" parent="." groups=["car"] instance=ExtResource("4_q0spc")]
 position = Vector2(-315, 0)
-collision_layer = 2
 
 [node name="ChaseCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("5_ddnrx")]
 position = Vector2(-315, 0)
 car = NodePath("../Car")
+
+[node name="TerrainSand" type="Area2D" parent="."]
+position = Vector2(-259, -264)
+script = ExtResource("7_gr8d5")
+terrain_type = "sand"
+metadata/_custom_type_script = "uid://duykyco6wqlc"
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TerrainSand"]
+polygon = PackedVector2Array(-60, -8, -48, -53, -15, -77, 43, -48, 124, -6, 143, 33, 142, 89, 85, 126, 12, 115, -57, 37)
+
+[node name="Polygon2D" type="Polygon2D" parent="TerrainSand"]
+color = Color(0.7594102, 0.6221743, 0.43064967, 1)
+polygon = PackedVector2Array(-60, -8, -48, -53, -15, -77, 43, -48, 124, -6, 143, 33, 142, 89, 85, 126, 12, 115, -57, 37)
+
+[node name="TerrainDirt" type="Area2D" parent="."]
+position = Vector2(346, -73)
+script = ExtResource("7_gr8d5")
+terrain_type = "dirt"
+metadata/_custom_type_script = "uid://duykyco6wqlc"
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TerrainDirt"]
+polygon = PackedVector2Array(-13, -130, -32, -80, -48, 8, -37, 89, -16, 146, 28, 189, 36, 164, 46, 175, 70, 157, 86, 177, 94, 147, 125, 164, 138, 128, 117, 55, 118, 2, 137, -77, 140, -122, 114, -134, 98, -112, 51, -127, 49, -106, 9, -134)
+
+[node name="Polygon2D" type="Polygon2D" parent="TerrainDirt"]
+color = Color(0.47637045, 0.30216306, 0.17505264, 1)
+polygon = PackedVector2Array(-13, -130, -32, -80, -48, 8, -37, 89, -16, 146, 28, 189, 36, 164, 46, 175, 70, 157, 86, 177, 94, 147, 125, 164, 138, 128, 117, 55, 118, 2, 137, -77, 140, -122, 114, -134, 98, -112, 51, -127, 49, -106, 9, -134)
+
+[node name="TerrainOil" type="Area2D" parent="."]
+position = Vector2(200, -392)
+script = ExtResource("7_gr8d5")
+terrain_type = "oil"
+metadata/_custom_type_script = "uid://duykyco6wqlc"
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TerrainOil"]
+polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -9, 47, 4, 40, 18, 20, 27, -15, 21, -35, 14, -68, 17, -78, 7)
+
+[node name="Polygon2D" type="Polygon2D" parent="TerrainOil"]
+color = Color(0.1361005, 0.1361005, 0.1361005, 1)
+polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -9, 47, 4, 40, 18, 20, 27, -15, 21, -35, 14, -68, 17, -78, 7)
 
 [connection signal="seen_all_checkpoints" from="CheckpointRecorder" to="Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
 [connection signal="lap_finished" from="FinishLine" to="Car" method="_on_lap_finished"]
