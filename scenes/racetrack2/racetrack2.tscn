@@ -15,7 +15,7 @@ viewport_path = NodePath("TextureRect/SubViewport")
 [sub_resource type="LabelSettings" id="LabelSettings_gq24m"]
 font_size = 54
 
-[node name="UX" type="Control"]
+[node name="UX" type="Control" node_paths=PackedStringArray("car")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,6 +23,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gq24m")
+car = NodePath("TextureRect/SubViewport/Racetrack2/Car")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
