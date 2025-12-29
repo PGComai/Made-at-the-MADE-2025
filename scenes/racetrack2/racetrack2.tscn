@@ -10,7 +10,8 @@
 
 [node name="Racetrack2" type="Node2D"]
 
-[node name="Main" parent="." instance=ExtResource("1_gr8d5")]
+[node name="Main" parent="." node_paths=PackedStringArray("car") instance=ExtResource("1_gr8d5")]
+car = NodePath("../Car")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ddnrx")
