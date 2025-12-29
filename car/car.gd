@@ -2,7 +2,11 @@ extends CharacterBody2D
 class_name Car
 
 
+signal i_died
+
+
 enum PowerUp{BRAKE, JUMP, SHIELD, GHOST, AUTO}
+
 
 const INITIAL_SPEED: float = 50.0
 const MIN_GRIP: float = 0.05
@@ -36,6 +40,7 @@ var terrain_damp: float = 1.0
 var current_terrain: Terrain
 var braking := false
 var on_track := true
+var life: float = LIFE_TIME
 ## How many laps have been completed
 var completed_laps := 0
 
@@ -60,6 +65,11 @@ func _ready() -> void:
 		wheel.speed_scale = 0.0
 
 func _physics_process(delta: float) -> void:
+	if not on_track:
+		life -= delta
+		if life <= 0.0:
+			i_died.emit()
+
 	var turn: float = Input.get_axis("left", "right")
 
 	wheel_angle = lerp_angle(wheel_angle, turn * PI/4.0, 0.1)

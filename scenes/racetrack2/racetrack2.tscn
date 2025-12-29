@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ewlgm45y3f0x"]
+[gd_scene load_steps=11 format=3 uid="uid://ewlgm45y3f0x"]
 
 [ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_c5lvn"]
+[ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://main.gd" id="1_gq24m"]
 [ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="2_c5lvn"]
 [ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://Sprites/Racetrack2.png" id="2_ddnrx"]
 [ext_resource type="PackedScene" uid="uid://d0o2qlnyynrd1" path="res://car/car.tscn" id="4_q0spc"]
@@ -11,13 +12,17 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_gr8d5"]
 viewport_path = NodePath("TextureRect/SubViewport")
 
-[node name="Control" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_gq24m"]
+font_size = 54
+
+[node name="UX" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_gq24m")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -119,6 +124,19 @@ polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TextureRect/SubViewport/Racetrack2/Track"]
 polygon = PackedVector2Array(-406, 13, -277, 16, -284, -93, -311, -179, -342, -263, -331, -327, -293, -358, -260, -356, -183, -313, -83, -292, -14, -311, 140, -362, 253, -367, 364, -343, 371, -330, 335, -202, 314, -149, 304, -95, 300, -60, 309, 14, 329, 73, 346, 88, 358, 136, 352, 215, 311, 333, 266, 368, 189, 320, 110, 291, -11, 290, -155, 311, -263, 327, -321, 317, -336, 297, -337, 243, -303, 145, -281, 68, -277, 16, -406, 13, -412, 60, -432, 119, -457, 191, -467, 243, -470, 287, -449, 376, -410, 414, -351, 447, -265, 461, -169, 447, -38, 427, 63, 419, 115, 429, 160, 454, 209, 484, 239, 496, 305, 491, 366, 461, 417, 406, 449, 344, 477, 246, 489, 147, 477, 77, 485, 52, 463, -18, 464, -72, 484, -151, 486, -195, 473, -200, 497, -292, 502, -338, 492, -382, 462, -430, 431, -451, 375, -474, 260, -498, 181, -498, 69, -481, -30, -444, -66, -433, -95, -426, -124, -430, -178, -457, -233, -484, -284, -492, -339, -482, -398, -448, -441, -397, -467, -331, -471, -261, -459, -196, -433, -133, -412, -68, -406, -19)
+
+[node name="LabelTimeLeft" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "10.00"
+label_settings = SubResource("LabelSettings_gq24m")
+horizontal_alignment = 1
 
 [connection signal="checkpoint_entered" from="TextureRect/SubViewport/Racetrack2/CheckpointRecorder" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_checkpoint_entered"]
 [connection signal="seen_all_checkpoints" from="TextureRect/SubViewport/Racetrack2/CheckpointRecorder" to="TextureRect/SubViewport/Racetrack2/Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
