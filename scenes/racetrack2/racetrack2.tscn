@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ewlgm45y3f0x"]
+[gd_scene load_steps=8 format=3 uid="uid://ewlgm45y3f0x"]
 
 [ext_resource type="Script" uid="uid://bilbkxg3fr8ac" path="res://scenes/checkpoint_recorder.gd" id="1_c5lvn"]
 [ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="2_c5lvn"]
@@ -90,5 +90,6 @@ polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -
 color = Color(0.1361005, 0.1361005, 0.1361005, 1)
 polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -9, 47, 4, 40, 18, 20, 27, -15, 21, -35, 14, -68, 17, -78, 7)
 
+[connection signal="checkpoint_entered" from="CheckpointRecorder" to="Car" method="_on_checkpoint_entered"]
 [connection signal="seen_all_checkpoints" from="CheckpointRecorder" to="Car" method="_on_checkpoint_recorder_seen_all_checkpoints"]
 [connection signal="lap_finished" from="FinishLine" to="Car" method="_on_lap_finished"]

@@ -43,6 +43,7 @@ var completed_laps := 0
 @onready var smoke_right: GPUParticles2D = $SmokeRight
 @onready var vehicle_player: VehiclePlayer = %VehiclePlayer
 @onready var stuff_detector: Area2D = $StuffDetector
+@onready var toast: Toast = %Toast
 
 
 func _ready() -> void:
@@ -100,11 +101,14 @@ func _physics_process(delta: float) -> void:
 	for wheel in wheels:
 		wheel.speed_scale = (real_vel.length() + randfn(0.0, 0.1)) * WHEEL_SPIN_SCALE
 
+func _on_checkpoint_entered(_body: Node2D, count: int, total: int) -> void:
+	toast.toast("Checkpoint %d/%d!" % [count, total])
+
 func _on_lap_finished(_body: Node2D) -> void:
 	completed_laps += 1
 	vehicle_player.gear_shift(completed_laps)
 	speed += 50.0
-
+	toast.toast("Lap %d!" % [completed_laps + 1])
 
 func _on_stuff_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("terrain"):

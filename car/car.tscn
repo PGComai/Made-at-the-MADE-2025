@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0o2qlnyynrd1"]
+[gd_scene load_steps=15 format=3 uid="uid://d0o2qlnyynrd1"]
 
 [ext_resource type="Script" uid="uid://ql5fgk7fubbe" path="res://car/car.gd" id="1_2gitb"]
 [ext_resource type="Texture2D" uid="uid://cl2qi4xf1y5vs" path="res://Sprites/Car/body_concept1.png" id="2_dxy33"]
+[ext_resource type="PackedScene" uid="uid://cepc801q0224o" path="res://scenes/toast/toast.tscn" id="2_h3fet"]
 [ext_resource type="PackedScene" uid="uid://30gtxo2tdg4p" path="res://scenes/vehicle_sound/vehicle_player.tscn" id="2_jpe8o"]
 [ext_resource type="PackedScene" uid="uid://sy7cihov55fu" path="res://scenes/vehicle/wheel.tscn" id="3_hkabp"]
 
@@ -50,6 +51,9 @@ alpha_curve = SubResource("CurveTexture_jpe8o")
 [node name="Car" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_2gitb")
+
+[node name="Toast" parent="." instance=ExtResource("2_h3fet")]
+unique_name_in_owner = true
 
 [node name="VehiclePlayer" parent="." instance=ExtResource("2_jpe8o")]
 unique_name_in_owner = true

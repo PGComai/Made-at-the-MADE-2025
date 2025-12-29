@@ -2,6 +2,8 @@
 class_name CheckpointRecorder
 extends Node
 
+signal checkpoint_entered(body: Node2D, count: int, total: int)
+
 ## Emitted when a body has visited all checkpoints
 signal seen_all_checkpoints(body: Node2D)
 
@@ -38,6 +40,7 @@ func record_checkpoint(body: Node2D, checkpoint: Checkpoint) -> void:
 	if not seen[body].has(checkpoint):
 		seen[body].push_back(checkpoint)
 
+	checkpoint_entered.emit(body, seen[body].size(), all_checkpoints.size())
 	if has_seen_all(body):
 		seen_all_checkpoints.emit(body)
 
