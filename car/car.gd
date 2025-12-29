@@ -8,6 +8,7 @@ const INITIAL_SPEED: float = 50.0
 const MIN_GRIP: float = 0.05
 const WHEEL_SPIN_SCALE: float = 0.05
 const BRAKE_EFFECT: float = 0.99
+const LIFE_TIME: float = 10.0
 
 
 @export var show_steer := true
@@ -34,6 +35,7 @@ var terrain_slip: float = 1.0
 var terrain_damp: float = 1.0
 var current_terrain: Terrain
 var braking := false
+var on_track := true
 ## How many laps have been completed
 var completed_laps := 0
 
@@ -119,6 +121,7 @@ func _on_lap_finished(_body: Node2D) -> void:
 	print("new accel: %s" % snappedf(speed, 1.0))
 	current_powerup = PowerUp[PowerUp.keys().pick_random()]
 	print(current_powerup)
+	toast.toast("PowerUp! %s" % PowerUp.keys()[current_powerup])
 
 
 func _on_stuff_detector_area_entered(area: Area2D) -> void:
@@ -137,6 +140,8 @@ func _on_stuff_detector_area_entered(area: Area2D) -> void:
 		elif current_terrain.terrain_type == "dirt":
 			terrain_slip = 0.8
 			terrain_damp = 0.995
+	elif area.is_in_group("track"):
+		on_track = true
 
 
 func _on_stuff_detector_area_exited(area: Area2D) -> void:
@@ -146,3 +151,6 @@ func _on_stuff_detector_area_exited(area: Area2D) -> void:
 			current_terrain = null
 			terrain_slip = 1.0
 			terrain_damp = 1.0
+	elif area.is_in_group("track"):
+		on_track = false
+		toast.toast("Off track!")
