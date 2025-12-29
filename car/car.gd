@@ -58,6 +58,35 @@ var is_dead: bool:
 var jump_grip_boost: float = 1.0:
 	set(value):
 		jump_grip_boost = clampf(value, 1.0, JUMP_GRIP)
+var smoke_target_color := Color.WHITE
+var skid_frame: int = 5:
+	set(value):
+		skid_frame = wrapi(value, 0, 6)
+var smoking := false:
+	set(value):
+		if smoking != value:
+			smoking = value
+			if smoking:
+				print("smoking")
+				var new_skid_left := TireMark.new()
+				var new_skid_right := TireMark.new()
+
+				add_child(new_skid_left)
+				add_child(new_skid_right)
+
+				current_skid_left = new_skid_left
+				current_skid_right = new_skid_right
+
+				current_skid_left.points = []
+				current_skid_right.points = []
+
+				add_skid_points()
+			else:
+				add_skid_points()
+
+
+var current_skid_left: TireMark
+var current_skid_right: TireMark
 
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -82,6 +111,8 @@ func _ready() -> void:
 	for wheel in wheels:
 		wheel.play()
 		wheel.speed_scale = 0.0
+	smoke_left.emitting = false
+	smoke_right.emitting = false
 
 func _physics_process(delta: float) -> void:
 	# Don't process any input if we are dead
@@ -140,12 +171,12 @@ func _physics_process(delta: float) -> void:
 				MIN_GRIP,
 				1.0)
 	grip = pow(grip, 6.0)
-	var tire_smoke: bool = (grip <= smoke_threshold or braking) and not jumping
-	smoke_left.emitting = tire_smoke
-	smoke_right.emitting = tire_smoke
+	var real_vel: Vector2 = get_real_velocity()
+	var eh_smoke: bool = (grip <= smoke_threshold or braking) and not jumping and real_vel.length_squared() > 1.0
+	smoke_left.emitting = eh_smoke
+	smoke_right.emitting = eh_smoke
 	label_grip.text = "GRIP: %s" % snappedf(grip, 0.01)
 
-	var real_vel: Vector2 = get_real_velocity()
 	var small_speed: float = clampf(real_vel.length(), 0.0, 1.0)
 
 	var thrust_dir: Vector2 = -global_transform.y
@@ -157,6 +188,14 @@ func _physics_process(delta: float) -> void:
 		velocity *= drag * remap(grip, MIN_GRIP, 1.0, 0.995, 1.0) * terrain_damp
 	if braking:
 		velocity *= BRAKE_EFFECT
+
+	smoking = eh_smoke and not current_terrain
+
+	if smoking:
+		skid_frame -= 1
+		if skid_frame == 0:
+			print("add skid point")
+			add_skid_points()
 
 	var heading = velocity.rotated(wheel_angle * small_speed)
 
@@ -180,6 +219,19 @@ func _physics_process(delta: float) -> void:
 
 	for wheel in wheels:
 		wheel.speed_scale = (real_vel.length() + randfn(0.0, 0.1)) * WHEEL_SPIN_SCALE
+
+	var current_smoke_color: Color = smoke_left.modulate
+	set_smoke_color(current_smoke_color.lerp(smoke_target_color, 0.03))
+
+func add_skid_points() -> void:
+	var temp_skid_left := current_skid_left.points
+	var temp_skid_right := current_skid_right.points
+
+	temp_skid_left.append(wheel_bl.global_position)
+	temp_skid_right.append(wheel_br.global_position)
+
+	current_skid_left.points = temp_skid_left
+	current_skid_right.points = temp_skid_right
 
 func set_smoke_color(clr: Color) -> void:
 	smoke_left.modulate = clr
@@ -220,22 +272,22 @@ func _on_node_2d_entered(node_2d: Node2D) -> void:
 			terrain_slip = 0.4
 			terrain_damp = 1.0
 			smoke_threshold = SMOKE_THRESH_OIL
-			set_smoke_color(Color.WHITE)
+			smoke_target_color = Color.WHITE
 		elif current_terrain.terrain_type == "rough":
 			terrain_slip = 0.9
 			terrain_damp = 0.99
 			smoke_threshold = SMOKE_THRESH_DEFAULT
-			set_smoke_color(Color.WHITE)
+			smoke_target_color = Color.WHITE
 		elif current_terrain.terrain_type == "sand":
 			terrain_slip = 0.9
 			terrain_damp = 0.97
 			smoke_threshold = SMOKE_THRESH_SAND
-			set_smoke_color(Color.TAN)
+			smoke_target_color = Color.TAN
 		elif current_terrain.terrain_type == "dirt":
 			terrain_slip = 0.8
 			terrain_damp = 0.995
 			smoke_threshold = SMOKE_THRESH_DIRT
-			set_smoke_color(Color.SADDLE_BROWN)
+			smoke_target_color = Color.SADDLE_BROWN
 	elif node_2d.is_in_group("track"):
 		on_track = true
 
@@ -247,7 +299,7 @@ func _on_node_2d_exited(node_2d: Node2D) -> void:
 			terrain_slip = 1.0
 			terrain_damp = 1.0
 			smoke_threshold = SMOKE_THRESH_DEFAULT
-			set_smoke_color(Color.WHITE)
+			smoke_target_color = Color.WHITE
 	elif node_2d.is_in_group("track") and not jumping:
 		on_track = false
 		toast.toast("Off track!")

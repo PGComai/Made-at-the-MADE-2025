@@ -125,7 +125,6 @@ text = "GRIP: 1.0"
 [node name="SmokeLeft" type="GPUParticles2D" parent="."]
 z_index = 2
 position = Vector2(-8, 13)
-emitting = false
 amount = 32
 texture = SubResource("GradientTexture2D_jpe8o")
 lifetime = 0.6
@@ -136,7 +135,6 @@ process_material = SubResource("ParticleProcessMaterial_h3fet")
 [node name="SmokeRight" type="GPUParticles2D" parent="."]
 z_index = 2
 position = Vector2(8, 13)
-emitting = false
 amount = 32
 texture = SubResource("GradientTexture2D_jpe8o")
 lifetime = 0.6
