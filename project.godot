@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Made@Made2025"
-run/main_scene="uid://ewlgm45y3f0x"
+run/main_scene="uid://1xdrpjx4bpbp"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
