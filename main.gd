@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 const POINT_TIME := 0.1
 
@@ -10,7 +10,7 @@ const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 @export var car: Car
 @onready var time_label: Label = %LabelTimeLeft
 @onready var score_label: Label = %Score
-@onready var label_power_up: Label = $LabelPowerUp
+@onready var label_power_up: Label = %LabelPowerUp
 
 func _ready() -> void:
 	car.completed_lap.connect(_on_completed_lap)

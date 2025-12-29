@@ -17,6 +17,7 @@ font = SubResource("SystemFont_3j056")
 font_size = 30
 
 [node name="GameOver" type="CanvasLayer"]
+layer = 100
 script = ExtResource("1_3j056")
 
 [node name="Control" type="ColorRect" parent="."]
