@@ -55,6 +55,7 @@ var life: float = LIFE_TIME
 var is_dead: bool:
 	get:
 		return life <= 0
+var has_started_race := false
 var jump_grip_boost: float = 1.0:
 	set(value):
 		jump_grip_boost = clampf(value, 1.0, JUMP_GRIP)
@@ -116,8 +117,8 @@ func _ready() -> void:
 	smoke_right.emitting = false
 
 func _physics_process(delta: float) -> void:
-	# Don't process any input if we are dead
-	if is_dead:
+	# Don't process any input if we are dead or haven't started yet
+	if is_dead or !has_started_race:
 		velocity = velocity.slerp(Vector2.ZERO, 0.1 * delta)
 		move_and_slide()
 		return
