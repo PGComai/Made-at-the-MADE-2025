@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2bb8tpx5ikj2"]
+[gd_scene load_steps=8 format=3 uid="uid://d2bb8tpx5ikj2"]
 
 [ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://scenes/main/main.gd" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://rian43jqtsj3" path="res://Scripts/LegacySystem/character_info_ui.gd" id="2_6q06x"]
 [ext_resource type="AudioStream" uid="uid://dt21jvi8ch4mt" path="res://OST/racing game song draft 2.wav" id="2_iuonh"]
 [ext_resource type="Texture2D" uid="uid://bdusga3gw7kx6" path="res://Sprites/UI/char_portrait_placeholder.png" id="2_l3cfh"]
 [ext_resource type="Script" uid="uid://wdgn71b84xh6" path="res://Scripts/LegacySystem/legacy_system.gd" id="3_k2fmo"]
@@ -72,6 +73,7 @@ offset_right = 180.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_6q06x")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo"]
 layout_mode = 1
@@ -102,34 +104,34 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Stat" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
+[node name="Turn" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
 layout_mode = 2
 
-[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Stat"]
+[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Turn"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "Speed"
+text = "Turn: "
 fit_content = true
 
-[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Stat"]
+[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Turn"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
 text = "10"
 fit_content = true
 
-[node name="Stat2" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
+[node name="Grip" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
 layout_mode = 2
 
-[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Stat2"]
+[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Grip"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "Speed"
+text = "Grip"
 fit_content = true
 
-[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Stat2"]
+[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Grip"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
@@ -143,7 +145,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "Speed"
+text = "Stat3"
 fit_content = true
 
 [node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Stat3"]

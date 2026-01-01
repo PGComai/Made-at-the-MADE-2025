@@ -36,6 +36,7 @@ var grip: float = 1.0:
 var turn_grip: float = 1.0:
 	set(value):
 		turn_grip = clampf(value, 0.0, 1.0)
+
 var drag: float = 0.995
 var spin: float = 0.0
 var spin_momentum: float = 1.0:
@@ -85,6 +86,11 @@ var smoking := false:
 			else:
 				add_skid_points()
 
+#stats
+var turn_handling: float = 1.0
+var turn_lerp_amount: float = 0.1
+var grip_stat: float = 0.0
+var grip_turn_adjustment: float = 0.0
 
 var current_skid_left: TireMark
 var current_skid_right: TireMark
@@ -160,19 +166,22 @@ func _physics_process(delta: float) -> void:
 		sprite_2d_shadow.scale = Vector2(shadow_scale, shadow_scale)
 
 	var turn: float = Input.get_axis("left", "right")
-
-	wheel_angle = lerp_angle(wheel_angle, turn * PI/4.0, 0.1)
+	
+	wheel_angle = lerp_angle(wheel_angle, turn * PI/4.0, turn_lerp_amount)
 
 	if show_steer:
 		wheel_fl.rotation = lerp_angle(wheel_fl.rotation, wheel_angle, 0.1)
 		wheel_fr.rotation = lerp_angle(wheel_fr.rotation, wheel_angle, 0.1)
 
+	
 	grip = remap(velocity.normalized().dot(-global_transform.y),
-				0.0,
+				grip_turn_adjustment,
 				1.0,
-				MIN_GRIP,
+				0.0,
 				1.0)
-	grip = pow(grip, 6.0)
+	print("grip - ", grip)
+	grip = pow(grip, grip_stat)#pow(grip, 6.0)
+	print("grip adjusted - ", grip)
 	var real_vel: Vector2 = get_real_velocity()
 	var eh_smoke: bool = (grip <= smoke_threshold or braking) and not jumping and real_vel.length_squared() > 1.0
 	smoke_left.emitting = eh_smoke
@@ -209,7 +218,7 @@ func _physics_process(delta: float) -> void:
 		spin = lerp(spin, ang_diff, 0.02 * grip * terrain_slip)
 	else:
 		spin = lerp(spin, turn * 0.4, 0.2)
-	var steer_strength: float = pow(speed, 0.95) * (3.0 / INITIAL_SPEED)
+	var steer_strength: float = pow(speed, 0.95) * (3.0 / INITIAL_SPEED) * turn_handling
 
 	car_angle += spin * delta * steer_strength * spin_momentum * grip * terrain_slip
 	rotation = car_angle
