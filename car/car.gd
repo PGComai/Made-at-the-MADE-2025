@@ -86,6 +86,13 @@ var smoking := false:
 			else:
 				add_skid_points()
 
+#drift variables
+var drifting := false
+var drifting_left := false
+var drifting_right := false
+var double_tap_frames_left := 0
+var double_tap_frames_right := 0
+
 #stats
 var turn_handling: float = 1.0
 var turn_lerp_amount: float = 0.1
@@ -122,6 +129,40 @@ func _ready() -> void:
 	smoke_left.emitting = false
 	smoke_right.emitting = false
 
+func _process(delta: float) -> void:
+	#check for drift inputs if we aren't drifting
+	if(!drifting):
+		#check double-tap left
+		if(double_tap_frames_left > 0):
+			double_tap_frames_left -= 1
+		if(Input.is_action_just_pressed("left")):
+			if(double_tap_frames_left == 0):
+				double_tap_frames_left = 16
+			else:
+				drifting = true
+				drifting_left = true
+				jump(.3)
+				double_tap_frames_left = 0
+		#check double-tap right
+		if(double_tap_frames_right > 0):
+			double_tap_frames_right -= 1
+		if(Input.is_action_just_pressed("right")):
+			if(double_tap_frames_right == 0):
+				double_tap_frames_right = 16
+			else:
+				drifting = true
+				drifting_right = true
+				jump(.3)
+				double_tap_frames_right = 0
+	else:
+		#drifting
+		if(drifting_left and Input.is_action_just_released("left")):
+			drifting = false
+			drifting_left = false
+		elif(drifting_right and Input.is_action_just_released("right")):
+			drifting = false
+			drifting_right = false
+			
 func _physics_process(delta: float) -> void:
 	# Don't process any input if we are dead or haven't started yet
 	if is_dead or !has_started_race:
@@ -179,9 +220,9 @@ func _physics_process(delta: float) -> void:
 				1.0,
 				0.0,
 				1.0)
-	print("grip - ", grip)
+	#print("grip - ", grip)
 	grip = pow(grip, grip_stat)#pow(grip, 6.0)
-	print("grip adjusted - ", grip)
+	#print("grip adjusted - ", grip)
 	var real_vel: Vector2 = get_real_velocity()
 	var eh_smoke: bool = (grip <= smoke_threshold or braking) and not jumping and real_vel.length_squared() > 1.0
 	smoke_left.emitting = eh_smoke
@@ -219,7 +260,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		spin = lerp(spin, turn * 0.4, 0.2)
 	var steer_strength: float = pow(speed, 0.95) * (3.0 / INITIAL_SPEED) * turn_handling
-
+	if(drifting):
+		steer_strength *= 2.0
 	car_angle += spin * delta * steer_strength * spin_momentum * grip * terrain_slip
 	rotation = car_angle
 	label_grip.rotation = -rotation
@@ -335,3 +377,10 @@ func _on_timer_power_up_timeout() -> void:
 	sprite_2d.position.y = 0.0
 	sprite_2d.position.x = 0.0
 	sprite_2d_shadow.scale = Vector2.ONE
+
+func jump(jump_time):
+	timer_power_up.start(jump_time)
+	jumping = true
+	jump_grip_boost = JUMP_GRIP
+	toast.toast("jump")
+	stuff_detector.monitoring = false
