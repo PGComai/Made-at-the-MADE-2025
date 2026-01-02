@@ -41,6 +41,26 @@ var grip_turn_adjustment_values = {
 	7: .0
 }
 
+var drift_power_values = {
+	1: 1.1,
+	2: 1.25,
+	3: 1.4,
+	4: 1.55,
+	5: 1.7,
+	6: 1.85,
+	7: 2.0
+}
+
+var acceleration_values = {
+	1: 1.0,
+	2: 1.2,
+	3: 1.4,
+	4: 1.6,
+	5: 1.8,
+	6: 2.0,
+	7: 2.2
+}
+
 func _ready() -> void:
 	generate_character()
 	apply_stats_to_car(current_character_data)
@@ -66,6 +86,8 @@ func generate_character():
 	# stats
 	char_data.turn = randi_range(1,7)
 	char_data.grip = randi_range(1,7)
+	char_data.acceleration = randi_range(1,7)
+	char_data.drift_power = randi_range(1,7)
 	
 	current_character_data = char_data
 	return char_data
@@ -75,3 +97,5 @@ func apply_stats_to_car(char_data):
 	game_car.turn_handling = turn_values[char_data.turn]
 	game_car.grip_stat = grip_values[char_data.grip]
 	game_car.grip_turn_adjustment = grip_turn_adjustment_values[char_data.turn]
+	game_car.drift_power = drift_power_values[char_data.drift_power]
+	game_car.acceleration = acceleration_values[char_data.acceleration]

@@ -138,17 +138,34 @@ bbcode_enabled = true
 text = "10"
 fit_content = true
 
-[node name="Stat3" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
+[node name="Drift" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
 layout_mode = 2
 
-[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Stat3"]
+[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Drift"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "Stat3"
+text = "Drift"
 fit_content = true
 
-[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Stat3"]
+[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Drift"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "10"
+fit_content = true
+
+[node name="Accel" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Accel"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Accel"
+fit_content = true
+
+[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Accel"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true

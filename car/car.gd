@@ -43,6 +43,7 @@ var spin_momentum: float = 1.0:
 	set(value):
 		spin_momentum = clampf(value, 1.0, 2.0)
 var speed: float = INITIAL_SPEED
+var acceleration: float
 var wheels: Array[AnimatedSprite2D]
 var smoke_timer: float = 0.0
 var terrain_slip: float = 1.0
@@ -98,6 +99,7 @@ var turn_handling: float = 1.0
 var turn_lerp_amount: float = 0.1
 var grip_stat: float = 0.0
 var grip_turn_adjustment: float = 0.0
+var drift_power: float = 1.5
 
 var current_skid_left: TireMark
 var current_skid_right: TireMark
@@ -232,7 +234,7 @@ func _physics_process(delta: float) -> void:
 	var small_speed: float = clampf(real_vel.length(), 0.0, 1.0)
 
 	var thrust_dir: Vector2 = -global_transform.y
-	velocity += thrust_dir * speed * delta * grip
+	velocity += thrust_dir * speed * delta * grip * acceleration
 	var ideal_vel: Vector2 = -global_transform.y * velocity.length()
 
 	if not jumping:
@@ -261,7 +263,7 @@ func _physics_process(delta: float) -> void:
 		spin = lerp(spin, turn * 0.4, 0.2)
 	var steer_strength: float = pow(speed, 0.95) * (3.0 / INITIAL_SPEED) * turn_handling
 	if(drifting):
-		steer_strength *= 2.0
+		steer_strength *= (drift_power / turn_handling)
 	car_angle += spin * delta * steer_strength * spin_momentum * grip * terrain_slip
 	rotation = car_angle
 	label_grip.rotation = -rotation
