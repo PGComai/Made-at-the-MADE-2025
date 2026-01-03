@@ -1,0 +1,123 @@
+===
+RACES
+===
+Some number of laps, and there is a max top-speed, which we gradually climb towards, each consecutive lap.
+
+Once top-speed lap has completed, an exit ramp opens up to move on to the next race.
+
+But you can choose not to take it yet and try to keep driving around to pick up unclaimed collectables to
+help yourself more. (inspired by NT here)
+
+Each lap, you are forced into changing your main ability
+
+Different races could cater to different car types so overall there is no clear "best class". 
+Speaking of which...
+
+===
+CLASSES
+===
+What rogue legacy (RL) and nuclear throne (NT) have in common.
+Like in RL, you could have a spread of 2-3 or classes to choose from in your heir, with some slight
+property variance intra-class. Can't choose to re-use a previous racer though.
+But unlike in RL, but like in NT, you unlock new classes through playing and getting further?
+Each class should be based around at least one core interesting trade-off
+
+---
+Property groups that affect class:
+Car Shape (maybe makes some maneuvers easier/even possible)
+Weight?
+Handling - turn, grip, etc
+Off-Road Handling
+Braking Ability
+Defensive Ability
+---
+
+---
+Class Ideas
+ - Stock (base starting class, all-arounder)
+ - Off-Road truck (kind of larger, good off-road handling, maybe a bit slow, damage resistant)
+ - Dragster (thin, high speed, high track grip, excellent braking, low turn, damage resistant)
+ - Catamaran (wide, big, maybe high accel?, good braking? handles certain terrain like bumps well?, damage resistant?)
+ - ATV - smaller, better turn and accel, good off-road handling, takes way more damage
+ - UTV - Handles like Stock, except high off-road stats and takes more damage
+ - SuperCar - High Speed, High Accel, High Turn, all-rounder in size/shape, excellent braking
+ - SUV - Damage Resistant, good turn, mid shape profile, slightly good off-road handling
+ - Rally Car - great off-road, high turn, low track grip, no bumps damage?
+---
+
+===
+ABILITIES
+===
+much like your weapons in NT and spells in RL
+except, you get a new random one each lap
+
+---
+jump - discrete amount of uses. jump over pits, rocks, terrain, off-road
+brake - hold button to use fluid amount. collectables of "brake juice" scattered around/in destructibles
+grappling hook - grapple rocks, trees, bumpers anything else?
+projectile - blow up trees and rocks and other? (maybe takes two shots)
+bombs - lay down and explodes in a second - blows up rocks, trees, bumpers?, sets oil/leaves/logs on fire
+bullet bill (auto-drive) - always nice in a variety of situations
+shield - protect from damage - there ought be lots of ways to take damage
+---
+
+
+===
+OBSTACLES
+===
+Every obstacle is ideally affectable by every active ability
+Most/all can damage the player car in some way.
+
+---
+all off-road - damages the player
+trees - speed threshold damage, grapple-able, shoot-able, bomb-able
+rocks - speed threshold damage, grapple-able, shoot-able, bomb-able
+bumpers? (+ moving ones?), just bounce the player
+guardrails - along sides of track. self-explanatory
+pits - large burst of damage if fallen into? (resurrect, think lakitu in mario kart)
+terrain 
+	dirt - slows down, hard to grip depending on tires 
+	oil - hard to grip, something to do with fire that could multiply damage maybe?
+	bumps - steering weirdness, a little slowdown, light damage?
+	leaves/twigs/long grass? - gets set on fire
+---
+
+
+===
+POWER-UPS
+===
+like mutations in NT
+collect xp collectables around the track, 
+when leveled up, get a choice
+
+---
+jump 
+  -midair influence-ability
+  -height (maybe obstacles can have discrete, obvious heights)
+  -distance
+brake juice 
+  -amount per lap
+  -more juice collectables
+grappling hook 
+  -distance
+  -grabber width
+projectile
+  -ammo
+  -projectile size
+  -range
+  -rate of fire?
+bombs
+  -explosion radius
+  -non-fire generating?
+bullet bill
+  -length of time
+  -uses per lap
+shield
+  -amount per lap
+car
+  -change car style?
+  -upgrade any property, really
+misc
+  -more xp drops
+  -more health drops
+---
