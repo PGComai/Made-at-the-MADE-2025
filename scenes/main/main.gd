@@ -5,10 +5,19 @@ const POINT_TIME := 0.1
 
 const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 
+
+
 @export var car: Car
 @onready var time_label: Label = %TimeLabel
 @onready var score_label: Label = %ScoreLabel
 @onready var power_up_label: Label = %PowerUpLabel
+@onready var legacy_system = $LegacySystem
+@onready var ui_node = $CanvasLayer/UI
+@onready var save_node = $SaveData
+
+## state of the game
+enum GameState {CHARACTER_SELECT = 0, RACING = 1}
+var game_state
 
 ## The number of completed laps.
 var completed_laps: int = 0
@@ -24,6 +33,9 @@ var all_checkpoints: Array[Checkpoint] = []
 
 ## The checkpoints visited by the player
 var seen_checkpoints: Array[Checkpoint] = []
+
+## Character Lineage in use
+var current_lineage: Lineage
 
 func _ready() -> void:
 	car.i_died.connect(_on_car_died)
@@ -50,6 +62,26 @@ func _ready() -> void:
 		var finish_line: FinishLine = node
 		if not finish_line.body_entered.is_connected(_on_finish_crossed):
 			finish_line.body_entered.connect(_on_finish_crossed)
+	
+	# game state, for _process()
+	game_state = GameState.CHARACTER_SELECT
+	
+	# load game or create new lineage with starting character
+	try_load_game()
+	current_lineage = json_to_resource(save_node.lineage)
+	if(current_lineage == null):
+		# new game, create a new lineage
+		current_lineage = legacy_system.generate_new_lineage()
+	var first_char_data = current_lineage.characters[0]
+	#save anything that might be new
+	save_node.lineage = json_string_from_resource(current_lineage)
+	save_node.current_character = json_string_from_resource(first_char_data)
+	save_game()
+	
+	#setup car
+	legacy_system.apply_stats_to_car(first_char_data)
+	#instance the UI element showing the character
+	ui_node.instance_character_ui(Vector2(460,332), first_char_data)
 
 ## Records a checkpoint for a body.
 func record_checkpoint(body: Node2D, checkpoint: Checkpoint) -> void:
@@ -71,6 +103,16 @@ func has_seen_all_checkpoints() -> bool:
 	return to_see.size() == 0
 
 func _process(delta: float) -> void:
+	match game_state:
+		GameState.CHARACTER_SELECT:
+			if(Input.is_action_just_pressed("a")):
+				#TODO: choose_character()
+				car.has_started_race = true
+				ui_node.clear_character_select()
+				game_state = GameState.RACING
+		GameState.RACING:
+			pass
+	
 	time_label.text = "%.2f" % car.life
 
 	var num = int(score_label.text)
@@ -106,3 +148,85 @@ func _on_car_power_up_get(pup: Car.PowerUp) -> void:
 
 func _on_car_power_up_used() -> void:
 	power_up_label.text = "Power Up: None"
+
+func save_game():
+	var filename = "user://save_game.save"
+	var save_file = FileAccess.open(filename, FileAccess.WRITE)
+	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	for node in save_nodes:
+		# Check the node is an instanced scene so it can be instanced again during load.
+		if node.scene_file_path.is_empty():
+			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
+			continue
+
+		# Check the node has a save function.
+		if !node.has_method("save"):
+			print("persistent node '%s' is missing a save() function, skipped" % node.name)
+			continue
+
+		# Call the node's save function.
+		var node_data = node.call("save")
+
+		# JSON provides a static method to serialized JSON string.
+		var json_string = JSON.stringify(node_data)
+
+		# Store the save dictionary as a new line in the save file.
+		save_file.store_line(json_string)
+	
+func try_load_game():
+	var filename = "user://save_game.save"
+	if not FileAccess.file_exists(filename):
+		#print("load game, no file exists named ", filename)
+		return get_node("SaveData")# Error! We don't have a save to load.
+
+	# We need to revert the game state so we're not cloning objects
+	# during loading. This will vary wildly depending on the needs of a
+	# project, so take care with this step.
+	# For our example, we will accomplish this by deleting saveable objects.
+	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	for i in save_nodes:
+		i.queue_free()
+
+	# Load the file line by line and process that dictionary to restore
+	# the object it represents.
+	var save_file = FileAccess.open(filename, FileAccess.READ)
+	var new_object = null
+	while save_file.get_position() < save_file.get_length():
+		var json_string = save_file.get_line()
+
+		# Creates the helper class to interact with JSON
+		var json = JSON.new()
+
+		# Check if there is any error while parsing the JSON string, skip in case of failure
+		var parse_result = json.parse(json_string)
+		if not parse_result == OK:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			continue
+
+		# Get the data from the JSON object
+		var node_data = json.get_data()
+
+		# Firstly, we need to create the object and add it to the tree and set its position.
+		new_object = load(node_data["filename"]).instantiate()
+		#get_node(node_data["parent"]).add_child(new_object)
+		add_child(new_object)
+		new_object.position = Vector2(0,0)
+		print(new_object.name)
+		# Now we set the remaining variables.
+		for i in node_data.keys():
+			if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
+				continue
+			new_object.set(i, node_data[i])
+		#print("in load game")
+		#print(new_object.name)
+	save_node = new_object
+	print("loaded save data")
+	return new_object
+
+func json_string_from_resource(res):
+	# Convert the Resource to a JSON-compatible variant
+	var json_variant = JSON.from_native(res, true)  # true enables full object serialization
+	return JSON.stringify(json_variant)
+	
+func json_to_resource(string):
+	return JSON.to_native(JSON.parse_string(string),true)

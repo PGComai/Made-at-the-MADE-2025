@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CharacterClass" load_steps=2 format=3 uid="uid://c2cn12o8ueq3o"]
+
+[ext_resource type="Script" uid="uid://dwsa1rwlvfj61" path="res://Scripts/LegacySystem/CharacterClass.gd" id="1_ywxc3"]
+
+[resource]
+script = ExtResource("1_ywxc3")
+classname = "Stock"
+speed_range = Array[int]([1, 7])
+accel_range = Array[int]([1, 7])
+turn_range = Array[int]([1, 7])
+grip_range = Array[int]([1, 7])
+terrain_slip_range = Array[int]([1, 7])
+terrain_damp_range = Array[int]([1, 7])
+drift_power_range = Array[int]([1, 7])
+base_item_ammo_range = Array[int]([1, 7])
+base_health_range = Array[int]([1, 7])
+health_drain_range = Array[int]([1, 7])
+health_regen_range = Array[int]([1, 7])

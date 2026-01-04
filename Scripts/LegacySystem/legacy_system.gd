@@ -3,10 +3,10 @@ extends Node
 @onready var game_controller = get_parent()
 @onready var game_car = get_parent().car
 @onready var ui = get_parent().get_node("CanvasLayer/UI")
-@onready var character_ui = get_parent().get_node("CanvasLayer/UI/VBoxContainer/Space/CharacterInfo")
+#@onready var character_ui = get_parent().get_node("CanvasLayer/UI/VBoxContainer/Space/CharacterInfo")
 
 @export var character_info_scene : PackedScene
-
+@export var character_classes : Array[CharacterClass]
 var current_character_data
 
 var has_started_race := false
@@ -62,20 +62,29 @@ var acceleration_values = {
 }
 
 func _ready() -> void:
-	generate_character()
-	apply_stats_to_car(current_character_data)
-	character_info_display(true)
+	#this all happens in main.ready() now
+	#generate_character()
+	#apply_stats_to_car(current_character_data)
+	#character_info_display(true)
+	pass
 
-func _process(delta: float) -> void:
-	if(!has_started_race):
-		if(Input.is_action_just_pressed("a")):
-			game_car.has_started_race = true
-			character_info_display(false)
+#func _process(delta: float) -> void:
+	#if(!has_started_race):
+		#if(Input.is_action_just_pressed("a")):
+			#game_car.has_started_race = true
+			#character_info_display(false)
 
+#func character_info_display(state):
+	#character_ui.set_data(current_character_data)
+	#character_ui.visible = state
 
-func character_info_display(state):
-	character_ui.set_data(current_character_data)
-	character_ui.visible = state
+func generate_new_lineage():
+	var lineage = Lineage.new()
+	var first_character = generate_character()
+	current_character_data = first_character
+	lineage.characters.append(first_character)
+	return lineage
+
 
 func generate_character():
 	var char_data = CharacterData.new()
@@ -89,9 +98,7 @@ func generate_character():
 	char_data.acceleration = randi_range(1,7)
 	char_data.drift_power = randi_range(1,7)
 	
-	current_character_data = char_data
 	return char_data
-	
 
 func apply_stats_to_car(char_data):
 	game_car.turn_handling = turn_values[char_data.turn]

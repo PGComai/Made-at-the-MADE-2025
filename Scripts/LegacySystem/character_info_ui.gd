@@ -15,3 +15,12 @@ func set_data(char_data):
 	stats.get_node("Drift/StatVal").text = str(char_data.drift_power)
 	
 	stats.get_node("Accel/StatVal").text = str(char_data.acceleration)
+
+func remove_self():
+	var end_position = position + Vector2(0,-200)
+	var tween_pos = get_tree().create_tween()
+	tween_pos.tween_property(self, "position", end_position, 1.0).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+	var tween_vis = get_tree().create_tween()
+	tween_vis.tween_property(self, "modulate", Color(1.0,1.0,1.0,0.0), 1.5).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+	await get_tree().create_timer(1.5).timeout
+	queue_free()

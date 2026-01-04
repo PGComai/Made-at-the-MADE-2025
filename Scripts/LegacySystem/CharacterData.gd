@@ -20,3 +20,15 @@ class_name CharacterData
 @export var base_health: float
 @export var health_drain: float
 @export var health_regen: float
+
+#portrait
+@export var portrait_face_shape: int
+@export var portrait_eyes: int
+@export var portrait_eyebrows: int
+@export var portrait_nose: int
+@export var portrait_mouth: int
+@export var portrait_ears: int
+@export var portrait_hair: int
+@export var portrait_face_hair: int
+@export var portrait_hair_color: int
+@export var portrait_shirt_color: int

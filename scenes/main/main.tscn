@@ -1,10 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2bb8tpx5ikj2"]
+[gd_scene load_steps=14 format=3 uid="uid://d2bb8tpx5ikj2"]
 
 [ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://scenes/main/main.gd" id="1_hyk8p"]
-[ext_resource type="Script" uid="uid://rian43jqtsj3" path="res://Scripts/LegacySystem/character_info_ui.gd" id="2_6q06x"]
 [ext_resource type="AudioStream" uid="uid://dt21jvi8ch4mt" path="res://OST/racing game song draft 2.wav" id="2_iuonh"]
-[ext_resource type="Texture2D" uid="uid://bdusga3gw7kx6" path="res://Sprites/UI/char_portrait_placeholder.png" id="2_l3cfh"]
+[ext_resource type="Script" uid="uid://nytstdqrls0p" path="res://Scripts/UI/ui_main.gd" id="2_yyfjg"]
+[ext_resource type="PackedScene" uid="uid://dg1um1nm8ndk1" path="res://scenes/UI/character_info_ui.tscn" id="3_b1x3f"]
 [ext_resource type="Script" uid="uid://wdgn71b84xh6" path="res://Scripts/LegacySystem/legacy_system.gd" id="3_k2fmo"]
+[ext_resource type="Script" uid="uid://bk74ssjexwf0t" path="res://Scripts/UI/character_chooser.gd" id="4_a8run"]
+[ext_resource type="Script" uid="uid://dwsa1rwlvfj61" path="res://Scripts/LegacySystem/CharacterClass.gd" id="4_hujxm"]
+[ext_resource type="Resource" uid="uid://c2cn12o8ueq3o" path="res://CustomResources/CharacterClasses/Stock.tres" id="5_yyfjg"]
+[ext_resource type="Resource" uid="uid://dkkmqqcdu75bo" path="res://CustomResources/CharacterClasses/Dragster.tres" id="6_b1x3f"]
+[ext_resource type="Resource" uid="uid://1a6dr2p0osm3" path="res://CustomResources/CharacterClasses/Truck.tres" id="7_a8run"]
+[ext_resource type="PackedScene" uid="uid://rv0hs1mnl1y8" path="res://scenes/main/save_data.tscn" id="11_ouso4"]
 
 [sub_resource type="SystemFont" id="SystemFont_wyggb"]
 font_names = PackedStringArray("monospace")
@@ -33,6 +39,8 @@ theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
+script = ExtResource("2_yyfjg")
+character_ui_scene = ExtResource("3_b1x3f")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI"]
 layout_mode = 2
@@ -59,129 +67,14 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CharacterInfo" type="Control" parent="CanvasLayer/UI/VBoxContainer/Space"]
-visible = false
+[node name="CharacterChooser" type="Control" parent="CanvasLayer/UI/VBoxContainer/Space"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -180.0
-offset_right = 180.0
-offset_bottom = 180.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_6q06x")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo"]
-layout_mode = 1
-offset_right = 360.0
-offset_bottom = 360.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer"]
-layout_mode = 2
-
-[node name="Player" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Portrait" type="TextureRect" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Player"]
-layout_mode = 2
-texture = ExtResource("2_l3cfh")
-stretch_mode = 2
-
-[node name="Name" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Player"]
-layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "Bob Loblaw III"
-fit_content = true
-horizontal_alignment = 1
-
-[node name="Stats" type="VBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Turn" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
-layout_mode = 2
-
-[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Turn"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "Turn: "
-fit_content = true
-
-[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Turn"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "10"
-fit_content = true
-
-[node name="Grip" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
-layout_mode = 2
-
-[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Grip"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "Grip"
-fit_content = true
-
-[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Grip"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "10"
-fit_content = true
-
-[node name="Drift" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
-layout_mode = 2
-
-[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Drift"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "Drift"
-fit_content = true
-
-[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Drift"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "10"
-fit_content = true
-
-[node name="Accel" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats"]
-layout_mode = 2
-
-[node name="StatName" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Accel"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "Accel"
-fit_content = true
-
-[node name="StatVal" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer/HBoxContainer/Stats/Accel"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "10"
-fit_content = true
-
-[node name="Control" type="Control" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UI/VBoxContainer/Space/CharacterInfo/VBoxContainer"]
-layout_mode = 2
-bbcode_enabled = true
-text = "Press 'A' To Race!"
-fit_content = true
-horizontal_alignment = 1
+script = ExtResource("4_a8run")
 
 [node name="PowerUpLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer"]
 unique_name_in_owner = true
@@ -196,3 +89,6 @@ autoplay = true
 
 [node name="LegacySystem" type="Node" parent="."]
 script = ExtResource("3_k2fmo")
+character_classes = Array[ExtResource("4_hujxm")]([ExtResource("5_yyfjg"), ExtResource("6_b1x3f"), ExtResource("7_a8run")])
+
+[node name="SaveData" parent="." instance=ExtResource("11_ouso4")]
