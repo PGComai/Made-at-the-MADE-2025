@@ -74,7 +74,8 @@ trees - speed threshold damage, grapple-able, shoot-able, bomb-able
 rocks - speed threshold damage, grapple-able, shoot-able, bomb-able
 bumpers? (+ moving ones?), just bounce the player
 guardrails - along sides of track. self-explanatory
-pits - large burst of damage if fallen into? (resurrect, think lakitu in mario kart)
+"pits" - large burst of damage if fallen into? (resurrect, think lakitu in mario kart) 
+  -(maybe its more like a triggerable spike? juts out when driven over, so it can later be shot w/ projectiles)
 terrain 
 	dirt - slows down, hard to grip depending on tires 
 	oil - hard to grip, something to do with fire that could multiply damage maybe?

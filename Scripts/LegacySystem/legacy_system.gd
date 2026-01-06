@@ -100,6 +100,11 @@ func generate_character():
 	
 	return char_data
 
+# typically called after selecting a new character at run start
+func add_character_to_current_lineage(character):
+	game_controller.current_lineage.characters.append(character)
+	game_controller.save_lineage_and_character(character)
+	
 func apply_stats_to_car(char_data):
 	game_car.turn_handling = turn_values[char_data.turn]
 	game_car.grip_stat = grip_values[char_data.grip]

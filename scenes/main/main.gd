@@ -11,8 +11,9 @@ const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 @onready var time_label: Label = %TimeLabel
 @onready var score_label: Label = %ScoreLabel
 @onready var power_up_label: Label = %PowerUpLabel
-@onready var legacy_system = $LegacySystem
+@onready var legacy_system = %LegacySystem
 @onready var ui_node = $CanvasLayer/UI
+@onready var character_chooser = $CanvasLayer/UI/VBoxContainer/Space/CharacterChooser
 @onready var save_node = $SaveData
 
 ## state of the game
@@ -68,20 +69,36 @@ func _ready() -> void:
 	
 	# load game or create new lineage with starting character
 	try_load_game()
+	var is_new_game = false
+	
 	current_lineage = json_to_resource(save_node.lineage)
 	if(current_lineage == null):
 		# new game, create a new lineage
 		current_lineage = legacy_system.generate_new_lineage()
+		is_new_game = true
+		
 	var first_char_data = current_lineage.characters[0]
-	#save anything that might be new
-	save_node.lineage = json_string_from_resource(current_lineage)
-	save_node.current_character = json_string_from_resource(first_char_data)
-	save_game()
+	var most_recent_char = current_lineage.characters[current_lineage.characters.size()-1]
 	
-	#setup car
-	legacy_system.apply_stats_to_car(first_char_data)
-	#instance the UI element showing the character
-	ui_node.instance_character_ui(Vector2(460,332), first_char_data)
+	#save anything that might be new
+	save_lineage_and_character(most_recent_char)
+	
+	#character UI
+	if(is_new_game):
+		legacy_system.apply_stats_to_car(most_recent_char)
+		#instance the UI element showing the character
+		ui_node.instance_character_ui(Vector2(460,332), most_recent_char)
+	else:
+		
+		var char_ui = ui_node.instance_character_ui(Vector2(460,332), most_recent_char)
+		await get_tree().create_timer(1.5)
+		var tween_pos = get_tree().create_tween()
+		tween_pos.tween_property(char_ui, "position", char_ui.position+Vector2(0,200), 1.0).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		var tween_vis = get_tree().create_tween()
+		tween_vis.tween_property(char_ui, "modulate", Color(.3,.3,.3,.8), 1.5).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		character_chooser.instance_characters()
+		await get_tree().create_timer(1.5)
+		character_chooser.enabled_status = true
 
 ## Records a checkpoint for a body.
 func record_checkpoint(body: Node2D, checkpoint: Checkpoint) -> void:
@@ -223,6 +240,11 @@ func try_load_game():
 	print("loaded save data")
 	return new_object
 
+func save_lineage_and_character(character):
+	save_node.lineage = json_string_from_resource(current_lineage)
+	save_node.current_character = json_string_from_resource(character)
+	save_game()
+	
 func json_string_from_resource(res):
 	# Convert the Resource to a JSON-compatible variant
 	var json_variant = JSON.from_native(res, true)  # true enables full object serialization

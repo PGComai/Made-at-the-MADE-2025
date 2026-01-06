@@ -75,6 +75,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_a8run")
+character_info_scene = ExtResource("3_b1x3f")
+num_options = 3
 
 [node name="PowerUpLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer"]
 unique_name_in_owner = true
@@ -88,6 +90,7 @@ stream = ExtResource("2_iuonh")
 autoplay = true
 
 [node name="LegacySystem" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_k2fmo")
 character_classes = Array[ExtResource("4_hujxm")]([ExtResource("5_yyfjg"), ExtResource("6_b1x3f"), ExtResource("7_a8run")])
 
