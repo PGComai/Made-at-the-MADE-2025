@@ -56,9 +56,11 @@ jump - discrete amount of uses. jump over pits, rocks, terrain, off-road
 brake - hold button to use fluid amount. collectables of "brake juice" scattered around/in destructibles
 grappling hook - grapple rocks, trees, bumpers anything else?
 projectile - blow up trees and rocks and other? (maybe takes two shots)
-bombs - lay down and explodes in a second - blows up rocks, trees, bumpers?, sets oil/leaves/logs on fire
+bombs - lay down and manually explode one at a time - blows up rocks, trees, bumpers?, sets oil/leaves/logs on fire
+projectile bombs
 bullet bill (auto-drive) - always nice in a variety of situations
 shield - protect from damage - there ought be lots of ways to take damage
+saw blades out the sides? - cut down trees, put out fires?
 ---
 
 
@@ -78,7 +80,7 @@ guardrails - along sides of track. self-explanatory
   -(maybe its more like a triggerable spike? juts out when driven over, so it can later be shot w/ projectiles)
 terrain 
 	dirt - slows down, hard to grip depending on tires 
-	oil - hard to grip, something to do with fire that could multiply damage maybe?
+	oil - hard to grip, gets set on fire
 	bumps - steering weirdness, a little slowdown, light damage?
 	leaves/twigs/long grass? - gets set on fire
 ---

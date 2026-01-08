@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0o2qlnyynrd1"]
+[gd_scene load_steps=17 format=3 uid="uid://d0o2qlnyynrd1"]
 
 [ext_resource type="Script" uid="uid://ql5fgk7fubbe" path="res://car/car.gd" id="1_2gitb"]
+[ext_resource type="PackedScene" uid="uid://cf5lx17j41dd" path="res://scenes/Ability/projectile.tscn" id="2_bkrhx"]
 [ext_resource type="Texture2D" uid="uid://cl2qi4xf1y5vs" path="res://Sprites/Car/body_concept1.png" id="2_dxy33"]
 [ext_resource type="PackedScene" uid="uid://cepc801q0224o" path="res://scenes/toast/toast.tscn" id="2_h3fet"]
 [ext_resource type="PackedScene" uid="uid://30gtxo2tdg4p" path="res://scenes/vehicle_sound/vehicle_player.tscn" id="2_jpe8o"]
@@ -56,6 +57,7 @@ alpha_curve = SubResource("CurveTexture_jpe8o")
 collision_layer = 2
 script = ExtResource("1_2gitb")
 jump_sprite_curve = SubResource("Curve_bkrhx")
+projectile_scene = ExtResource("2_bkrhx")
 
 [node name="Toast" parent="." instance=ExtResource("2_h3fet")]
 unique_name_in_owner = true
@@ -152,6 +154,9 @@ shape = SubResource("CircleShape2D_jpe8o")
 [node name="TimerPowerUp" type="Timer" parent="."]
 process_callback = 0
 one_shot = true
+
+[node name="ProjectileSpawn" type="Node2D" parent="."]
+position = Vector2(0, -23)
 
 [connection signal="area_entered" from="StuffDetector" to="." method="_on_stuff_detector_area_entered"]
 [connection signal="area_exited" from="StuffDetector" to="." method="_on_stuff_detector_area_exited"]

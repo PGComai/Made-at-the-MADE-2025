@@ -50,6 +50,7 @@ rotation = 1.5707964
 width = 150.0
 
 [node name="ChaseCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("6_pulch")]
+unique_name_in_owner = true
 position = Vector2(-315, 0)
 car = NodePath("../Car")
 

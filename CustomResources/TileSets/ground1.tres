@@ -1,15 +1,15 @@
-[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://vg1colbw8e5k"]
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://bkncej2nqi00a"]
 
-[ext_resource type="Texture2D" uid="uid://baw8ss0acjyx4" path="res://Sprites/Environment/track1.png" id="1_wuc64"]
-[ext_resource type="Texture2D" uid="uid://cqrn2vrnico3j" path="res://Sprites/Environment/env_32_32_1.png" id="2_dqq02"]
-[ext_resource type="Texture2D" uid="uid://cinvajuo4diqv" path="res://Sprites/Environment/env_64_64_1.png" id="3_dqq02"]
+[ext_resource type="Texture2D" uid="uid://baw8ss0acjyx4" path="res://Sprites/Environment/track1.png" id="1_y4tx7"]
+[ext_resource type="Texture2D" uid="uid://cqrn2vrnico3j" path="res://Sprites/Environment/env_32_32_1.png" id="2_eoj6b"]
+[ext_resource type="Texture2D" uid="uid://cinvajuo4diqv" path="res://Sprites/Environment/env_64_64_1.png" id="3_3r6lr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dqq02"]
 friction = 0.0
 bounce = 1.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_24o4s"]
-texture = ExtResource("1_wuc64")
+texture = ExtResource("1_y4tx7")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -25,7 +25,7 @@ texture = ExtResource("1_wuc64")
 1:4/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oeaph"]
-texture = ExtResource("2_dqq02")
+texture = ExtResource("2_eoj6b")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
@@ -37,11 +37,11 @@ texture_region_size = Vector2i(32, 32)
 3:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_35fmj"]
-texture = ExtResource("3_dqq02")
+texture = ExtResource("3_3r6lr")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/y_sort_origin = 16
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.982899, -0.564476, -1.6934242, -3.3868446, 13.547375, -2.2578964, 13.547375, 15.240791, -1.7613621, 21.417006, -14.111847, 12.982895)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.7447033, 16.00743, -1.7086582, 17.446299, 6.205126, 16.187284, 9.082865, 12.410254, 8, 5.5756207, 3.8669624, 1.2590122, -4.0468216, 1.6187286, -9.622442, 5.935339, -10.341877, 13.309547)
 1:0/0 = 0
 1:0/0/y_sort_origin = 16
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.464138, 11.870676, -0.62950516, 13.489405, 5.485691, 13.129688, 10.341875, 10.251947, 9.802301, 4.4964695, 3.6871033, 1.6187286, -2.2482338, 1.2590122, -8, 1.978447, -10.341877, 7.5540676)
@@ -69,8 +69,7 @@ texture_region_size = Vector2i(64, 64)
 3:3/0 = 0
 
 [resource]
-physics_layer_0/collision_layer = 17
-physics_layer_0/collision_mask = 19
+physics_layer_0/collision_layer = 2
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_dqq02")
 sources/0 = SubResource("TileSetAtlasSource_24o4s")
 sources/1 = SubResource("TileSetAtlasSource_oeaph")

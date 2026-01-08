@@ -7,7 +7,7 @@ signal power_up_get(pup: PowerUp)
 signal power_up_used
 
 
-enum PowerUp{BRAKE, JUMP}
+enum PowerUp{BRAKE, JUMP, PROJECTILE}
 
 
 const INITIAL_SPEED: float = 50.0
@@ -24,7 +24,7 @@ const SMOKE_THRESH_SAND: float = 1.0
 
 @export var show_steer := true
 @export var jump_sprite_curve: Curve
-
+@export var projectile_scene: PackedScene
 
 var smoke_threshold: float = SMOKE_THRESH_DEFAULT
 var current_powerup: PowerUp
@@ -105,7 +105,7 @@ var current_skid_left: TireMark
 var current_skid_right: TireMark
 var queue_track_check := false
 
-
+@onready var camera = %ChaseCam
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var label_grip: Label = $LabelGrip
 @onready var wheel_fl: AnimatedSprite2D = $Sprite2D/WheelFL
@@ -171,7 +171,10 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.slerp(Vector2.ZERO, 0.1 * delta)
 		move_and_slide()
 		return
-
+	
+	if(Input.is_action_just_pressed("b")):
+		shoot_projectile()
+		
 	if not used_powerup:
 		if Input.is_action_just_pressed("a") and not used_powerup:
 			timer_power_up.start()
@@ -185,6 +188,9 @@ func _physics_process(delta: float) -> void:
 				jump_grip_boost = JUMP_GRIP
 				toast.toast("jump")
 				stuff_detector.monitoring = false
+			elif current_powerup == PowerUp.PROJECTILE:
+				shoot_projectile()
+				
 	if not (on_track or jumping):
 		life -= delta
 		if is_dead:
@@ -248,7 +254,7 @@ func _physics_process(delta: float) -> void:
 	if smoking:
 		skid_frame -= 1
 		if skid_frame == 0:
-			print("add skid point")
+			#print("add skid point")
 			add_skid_points()
 
 	var heading = velocity.rotated(wheel_angle * small_speed)
@@ -386,3 +392,11 @@ func jump(jump_time):
 	jump_grip_boost = JUMP_GRIP
 	toast.toast("jump")
 	stuff_detector.monitoring = false
+
+func shoot_projectile():
+	var projectile = projectile_scene.instantiate()
+	projectile.direction = Vector2.from_angle(car_angle - PI/2)
+	camera.shake(.3,80,2, projectile.direction)
+	projectile.speed = 400.0
+	get_parent().add_child(projectile)
+	projectile.global_position = $ProjectileSpawn.global_position
