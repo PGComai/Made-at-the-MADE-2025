@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PowerupData" load_steps=2 format=3 uid="uid://cwaq0dfhoawhx"]
+
+[ext_resource type="Script" uid="uid://du1rm076y6oi8" path="res://Scripts/Ability/powerup_data.gd" id="1_bdwg7"]
+
+[resource]
+script = ExtResource("1_bdwg7")
+name = "Brake"
+ammo_type = "hold"
+max_ammo = 100

@@ -22,8 +22,8 @@ func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_inde
 	get_parent().add_child(smoke)
 	
 	visible = false
-	$Area2D.monitoring = false
-	$Area2D.monitorable = false
+	$Area2D.set_deferred("monitoring",false)
+	$Area2D.set_deferred("monitorable",false)
 	
 	#tree
 	if(atlas_coords == Vector2i(0,0)):

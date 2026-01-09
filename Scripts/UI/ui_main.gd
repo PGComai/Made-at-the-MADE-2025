@@ -2,6 +2,7 @@ extends MarginContainer
 
 @onready var main_space = $VBoxContainer/Space
 @onready var character_chooser = $VBoxContainer/Space/CharacterChooser
+@onready var power_up_label = %PowerUpLabel
 
 @export var character_ui_scene: PackedScene
 
@@ -27,3 +28,12 @@ func clear_character_select():
 	for character_ui_node in character_chooser.get_children():
 		if(character_ui_node.is_in_group("character_ui")):
 			character_ui_node.remove_self()
+			
+func update_power_up(pu_resource):
+	power_up_label.text = "Power Up: %s" % pu_resource.name
+	match pu_resource.ammo_type:
+		"hold":
+			power_up_label.text += "\n Juice: "
+		"press":
+			power_up_label.text += "\n Ammo: "
+	power_up_label.text +=  " %s / %s "  % [pu_resource.current_ammo,pu_resource.max_ammo]

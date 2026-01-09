@@ -9,7 +9,6 @@ signal power_up_used
 
 enum PowerUp{BRAKE, JUMP, PROJECTILE}
 
-
 const INITIAL_SPEED: float = 50.0
 const MIN_GRIP: float = 0.4
 const WHEEL_SPIN_SCALE: float = 0.05
@@ -28,6 +27,12 @@ const SMOKE_THRESH_SAND: float = 1.0
 
 var smoke_threshold: float = SMOKE_THRESH_DEFAULT
 var current_powerup: PowerUp
+var powerup_resources = {
+	PowerUp.BRAKE : "brake",
+	PowerUp.JUMP : "jump",
+	PowerUp.PROJECTILE : "projectile"
+}
+var current_powerup_resource: PowerupData
 var wheel_angle: float = 0.0
 var car_angle: float = 0.0
 var grip: float = 1.0:
@@ -53,6 +58,7 @@ var braking := false
 var jumping := false
 var on_track := true
 var used_powerup := false
+var can_use_powerup := false
 var life: float = LIFE_TIME
 var is_dead: bool:
 	get:
@@ -119,11 +125,11 @@ var queue_track_check := false
 @onready var toast: Toast = %Toast
 @onready var timer_power_up: Timer = $TimerPowerUp
 @onready var sprite_2d_shadow: Sprite2D = $Sprite2DShadow
-
+@onready var ui_node = get_node("/root/Racetrack/Main/CanvasLayer/UI")
 
 func _ready() -> void:
-	current_powerup = PowerUp[PowerUp.keys().pick_random()]
-	power_up_get.emit(current_powerup)
+	power_up_get.connect(_on_power_up_get)
+	
 	wheels = [wheel_fl, wheel_fr, wheel_bl, wheel_br]
 	for wheel in wheels:
 		wheel.play()
@@ -131,6 +137,10 @@ func _ready() -> void:
 	smoke_left.emitting = false
 	smoke_right.emitting = false
 
+func get_random_powerup():
+	current_powerup = PowerUp[PowerUp.keys().pick_random()]
+	power_up_get.emit(current_powerup)
+	
 func _process(delta: float) -> void:
 	#check for drift inputs if we aren't drifting
 	if(!drifting):
@@ -143,7 +153,7 @@ func _process(delta: float) -> void:
 			else:
 				drifting = true
 				drifting_left = true
-				jump(.3)
+				jump(.3,"drift!")
 				double_tap_frames_left = 0
 		#check double-tap right
 		if(double_tap_frames_right > 0):
@@ -154,7 +164,7 @@ func _process(delta: float) -> void:
 			else:
 				drifting = true
 				drifting_right = true
-				jump(.3)
+				jump(.3,"drift!")
 				double_tap_frames_right = 0
 	else:
 		#drifting
@@ -171,26 +181,35 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.slerp(Vector2.ZERO, 0.1 * delta)
 		move_and_slide()
 		return
-	
-	if(Input.is_action_just_pressed("b")):
-		shoot_projectile()
 		
-	if not used_powerup:
-		if Input.is_action_just_pressed("a") and not used_powerup:
-			timer_power_up.start()
-			power_up_used.emit()
-			used_powerup = true
-			if current_powerup == PowerUp.BRAKE:
-				braking = true
-				toast.toast("brake")
-			elif current_powerup == PowerUp.JUMP:
-				jumping = true
-				jump_grip_boost = JUMP_GRIP
-				toast.toast("jump")
-				stuff_detector.monitoring = false
-			elif current_powerup == PowerUp.PROJECTILE:
-				shoot_projectile()
-				
+	if not used_powerup and can_use_powerup:
+		if current_powerup_resource.ammo_type == "press":
+			if Input.is_action_just_pressed("a"):
+				timer_power_up.start()
+				power_up_used.emit()
+				if current_powerup == PowerUp.JUMP:
+					jumping = true
+					set_collision_mask_value(9,false)
+					jump_grip_boost = JUMP_GRIP
+					stuff_detector.monitoring = false
+				elif current_powerup == PowerUp.PROJECTILE:
+					shoot_projectile()
+				current_powerup_resource.current_ammo -= 1
+				if current_powerup_resource.current_ammo == 0:
+					used_powerup = true
+				ui_node.update_power_up(current_powerup_resource)
+		elif current_powerup_resource.ammo_type == "hold":
+			if Input.is_action_pressed("a"):
+				current_powerup_resource.current_ammo -= 1
+				ui_node.update_power_up(current_powerup_resource)
+			if Input.is_action_just_pressed("a"):
+				toast.toast(current_powerup_resource.name)
+				if current_powerup == PowerUp.BRAKE:
+					braking = true
+			if Input.is_action_just_released("a") or current_powerup_resource.current_ammo == 0:
+				if current_powerup == PowerUp.BRAKE:
+					braking = false
+					
 	if not (on_track or jumping):
 		life -= delta
 		if is_dead:
@@ -368,6 +387,12 @@ func _on_node_2d_exited(node_2d: Node2D) -> void:
 		else:
 			queue_track_check = true
 
+func _on_power_up_get(pup: Car.PowerUp) -> void:
+	can_use_powerup = true
+	current_powerup_resource = load("res://CustomResources/Powerups/%s.tres" % powerup_resources[pup])
+	current_powerup_resource.current_ammo = current_powerup_resource.max_ammo
+	ui_node.update_power_up(current_powerup_resource)
+	
 func _on_timer_power_up_timeout() -> void:
 	stuff_detector.monitoring = true
 	braking = false
@@ -382,15 +407,16 @@ func _on_timer_power_up_timeout() -> void:
 			on_track = false
 			toast.toast("Off track!")
 	jumping = false
+	set_collision_mask_value(9,true)
 	sprite_2d.position.y = 0.0
 	sprite_2d.position.x = 0.0
 	sprite_2d_shadow.scale = Vector2.ONE
 
-func jump(jump_time):
+func jump(jump_time, toast_msg = "jump!"):
 	timer_power_up.start(jump_time)
 	jumping = true
 	jump_grip_boost = JUMP_GRIP
-	toast.toast("jump")
+	toast.toast(toast_msg)
 	stuff_detector.monitoring = false
 
 func shoot_projectile():

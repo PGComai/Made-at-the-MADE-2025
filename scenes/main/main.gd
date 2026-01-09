@@ -125,6 +125,7 @@ func _process(delta: float) -> void:
 			if(Input.is_action_just_pressed("a")):
 				#TODO: choose_character()
 				car.has_started_race = true
+				car.get_random_powerup()
 				ui_node.clear_character_select()
 				game_state = GameState.RACING
 		GameState.RACING:
@@ -161,8 +162,8 @@ func _on_car_died() -> void:
 func _on_car_power_up_get(pup: Car.PowerUp) -> void:
 	if not power_up_label:
 		await ready
-	power_up_label.text = "Power Up: %s" % Car.PowerUp.keys()[pup]
-
+	#power_up_label.text = "Power Up: %s" % Car.PowerUp.keys()[pup]
+	
 func _on_car_power_up_used() -> void:
 	power_up_label.text = "Power Up: None"
 

@@ -55,6 +55,7 @@ alpha_curve = SubResource("CurveTexture_jpe8o")
 
 [node name="Car" type="CharacterBody2D" groups=["car"]]
 collision_layer = 2
+collision_mask = 769
 script = ExtResource("1_2gitb")
 jump_sprite_curve = SubResource("Curve_bkrhx")
 projectile_scene = ExtResource("2_bkrhx")
