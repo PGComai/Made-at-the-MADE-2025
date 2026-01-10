@@ -13,7 +13,8 @@ func set_data(char_data):
 	character_data = char_data
 	
 	character_name.text = str(char_data.first_name + " " 
-	+ char_data.last_name + " " + char_data.name_suffix)
+	+ char_data.last_name + " " + char_data.name_suffix +
+	"\n Class: " + char_data.character_class.classname)
 	
 	stats.get_node("Turn/StatVal").text = str(char_data.turn)
 	

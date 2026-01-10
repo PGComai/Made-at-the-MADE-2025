@@ -137,6 +137,26 @@ func _ready() -> void:
 	smoke_left.emitting = false
 	smoke_right.emitting = false
 
+func init_car_from_class(class_resource):
+	#collision shape
+	var coll_shape = load("res://car/CarCollisionShapes/%s.tres" % class_resource.car_shape)
+	$CollisionShape2D.shape = coll_shape
+	$StuffDetector/CollisionShape2D.shape = coll_shape
+	# body sprite
+	var sprite = load("res://Sprites/Car/%s.png" % class_resource.car_sprite)
+	$Sprite2D.texture = sprite
+	$Sprite2DShadow.texture = sprite
+	# wheels
+	for i in range(4):
+		$Sprite2D.get_child(i).position = class_resource.wheels_positions[i]
+		$Sprite2DShadow.get_child(i).position = class_resource.wheels_positions[i]
+		if(i < 2):
+			$Sprite2D.get_child(i).animation = class_resource.wheels_anim_front
+			$Sprite2DShadow.get_child(i).animation = class_resource.wheels_anim_front
+		else:
+			$Sprite2D.get_child(i).animation = class_resource.wheels_anim_back
+			$Sprite2DShadow.get_child(i).animation = class_resource.wheels_anim_back
+			
 func get_random_powerup():
 	current_powerup = PowerUp[PowerUp.keys().pick_random()]
 	power_up_get.emit(current_powerup)
@@ -199,14 +219,14 @@ func _physics_process(delta: float) -> void:
 					used_powerup = true
 				ui_node.update_power_up(current_powerup_resource)
 		elif current_powerup_resource.ammo_type == "hold":
-			if Input.is_action_pressed("a"):
+			if Input.is_action_pressed("a") and current_powerup_resource.current_ammo > 0:
 				current_powerup_resource.current_ammo -= 1
 				ui_node.update_power_up(current_powerup_resource)
 			if Input.is_action_just_pressed("a"):
 				toast.toast(current_powerup_resource.name)
 				if current_powerup == PowerUp.BRAKE:
 					braking = true
-			if Input.is_action_just_released("a") or current_powerup_resource.current_ammo == 0:
+			if Input.is_action_just_released("a") or current_powerup_resource.current_ammo <= 0:
 				if current_powerup == PowerUp.BRAKE:
 					braking = false
 					

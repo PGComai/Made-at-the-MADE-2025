@@ -4,7 +4,11 @@ class_name CharacterClass
 
 @export var classname: String
 
-@export var car_shape: int
+@export var car_shape: String
+@export var car_sprite: String
+@export var wheels_anim_front: String
+@export var wheels_anim_back: String
+@export var wheels_positions: Array[Vector2]
 
 @export var speed_range: Array[int]
 @export var accel_range: Array[int]

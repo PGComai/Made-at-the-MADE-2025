@@ -6,12 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://cepc801q0224o" path="res://scenes/toast/toast.tscn" id="2_h3fet"]
 [ext_resource type="PackedScene" uid="uid://30gtxo2tdg4p" path="res://scenes/vehicle_sound/vehicle_player.tscn" id="2_jpe8o"]
 [ext_resource type="PackedScene" uid="uid://sy7cihov55fu" path="res://scenes/vehicle/wheel.tscn" id="3_hkabp"]
+[ext_resource type="Texture2D" uid="uid://bbj8ooknsxcdr" path="res://Sprites/Car/body_dragster1.png" id="6_vl2bd"]
+[ext_resource type="Shape2D" uid="uid://bjckbmb0ny7bg" path="res://car/CarCollisionShapes/stock1.tres" id="8_vl2bd"]
 
 [sub_resource type="Curve" id="Curve_bkrhx"]
 _data = [Vector2(0, 0), 0.0, 4.9433246, 0, 0, Vector2(0.49665552, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.1777477, 0.0, 0, 0]
 point_count = 3
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_2gitb"]
 
 [sub_resource type="Gradient" id="Gradient_hkabp"]
 offsets = PackedFloat32Array(0, 0.8)
@@ -51,8 +51,6 @@ gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_bkrhx")
 alpha_curve = SubResource("CurveTexture_jpe8o")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jpe8o"]
-
 [node name="Car" type="CharacterBody2D" groups=["car"]]
 collision_layer = 2
 collision_mask = 769
@@ -67,31 +65,31 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_2gitb")
+shape = ExtResource("8_vl2bd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 3
-texture = ExtResource("2_dxy33")
+texture = ExtResource("6_vl2bd")
 
 [node name="WheelFL" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(-9, -8)
-frame_progress = 0.60218227
+position = Vector2(-6, -19)
+animation = &"thin2"
 
 [node name="WheelFR" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(8, -8)
-frame_progress = 0.60218227
+position = Vector2(5, -19)
+animation = &"thin2"
 
 [node name="WheelBL" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(-9, 12)
-frame_progress = 0.60218227
+position = Vector2(-12, 17)
+animation = &"large1"
 
 [node name="WheelBR" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(8, 12)
-frame_progress = 0.60218227
+position = Vector2(10, 17)
+animation = &"large1"
 
 [node name="Sprite2DShadow" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
@@ -102,22 +100,18 @@ texture = ExtResource("2_dxy33")
 [node name="WheelFL" parent="Sprite2DShadow" instance=ExtResource("3_hkabp")]
 z_index = 1
 position = Vector2(-9, -8)
-frame_progress = 0.60218227
 
 [node name="WheelFR" parent="Sprite2DShadow" instance=ExtResource("3_hkabp")]
 z_index = 1
 position = Vector2(8, -8)
-frame_progress = 0.60218227
 
 [node name="WheelBL" parent="Sprite2DShadow" instance=ExtResource("3_hkabp")]
 z_index = 1
 position = Vector2(-9, 12)
-frame_progress = 0.60218227
 
 [node name="WheelBR" parent="Sprite2DShadow" instance=ExtResource("3_hkabp")]
 z_index = 1
 position = Vector2(8, 12)
-frame_progress = 0.60218227
 
 [node name="LabelGrip" type="Label" parent="."]
 visible = false
@@ -150,7 +144,7 @@ collision_mask = 9
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StuffDetector"]
-shape = SubResource("CircleShape2D_jpe8o")
+shape = ExtResource("8_vl2bd")
 
 [node name="TimerPowerUp" type="Timer" parent="."]
 process_callback = 0

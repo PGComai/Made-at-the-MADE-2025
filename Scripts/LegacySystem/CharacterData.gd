@@ -6,6 +6,8 @@ class_name CharacterData
 @export var last_name: String
 @export var name_suffix: String
 
+@export var character_class: CharacterClass
+
 @export var base_speed: int
 @export var speed_increase: int
 @export var acceleration: int

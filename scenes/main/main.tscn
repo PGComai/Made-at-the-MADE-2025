@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d2bb8tpx5ikj2"]
+[gd_scene load_steps=13 format=3 uid="uid://d2bb8tpx5ikj2"]
 
 [ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://scenes/main/main.gd" id="1_hyk8p"]
 [ext_resource type="AudioStream" uid="uid://dt21jvi8ch4mt" path="res://OST/racing game song draft 2.wav" id="2_iuonh"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://dwsa1rwlvfj61" path="res://Scripts/LegacySystem/CharacterClass.gd" id="4_hujxm"]
 [ext_resource type="Resource" uid="uid://c2cn12o8ueq3o" path="res://CustomResources/CharacterClasses/Stock.tres" id="5_yyfjg"]
 [ext_resource type="Resource" uid="uid://dkkmqqcdu75bo" path="res://CustomResources/CharacterClasses/Dragster.tres" id="6_b1x3f"]
-[ext_resource type="Resource" uid="uid://1a6dr2p0osm3" path="res://CustomResources/CharacterClasses/Truck.tres" id="7_a8run"]
 [ext_resource type="PackedScene" uid="uid://rv0hs1mnl1y8" path="res://scenes/main/save_data.tscn" id="11_ouso4"]
 
 [sub_resource type="SystemFont" id="SystemFont_wyggb"]
@@ -99,6 +98,6 @@ autoplay = true
 [node name="LegacySystem" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_k2fmo")
-character_classes = Array[ExtResource("4_hujxm")]([ExtResource("5_yyfjg"), ExtResource("6_b1x3f"), ExtResource("7_a8run")])
+character_classes = Array[ExtResource("4_hujxm")]([ExtResource("5_yyfjg"), ExtResource("6_b1x3f")])
 
 [node name="SaveData" parent="." instance=ExtResource("11_ouso4")]

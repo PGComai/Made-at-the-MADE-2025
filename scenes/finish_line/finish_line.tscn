@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://8jmqbmvshmbp" path="res://scenes/finish_line/finish_line.gd" id="1_fealu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fealu"]
-size = Vector2(120, 24)
+size = Vector2(192, 24)
 
 [sub_resource type="Gradient" id="Gradient_fealu"]
 interpolation_mode = 1

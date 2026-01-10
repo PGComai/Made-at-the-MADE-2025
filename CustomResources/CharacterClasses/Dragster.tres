@@ -5,6 +5,11 @@
 [resource]
 script = ExtResource("1_k33nw")
 classname = "Dragster"
+car_shape = "dragster1"
+car_sprite = "body_dragster1"
+wheels_anim_front = "thin2"
+wheels_anim_back = "large1"
+wheels_positions = Array[Vector2]([Vector2(-6, -19), Vector2(5, -19), Vector2(-12, 17), Vector2(10, 17)])
 speed_range = Array[int]([1, 7])
 accel_range = Array[int]([1, 7])
 turn_range = Array[int]([1, 7])

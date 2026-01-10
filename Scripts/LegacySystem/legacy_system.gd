@@ -92,6 +92,8 @@ func generate_character():
 	char_data.first_name = "Dale"
 	char_data.last_name = "Earnhardt"
 	char_data.name_suffix = "II"
+	# class
+	char_data.character_class = character_classes.pick_random()
 	# stats
 	char_data.turn = randi_range(1,7)
 	char_data.grip = randi_range(1,7)
@@ -106,6 +108,9 @@ func add_character_to_current_lineage(character):
 	game_controller.save_lineage_and_character(character)
 	
 func apply_stats_to_car(char_data):
+	# class-specific stuff
+	game_car.init_car_from_class(char_data.character_class)
+	
 	game_car.turn_handling = turn_values[char_data.turn]
 	game_car.grip_stat = grip_values[char_data.grip]
 	game_car.grip_turn_adjustment = grip_turn_adjustment_values[char_data.turn]
