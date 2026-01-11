@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckebyjifk6j8n"]
+
+[ext_resource type="Script" uid="uid://dde8no2xvhgu5" path="res://Scripts/Obstacles/barrel.gd" id="1_fy6t5"]
+[ext_resource type="Texture2D" uid="uid://djj4n54f3xqwx" path="res://Sprites/Environment/Obstacles/barrel.png" id="2_uy2uu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2h03"]
+atlas = ExtResource("2_uy2uu")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1el5i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2h03")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6e13w"]
+radius = 6.0
+height = 12.0
+
+[node name="Barrel" type="Node2D"]
+script = ExtResource("1_fy6t5")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 257
+mass = 0.5
+gravity_scale = 0.0
+lock_rotation = true
+linear_damp = 3.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D"]
+sprite_frames = SubResource("SpriteFrames_1el5i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_6e13w")

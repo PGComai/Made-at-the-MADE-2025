@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://w6m32vdyypca"]
+[gd_scene load_steps=10 format=3 uid="uid://w6m32vdyypca"]
 
 [ext_resource type="PackedScene" uid="uid://8bme12g1d8x3" path="res://scenes/TrackTilemaps/track1_tilemap.tscn" id="2_2but6"]
 [ext_resource type="Texture2D" uid="uid://dqkmflcw0qvth" path="res://Sprites/Racetrack2.png" id="2_6tico"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://baup2npo25ut2" path="res://scenes/checkpoint/checkpoint.tscn" id="4_rnu2n"]
 [ext_resource type="PackedScene" uid="uid://c8cygi4lw5m0h" path="res://car/chase_cam.tscn" id="6_pulch"]
 [ext_resource type="Script" uid="uid://duykyco6wqlc" path="res://terrain/terrain.gd" id="7_pojh3"]
+[ext_resource type="PackedScene" uid="uid://ckebyjifk6j8n" path="res://scenes/Obstacles/barrel.tscn" id="9_6tico"]
 [ext_resource type="PackedScene" uid="uid://d2bb8tpx5ikj2" path="res://scenes/main/main.tscn" id="12_2but6"]
 
 [node name="Racetrack" type="Node2D"]
@@ -95,3 +96,40 @@ polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -
 [node name="Polygon2D" type="Polygon2D" parent="TerrainOil"]
 color = Color(0.1361005, 0.1361005, 0.1361005, 1)
 polygon = PackedVector2Array(-58, -5, -40, -14, -18, -25, 2, -36, 19, -32, 32, -9, 47, 4, 40, 18, 20, 27, -15, 21, -35, 14, -68, 17, -78, 7)
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Barrels" type="Node2D" parent="Obstacles"]
+
+[node name="Barrel6" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-392, -250)
+
+[node name="Barrel7" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-378, -240)
+
+[node name="Barrel12" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-409, -240)
+
+[node name="Barrel8" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(302, -128)
+
+[node name="Barrel9" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(316, -143)
+
+[node name="Barrel10" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(330, -155)
+
+[node name="Barrel11" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(342, -169)
+
+[node name="Barrel2" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-58, -102)
+
+[node name="Barrel3" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-43, -111)
+
+[node name="Barrel4" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-42, -96)
+
+[node name="Barrel5" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-25, -106)

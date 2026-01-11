@@ -5,7 +5,8 @@ class_name Car
 signal i_died
 signal power_up_get(pup: PowerUp)
 signal power_up_used
-
+signal car_off_track
+signal car_on_track
 
 enum PowerUp{BRAKE, JUMP, PROJECTILE}
 
@@ -54,6 +55,7 @@ var smoke_timer: float = 0.0
 var terrain_slip: float = 1.0
 var terrain_damp: float = 1.0
 var current_terrain: Terrain
+var push_force: float = 2.0
 var braking := false
 var jumping := false
 var on_track := true
@@ -322,6 +324,11 @@ func _physics_process(delta: float) -> void:
 
 	var current_smoke_color: Color = smoke_left.modulate
 	set_smoke_color(current_smoke_color.lerp(smoke_target_color, 0.03))
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider() is RigidBody2D:
+			collision.get_collider().apply_central_impulse(-collision.get_normal() * push_force)
 
 func add_skid_points() -> void:
 	var temp_skid_left := current_skid_left.points
@@ -390,6 +397,9 @@ func _on_node_2d_entered(node_2d: Node2D) -> void:
 			smoke_target_color = Color.SADDLE_BROWN
 	elif node_2d.is_in_group("track"):
 		on_track = true
+		if(has_started_race):
+			# don't signal if we are just putting car on track pre-driving
+			car_on_track.emit()
 
 func _on_node_2d_exited(node_2d: Node2D) -> void:
 	if node_2d.is_in_group("terrain"):
@@ -404,6 +414,8 @@ func _on_node_2d_exited(node_2d: Node2D) -> void:
 		if not jumping:
 			on_track = false
 			toast.toast("Off track!")
+			if(has_started_race):
+				car_off_track.emit()
 		else:
 			queue_track_check = true
 

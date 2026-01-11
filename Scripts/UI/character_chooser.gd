@@ -29,3 +29,4 @@ func select_current():
 	var selected_char = get_child(curr_index).character_data
 	legacy_system.apply_stats_to_car(selected_char)
 	legacy_system.add_character_to_current_lineage(selected_char)
+	legacy_system.current_character_data = selected_char

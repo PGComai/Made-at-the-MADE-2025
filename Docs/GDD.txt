@@ -10,7 +10,7 @@ help yourself more. (inspired by NT here)
 
 Each lap, you are forced into changing your main ability
 
-Different races could cater to different car types so overall there is no clear "best class". 
+Different races could cater to different car types? so overall there is no clear "best class". 
 Speaking of which...
 
 ===
@@ -36,7 +36,7 @@ Defensive Ability
 Class Ideas
  - Stock (base starting class, all-arounder)
  - Off-Road truck (kind of larger, good off-road handling, maybe a bit slow, damage resistant)
- - Dragster (thin, high speed, high track grip, excellent braking, low turn, damage resistant)
+ - Dragster (thin, high speed/accel, track: high grip/low turn, offroad: low grip/high turn, excellent braking, can't drift?, damage resistant?)
  - Catamaran (wide, big, maybe high accel?, good braking? handles certain terrain like bumps well?, damage resistant?)
  - ATV - smaller, better turn and accel, good off-road handling, takes way more damage
  - UTV - Handles like Stock, except high off-road stats and takes more damage
@@ -78,6 +78,7 @@ bumpers? (+ moving ones?), just bounce the player
 guardrails - along sides of track. self-explanatory
 "pits" - large burst of damage if fallen into? (resurrect, think lakitu in mario kart) 
   -(maybe its more like a triggerable spike? juts out when driven over, so it can later be shot w/ projectiles)
+barrels/crates - if hit slow, just get pushed around, but if hit fast enough, they break and drop xp
 terrain 
 	dirt - slows down, hard to grip depending on tires 
 	oil - hard to grip, gets set on fire

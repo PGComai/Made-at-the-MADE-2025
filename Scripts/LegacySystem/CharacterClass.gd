@@ -14,6 +14,8 @@ class_name CharacterClass
 @export var accel_range: Array[int]
 @export var turn_range: Array[int]
 @export var grip_range: Array[int]
+@export var off_road_turn_range: Array[int]
+@export var off_road_grip_range: Array[int]
 @export var terrain_slip_range: Array[int]
 @export var terrain_damp_range: Array[int]
 @export var drift_power_range: Array[int]

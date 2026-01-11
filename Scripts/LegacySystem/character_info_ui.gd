@@ -17,9 +17,9 @@ func set_data(char_data):
 	"\n Class: " + char_data.character_class.classname)
 	
 	stats.get_node("Turn/StatVal").text = str(char_data.turn)
-	
+	stats.get_node("OffRoadTurn/StatVal").text = str(char_data.off_road_turn)
 	stats.get_node("Grip/StatVal").text = str(char_data.grip)
-	
+	stats.get_node("OffRoadGrip/StatVal").text = str(char_data.off_road_grip)
 	stats.get_node("Drift/StatVal").text = str(char_data.drift_power)
 	
 	stats.get_node("Accel/StatVal").text = str(char_data.acceleration)

@@ -65,6 +65,23 @@ bbcode_enabled = true
 text = "10"
 fit_content = true
 
+[node name="OffRoadTurn" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="StatName" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/Stats/OffRoadTurn"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Offroad Turn: "
+fit_content = true
+
+[node name="StatVal" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/Stats/OffRoadTurn"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "10"
+fit_content = true
+
 [node name="Grip" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/Stats"]
 layout_mode = 2
 
@@ -76,6 +93,23 @@ text = "Grip"
 fit_content = true
 
 [node name="StatVal" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/Stats/Grip"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "10"
+fit_content = true
+
+[node name="OffRoadGrip" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="StatName" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/Stats/OffRoadGrip"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Offroad Grip"
+fit_content = true
+
+[node name="StatVal" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/Stats/OffRoadGrip"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true

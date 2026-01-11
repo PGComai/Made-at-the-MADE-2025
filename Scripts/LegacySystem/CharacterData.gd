@@ -13,6 +13,8 @@ class_name CharacterData
 @export var acceleration: int
 @export var turn: int
 @export var grip: int
+@export var off_road_turn: int
+@export var off_road_grip: int
 @export var terrain_slip: int
 @export var terrain_damp: int
 @export var drift_power: int

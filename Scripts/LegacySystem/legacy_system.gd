@@ -66,7 +66,8 @@ func _ready() -> void:
 	#generate_character()
 	#apply_stats_to_car(current_character_data)
 	#character_info_display(true)
-	pass
+	game_car.car_on_track.connect(_game_car_on_track)
+	game_car.car_off_track.connect(_game_car_off_track)
 
 #func _process(delta: float) -> void:
 	#if(!has_started_race):
@@ -95,9 +96,12 @@ func generate_character():
 	# class
 	char_data.character_class = character_classes.pick_random()
 	# stats
-	char_data.turn = randi_range(1,7)
-	char_data.grip = randi_range(1,7)
-	char_data.acceleration = randi_range(1,7)
+	var cl = char_data.character_class
+	char_data.turn = randi_range(cl.turn_range[0],cl.turn_range[1])
+	char_data.grip = randi_range(cl.grip_range[0],cl.grip_range[1])
+	char_data.off_road_turn = randi_range(cl.off_road_turn_range[0],cl.off_road_turn_range[1])
+	char_data.off_road_grip = randi_range(cl.off_road_grip_range[0],cl.off_road_grip_range[1])
+	char_data.acceleration = randi_range(cl.accel_range[0],cl.accel_range[1])
 	char_data.drift_power = randi_range(1,7)
 	
 	return char_data
@@ -116,3 +120,15 @@ func apply_stats_to_car(char_data):
 	game_car.grip_turn_adjustment = grip_turn_adjustment_values[char_data.turn]
 	game_car.drift_power = drift_power_values[char_data.drift_power]
 	game_car.acceleration = acceleration_values[char_data.acceleration]
+
+func _game_car_on_track():
+	print("ON TRACK")
+	game_car.turn_handling = turn_values[current_character_data.turn]
+	game_car.grip_turn_adjustment = grip_turn_adjustment_values[current_character_data.turn]
+	game_car.grip_stat = grip_values[current_character_data.grip]
+	
+func _game_car_off_track():
+	print("OFF TRACK")
+	game_car.turn_handling = turn_values[current_character_data.off_road_turn]
+	game_car.grip_turn_adjustment = grip_turn_adjustment_values[current_character_data.off_road_turn]
+	game_car.grip_stat = grip_values[current_character_data.off_road_grip]
