@@ -94,6 +94,8 @@ var smoking := false:
 				add_skid_points()
 			else:
 				add_skid_points()
+				
+var breakable_hit_velocity := 10.0
 
 #drift variables
 var drifting := false
@@ -325,10 +327,25 @@ func _physics_process(delta: float) -> void:
 	var current_smoke_color: Color = smoke_left.modulate
 	set_smoke_color(current_smoke_color.lerp(smoke_target_color, 0.03))
 	
+
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider() is RigidBody2D:
 			collision.get_collider().apply_central_impulse(-collision.get_normal() * push_force)
+			if(collision.get_collider().get_parent() is Barrel):
+				# I don't think I want any of this stuff, but keeping it for now anyway
+				var drive_angle = rad_to_deg(velocity.angle())
+				var normal_angle = rad_to_deg(collision.get_normal().angle())
+				#var collision_angle = velocity.normalized().dot(collision.get_normal().normalized())
+				var collision_angle = normal_angle - drive_angle
+				print("angle ", collision_angle)
+				print("speed: ", velocity.length())
+				#var degree_of_incidence = abs(180 - collision_angle)
+				#var incidence_threshold = 20.0 + (degree_of_incidence)
+				#print("hit barrel, threshold ", incidence_threshold)
+				if(velocity.length() >= breakable_hit_velocity):
+					collision.get_collider().get_parent().bust_open()
+				
 
 func add_skid_points() -> void:
 	var temp_skid_left := current_skid_left.points

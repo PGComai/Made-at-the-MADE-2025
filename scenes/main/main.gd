@@ -167,6 +167,13 @@ func _on_car_power_up_get(pup: Car.PowerUp) -> void:
 func _on_car_power_up_used() -> void:
 	power_up_label.text = "Power Up: None"
 
+# XP / Upgrades
+func add_xp(amount):
+	var remainder_amount = amount
+	ui_node.add_xp(amount)
+	
+	legacy_system.current_character_data.xp = remainder_amount
+	
 func save_game():
 	var filename = "user://save_game.save"
 	var save_file = FileAccess.open(filename, FileAccess.WRITE)
