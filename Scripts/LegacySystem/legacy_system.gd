@@ -104,6 +104,9 @@ func generate_character():
 	char_data.acceleration = randi_range(cl.accel_range[0],cl.accel_range[1])
 	char_data.drift_power = randi_range(1,7)
 	
+	char_data.level = 0
+	char_data.xp = 0
+	
 	return char_data
 
 # typically called after selecting a new character at run start

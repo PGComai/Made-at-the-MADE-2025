@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2bb8tpx5ikj2"]
+[gd_scene load_steps=14 format=3 uid="uid://d2bb8tpx5ikj2"]
 
 [ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://scenes/main/main.gd" id="1_hyk8p"]
 [ext_resource type="AudioStream" uid="uid://dt21jvi8ch4mt" path="res://OST/racing game song draft 2.wav" id="2_iuonh"]
+[ext_resource type="Resource" uid="uid://36g5urqr7ccw" path="res://CustomResources/game_data_1.tres" id="2_ouso4"]
 [ext_resource type="Script" uid="uid://nytstdqrls0p" path="res://Scripts/UI/ui_main.gd" id="2_yyfjg"]
 [ext_resource type="PackedScene" uid="uid://dg1um1nm8ndk1" path="res://scenes/UI/character_info_ui.tscn" id="3_b1x3f"]
 [ext_resource type="Script" uid="uid://wdgn71b84xh6" path="res://Scripts/LegacySystem/legacy_system.gd" id="3_k2fmo"]
@@ -23,6 +24,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_hyk8p")
+game_data = ExtResource("2_ouso4")
 metadata/_custom_type_script = "uid://bsukxywf6sn30"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -54,6 +56,22 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "10.00"
 label_settings = SubResource("LabelSettings_gq24m")
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LVL:1"
+label_settings = SubResource("LabelSettings_gq24m")
+horizontal_alignment = 2
+
+[node name="XPLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "XP: 0/50"
+label_settings = SubResource("LabelSettings_gq24m")
+horizontal_alignment = 2
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer/UI/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true

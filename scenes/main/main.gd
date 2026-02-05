@@ -8,6 +8,8 @@ const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 
 
 @export var car: Car
+@export var game_data: GameData
+
 @onready var time_label: Label = %TimeLabel
 @onready var score_label: Label = %ScoreLabel
 @onready var power_up_label: Label = %PowerUpLabel
@@ -169,10 +171,21 @@ func _on_car_power_up_used() -> void:
 
 # XP / Upgrades
 func add_xp(amount):
-	var remainder_amount = amount
-	ui_node.add_xp(amount)
+	var xp_to_next_lvl = game_data.level_xp_amounts[legacy_system.current_character_data.level]
+	
+	var new_xp = legacy_system.current_character_data.xp + amount
+	var remainder_amount = new_xp
+	
+	#level up
+	if(new_xp >= xp_to_next_lvl):
+		legacy_system.current_character_data.level += 1
+		remainder_amount = new_xp - xp_to_next_lvl
+		#update level-up-xp based on new level
+		xp_to_next_lvl = game_data.level_xp_amounts[legacy_system.current_character_data.level]
 	
 	legacy_system.current_character_data.xp = remainder_amount
+	ui_node.add_xp(remainder_amount, xp_to_next_lvl)
+	ui_node.set_character_level(legacy_system.current_character_data.level)
 	
 func save_game():
 	var filename = "user://save_game.save"

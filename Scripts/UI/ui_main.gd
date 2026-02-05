@@ -37,3 +37,9 @@ func update_power_up(pu_resource):
 		"press":
 			power_up_label.text += "\n Ammo: "
 	power_up_label.text +=  " %s / %s "  % [pu_resource.current_ammo,pu_resource.max_ammo]
+
+func add_xp(amount, next_lvl_needed):
+	%XPLabel.text = "XP:%s/%s" % [amount,next_lvl_needed]
+	
+func set_character_level(level):
+	%LevelLabel.text = "LVL:%s" % str(level+1)

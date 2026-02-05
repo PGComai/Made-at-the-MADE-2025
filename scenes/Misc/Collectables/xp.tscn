@@ -28,6 +28,7 @@ script = ExtResource("1_ppvqk")
 sprite_frames = SubResource("SpriteFrames_023b3")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_nb8j8")

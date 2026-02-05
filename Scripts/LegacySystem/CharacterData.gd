@@ -6,6 +6,7 @@ class_name CharacterData
 @export var last_name: String
 @export var name_suffix: String
 
+#class / stats
 @export var character_class: CharacterClass
 
 @export var base_speed: int
@@ -36,3 +37,7 @@ class_name CharacterData
 @export var portrait_face_hair: int
 @export var portrait_hair_color: int
 @export var portrait_shirt_color: int
+
+#non-persistent
+@export var level: int
+@export var xp: int
