@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d2bb8tpx5ikj2"]
+[gd_scene load_steps=21 format=3 uid="uid://d2bb8tpx5ikj2"]
 
 [ext_resource type="Script" uid="uid://bsukxywf6sn30" path="res://scenes/main/main.gd" id="1_hyk8p"]
 [ext_resource type="AudioStream" uid="uid://dt21jvi8ch4mt" path="res://OST/racing game song draft 2.wav" id="2_iuonh"]
@@ -10,7 +10,14 @@
 [ext_resource type="Script" uid="uid://dwsa1rwlvfj61" path="res://Scripts/LegacySystem/CharacterClass.gd" id="4_hujxm"]
 [ext_resource type="Resource" uid="uid://c2cn12o8ueq3o" path="res://CustomResources/CharacterClasses/Stock.tres" id="5_yyfjg"]
 [ext_resource type="Resource" uid="uid://dkkmqqcdu75bo" path="res://CustomResources/CharacterClasses/Dragster.tres" id="6_b1x3f"]
+[ext_resource type="Script" uid="uid://ooptc2qclbwk" path="res://Scripts/UI/upgrade_chooser.gd" id="6_blune"]
+[ext_resource type="PackedScene" uid="uid://bxicynsafn1b7" path="res://scenes/UI/upgrade_choice.tscn" id="7_th5th"]
+[ext_resource type="Script" uid="uid://d4g8r1l0pg8fd" path="res://Scripts/Misc/upgrade_data.gd" id="8_raeie"]
+[ext_resource type="Resource" uid="uid://diu8miemqjmd4" path="res://CustomResources/Upgrades/jump_time_up.tres" id="9_hxu8e"]
+[ext_resource type="Resource" uid="uid://cidw78t8fwpu1" path="res://CustomResources/Upgrades/jump_max_jumps.tres" id="10_nvumn"]
+[ext_resource type="Resource" uid="uid://gqkydyr5x8ja" path="res://CustomResources/Upgrades/projectiles_max_ammo.tres" id="11_ou6is"]
 [ext_resource type="PackedScene" uid="uid://rv0hs1mnl1y8" path="res://scenes/main/save_data.tscn" id="11_ouso4"]
+[ext_resource type="Resource" uid="uid://dmdwwoty0x8p4" path="res://CustomResources/Upgrades/life_add.tres" id="12_ou6is"]
 
 [sub_resource type="SystemFont" id="SystemFont_wyggb"]
 font_names = PackedStringArray("monospace")
@@ -23,15 +30,18 @@ outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node"]
+process_mode = 3
 script = ExtResource("1_hyk8p")
 game_data = ExtResource("2_ouso4")
 metadata/_custom_type_script = "uid://bsukxywf6sn30"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = 10
 
 [node name="UI" type="MarginContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -43,8 +53,10 @@ theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 script = ExtResource("2_yyfjg")
 character_ui_scene = ExtResource("3_b1x3f")
+upgrade_choice_ui_scene = ExtResource("7_th5th")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI"]
+process_mode = 3
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/VBoxContainer"]
@@ -82,6 +94,7 @@ label_settings = SubResource("LabelSettings_gq24m")
 horizontal_alignment = 2
 
 [node name="Space" type="Control" parent="CanvasLayer/UI/VBoxContainer"]
+process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -94,6 +107,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_a8run")
 character_info_scene = ExtResource("3_b1x3f")
+num_options = 3
+
+[node name="UpgradeChooser" type="Control" parent="CanvasLayer/UI/VBoxContainer/Space"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_blune")
+upgrade_choice_scene = ExtResource("7_th5th")
+possible_upgrades = Array[ExtResource("8_raeie")]([ExtResource("9_hxu8e"), ExtResource("10_nvumn"), ExtResource("11_ou6is"), ExtResource("12_ou6is")])
 num_options = 3
 
 [node name="PowerUp" type="Control" parent="CanvasLayer/UI/VBoxContainer"]
@@ -110,6 +136,7 @@ label_settings = SubResource("LabelSettings_gq24m")
 horizontal_alignment = 1
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("2_iuonh")
 autoplay = true
 

@@ -130,6 +130,7 @@ var queue_track_check := false
 @onready var timer_power_up: Timer = $TimerPowerUp
 @onready var sprite_2d_shadow: Sprite2D = $Sprite2DShadow
 @onready var ui_node = get_node("/root/Racetrack/Main/CanvasLayer/UI")
+@onready var game_controller = get_node("/root/Racetrack/Main")
 
 func _ready() -> void:
 	power_up_get.connect(_on_power_up_get)
@@ -209,15 +210,16 @@ func _physics_process(delta: float) -> void:
 	if not used_powerup and can_use_powerup:
 		if current_powerup_resource.ammo_type == "press":
 			if Input.is_action_just_pressed("a"):
-				timer_power_up.start()
 				power_up_used.emit()
 				if current_powerup == PowerUp.JUMP:
-					jumping = true
-					set_collision_mask_value(9,false)
-					jump_grip_boost = JUMP_GRIP
-					stuff_detector.monitoring = false
+					jump(current_powerup_resource.custom_properties_values[0],"jump!")
+					#jumping = true
+					#set_collision_mask_value(9,false)
+					#jump_grip_boost = JUMP_GRIP
+					#stuff_detector.monitoring = false
 				elif current_powerup == PowerUp.PROJECTILE:
 					shoot_projectile()
+					timer_power_up.start()
 				current_powerup_resource.current_ammo -= 1
 				if current_powerup_resource.current_ammo == 0:
 					used_powerup = true
@@ -438,7 +440,7 @@ func _on_node_2d_exited(node_2d: Node2D) -> void:
 
 func _on_power_up_get(pup: Car.PowerUp) -> void:
 	can_use_powerup = true
-	current_powerup_resource = load("res://CustomResources/Powerups/%s.tres" % powerup_resources[pup])
+	current_powerup_resource = game_controller.get_cached_powerup(powerup_resources[pup])
 	current_powerup_resource.current_ammo = current_powerup_resource.max_ammo
 	ui_node.update_power_up(current_powerup_resource)
 	
@@ -465,6 +467,7 @@ func jump(jump_time, toast_msg = "jump!"):
 	timer_power_up.start(jump_time)
 	jumping = true
 	jump_grip_boost = JUMP_GRIP
+	set_collision_mask_value(9,false)
 	toast.toast(toast_msg)
 	stuff_detector.monitoring = false
 

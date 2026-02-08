@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://diu8miemqjmd4"]
+
+[ext_resource type="Script" uid="uid://d4g8r1l0pg8fd" path="res://Scripts/Misc/upgrade_data.gd" id="1_wfwly"]
+
+[resource]
+script = ExtResource("1_wfwly")
+name = "Hangtime"
+description = "Increase airtime of jump"
+upgrade_type = "custom_prop_up"
+powerup_affected = "jump"
+property_affected_name = "jump_time"
+property_affected_type = 3
+property_affected_amt = 0.1
+metadata/_custom_type_script = "uid://d4g8r1l0pg8fd"

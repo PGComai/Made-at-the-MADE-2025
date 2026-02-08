@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_gi11a")
-name = "Projectile"
+name = "projectile"
 ammo_type = "press"
 max_ammo = 10

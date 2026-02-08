@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_lx17l")
-name = "Jump"
+name = "jump"
+custom_properties_names = Array[String](["jump_time"])
+custom_properties_types = Array[int]([3])
+custom_properties_values = [0.25]
 ammo_type = "press"
 max_ammo = 1

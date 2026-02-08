@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_4j0wh")
-level_xp_amounts = Array[int]([50, 80, 100, 150, 200, 275, 350, 450, 575, 700])
+level_xp_amounts = Array[int]([30, 80, 100, 150, 200, 275, 350, 450, 575, 700])
 metadata/_custom_type_script = "uid://c3nc6rtgimxit"

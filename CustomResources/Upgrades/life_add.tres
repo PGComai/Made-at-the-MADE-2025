@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://dmdwwoty0x8p4"]
+
+[ext_resource type="Script" uid="uid://d4g8r1l0pg8fd" path="res://Scripts/Misc/upgrade_data.gd" id="1_lrqjs"]
+
+[resource]
+script = ExtResource("1_lrqjs")
+name = "Damage Repair"
+description = "One-time replenishment of 50% of car health. "
+upgrade_type = "car_prop_up"
+property_affected_name = "life"
+property_affected_type = 3
+property_affected_amt = 5.0
+metadata/_custom_type_script = "uid://d4g8r1l0pg8fd"

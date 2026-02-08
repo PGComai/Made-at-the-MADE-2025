@@ -29,6 +29,7 @@ track=""
 finish_line=""
 Persist=""
 character_ui=""
+upgrade_ui=""
 
 [input]
 

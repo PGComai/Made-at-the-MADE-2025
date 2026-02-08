@@ -16,11 +16,13 @@ const GAME_OVER = preload("uid://cdmwdc4fob4s2")
 @onready var legacy_system = %LegacySystem
 @onready var ui_node = $CanvasLayer/UI
 @onready var character_chooser = $CanvasLayer/UI/VBoxContainer/Space/CharacterChooser
+@onready var upgrade_chooser = $CanvasLayer/UI/VBoxContainer/Space/UpgradeChooser
 @onready var save_node = $SaveData
 
 ## state of the game
-enum GameState {CHARACTER_SELECT = 0, RACING = 1}
+enum GameState {CHARACTER_SELECT = 0, RACING = 1, UPGRADE_SELECT = 2, UI_TRANSITION_NO_INPUT = 3}
 var game_state
+var paused
 
 ## The number of completed laps.
 var completed_laps: int = 0
@@ -40,6 +42,13 @@ var seen_checkpoints: Array[Checkpoint] = []
 ## Character Lineage in use
 var current_lineage: Lineage
 
+# Powerups and upgrades data for this game session/run
+var powerups_cache = []
+var upgrades_cache = []
+
+func set_game_state(new_state):
+	game_state = new_state
+	
 func _ready() -> void:
 	car.i_died.connect(_on_car_died)
 	car.power_up_get.connect(_on_car_power_up_get)
@@ -68,6 +77,9 @@ func _ready() -> void:
 	
 	# game state, for _process()
 	game_state = GameState.CHARACTER_SELECT
+	
+	#upgrade and powerup data reset
+	reset_upgrades_and_powerups()
 	
 	# load game or create new lineage with starting character
 	try_load_game()
@@ -102,6 +114,24 @@ func _ready() -> void:
 		await get_tree().create_timer(1.5)
 		character_chooser.enabled_status = true
 
+# re-populate upgrade and resource caches with resources with defaault values
+func reset_upgrades_and_powerups():
+	upgrades_cache.clear()
+	for upgrade_res in DirAccess.get_files_at("res://CustomResources/Upgrades"):
+		var dup_res = load("res://CustomResources/Upgrades/%s" % upgrade_res).duplicate()
+		upgrades_cache.append(dup_res)
+	powerups_cache.clear()
+	for powerup_res in DirAccess.get_files_at("res://CustomResources/Powerups"):
+		var dup_res = load("res://CustomResources/Powerups/%s" % powerup_res).duplicate()
+		powerups_cache.append(dup_res)
+
+#get a cached powerup resource by name
+func get_cached_powerup(name):
+	var powerup_resource_ind = powerups_cache.find_custom(func(res):
+		return res.name == name
+	)
+	return powerups_cache[powerup_resource_ind]
+
 ## Records a checkpoint for a body.
 func record_checkpoint(body: Node2D, checkpoint: Checkpoint) -> void:
 	if body != car:
@@ -130,6 +160,11 @@ func _process(delta: float) -> void:
 				car.get_random_powerup()
 				ui_node.clear_character_select()
 				game_state = GameState.RACING
+		GameState.UPGRADE_SELECT:
+			if(Input.is_action_just_pressed("a")):
+				ui_node.clear_upgrade_chooser()
+				game_state = GameState.RACING
+				unpause_game()
 		GameState.RACING:
 			pass
 	
@@ -182,7 +217,10 @@ func add_xp(amount):
 		remainder_amount = new_xp - xp_to_next_lvl
 		#update level-up-xp based on new level
 		xp_to_next_lvl = game_data.level_xp_amounts[legacy_system.current_character_data.level]
-	
+		game_state = GameState.UI_TRANSITION_NO_INPUT
+		upgrade_chooser.instance_upgrades()
+		pause_game()
+		
 	legacy_system.current_character_data.xp = remainder_amount
 	ui_node.add_xp(remainder_amount, xp_to_next_lvl)
 	ui_node.set_character_level(legacy_system.current_character_data.level)
@@ -261,6 +299,14 @@ func try_load_game():
 	print("loaded save data")
 	return new_object
 
+func pause_game():
+	paused = true
+	get_tree().paused = true
+
+func unpause_game():
+	paused= false
+	get_tree().paused = false
+	
 func save_lineage_and_character(character):
 	save_node.lineage = json_string_from_resource(current_lineage)
 	save_node.current_character = json_string_from_resource(character)
