@@ -10,5 +10,5 @@ upgrade_type = "prop_up"
 powerup_affected = "projectile"
 property_affected_name = "max_ammo"
 property_affected_type = 2
-property_affected_amt = 1.0
+property_affected_amt = 5.0
 metadata/_custom_type_script = "uid://d4g8r1l0pg8fd"

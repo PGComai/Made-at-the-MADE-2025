@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_bdwg7")
-name = "Brake"
+name = "brake"
 ammo_type = "hold"
 max_ammo = 100

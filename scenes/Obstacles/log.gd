@@ -1,4 +1,4 @@
-extends Node2D
+extends Destructible
 
 func _ready():
 	pass

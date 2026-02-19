@@ -26,6 +26,7 @@ Each class should be based around at least one core interesting trade-off
 Property groups that affect class:
 Car Shape (maybe makes some maneuvers easier/even possible)
 Weight?
+Powerups Usage - limited sets of available powerups, AND ways in which said powerups work
 Handling - turn, grip, etc
 Off-Road Handling
 Braking Ability

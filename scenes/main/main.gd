@@ -116,6 +116,7 @@ func _ready() -> void:
 
 # re-populate upgrade and resource caches with resources with defaault values
 func reset_upgrades_and_powerups():
+	print("powerups reset")
 	upgrades_cache.clear()
 	for upgrade_res in DirAccess.get_files_at("res://CustomResources/Upgrades"):
 		var dup_res = load("res://CustomResources/Upgrades/%s" % upgrade_res).duplicate()
@@ -127,9 +128,13 @@ func reset_upgrades_and_powerups():
 
 #get a cached powerup resource by name
 func get_cached_powerup(name):
+	
 	var powerup_resource_ind = powerups_cache.find_custom(func(res):
+		print("looking for: ", name)
+		print("checking against: ", res.name)
 		return res.name == name
 	)
+	print("getting power up at cache idx: ", powerup_resource_ind)
 	return powerups_cache[powerup_resource_ind]
 
 ## Records a checkpoint for a body.

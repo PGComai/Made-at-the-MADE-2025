@@ -164,6 +164,7 @@ func init_car_from_class(class_resource):
 			
 func get_random_powerup():
 	current_powerup = PowerUp[PowerUp.keys().pick_random()]
+	print("setting powerup to: ", current_powerup)
 	power_up_get.emit(current_powerup)
 	
 func _process(delta: float) -> void:
@@ -347,7 +348,7 @@ func _physics_process(delta: float) -> void:
 				#print("hit barrel, threshold ", incidence_threshold)
 				if(velocity.length() >= breakable_hit_velocity):
 					collision.get_collider().get_parent().bust_open()
-				
+					collision.get_collider().get_parent().queue_free()
 
 func add_skid_points() -> void:
 	var temp_skid_left := current_skid_left.points
@@ -441,6 +442,7 @@ func _on_node_2d_exited(node_2d: Node2D) -> void:
 func _on_power_up_get(pup: Car.PowerUp) -> void:
 	can_use_powerup = true
 	current_powerup_resource = game_controller.get_cached_powerup(powerup_resources[pup])
+	print("setting resource to: ", current_powerup_resource.resource_path)
 	current_powerup_resource.current_ammo = current_powerup_resource.max_ammo
 	ui_node.update_power_up(current_powerup_resource)
 	
@@ -472,6 +474,7 @@ func jump(jump_time, toast_msg = "jump!"):
 	stuff_detector.monitoring = false
 
 func shoot_projectile():
+	print("in shoot_projectiles")
 	var projectile = projectile_scene.instantiate()
 	projectile.direction = Vector2.from_angle(car_angle - PI/2)
 	camera.shake(.3,80,2, projectile.direction)

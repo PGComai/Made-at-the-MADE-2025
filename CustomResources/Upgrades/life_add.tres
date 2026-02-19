@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_lrqjs")
 name = "Damage Repair"
-description = "One-time replenishment of 50% of car health. "
+description = "One-time replenishment of 50% of car max health. (Up to current max health)"
 upgrade_type = "car_prop_up"
 property_affected_name = "life"
 property_affected_type = 3

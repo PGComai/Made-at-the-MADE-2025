@@ -7,8 +7,6 @@ extends "res://Scripts/UI/horizontal_menu.gd"
 
 @export var possible_upgrades: Array[UpgradeData]
 
-
-
 func _ready() -> void:
 	pass
 	
