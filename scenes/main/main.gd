@@ -118,11 +118,12 @@ func _ready() -> void:
 func reset_upgrades_and_powerups():
 	print("powerups reset")
 	upgrades_cache.clear()
-	for upgrade_res in DirAccess.get_files_at("res://CustomResources/Upgrades"):
+	for upgrade_res in ResourceLoader.list_directory("res://CustomResources/Upgrades"):
+		print(upgrade_res)
 		var dup_res = load("res://CustomResources/Upgrades/%s" % upgrade_res).duplicate()
 		upgrades_cache.append(dup_res)
 	powerups_cache.clear()
-	for powerup_res in DirAccess.get_files_at("res://CustomResources/Powerups"):
+	for powerup_res in ResourceLoader.list_directory("res://CustomResources/Powerups"):
 		var dup_res = load("res://CustomResources/Powerups/%s" % powerup_res).duplicate()
 		powerups_cache.append(dup_res)
 

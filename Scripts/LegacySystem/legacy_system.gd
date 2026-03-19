@@ -61,6 +61,16 @@ var acceleration_values = {
 	7: 2.2
 }
 
+var health_drain_values = {
+	1: 1.0,
+	2: 1.0,
+	3: 1.0,
+	4: .5,
+	5: .5,
+	6: .3,
+	7: .3
+}
+
 func _ready() -> void:
 	#this all happens in main.ready() now
 	#generate_character()
@@ -103,7 +113,11 @@ func generate_character():
 	char_data.off_road_grip = randi_range(cl.off_road_grip_range[0],cl.off_road_grip_range[1])
 	char_data.acceleration = randi_range(cl.accel_range[0],cl.accel_range[1])
 	char_data.drift_power = randi_range(1,7)
-	
+	if(cl.brake_effect_range.size() > 0):
+		char_data.brake_effect = randf_range(cl.brake_effect_range[0],cl.brake_effect_range[1])
+	else:
+		char_data.brake_effect = .99
+	char_data.health_drain = randi_range(cl.health_drain_range[0],cl.health_drain_range[1])
 	char_data.level = 0
 	char_data.xp = 0
 	
@@ -123,7 +137,9 @@ func apply_stats_to_car(char_data):
 	game_car.grip_turn_adjustment = grip_turn_adjustment_values[char_data.turn]
 	game_car.drift_power = drift_power_values[char_data.drift_power]
 	game_car.acceleration = acceleration_values[char_data.acceleration]
-
+	game_car.BRAKE_EFFECT = char_data.brake_effect
+	game_car.health_drain_rate = health_drain_values[char_data.health_drain]
+	
 func _game_car_on_track():
 	print("ON TRACK")
 	game_car.turn_handling = turn_values[current_character_data.turn]

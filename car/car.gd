@@ -13,7 +13,7 @@ enum PowerUp{BRAKE, JUMP, PROJECTILE}
 const INITIAL_SPEED: float = 50.0
 const MIN_GRIP: float = 0.4
 const WHEEL_SPIN_SCALE: float = 0.05
-const BRAKE_EFFECT: float = 0.99
+var BRAKE_EFFECT: float = 0.99
 const LIFE_TIME: float = 10.0
 const JUMP_GRIP: float = 3.0
 const SMOKE_THRESH_DEFAULT: float = 0.65
@@ -110,6 +110,7 @@ var turn_lerp_amount: float = 0.1
 var grip_stat: float = 0.0
 var grip_turn_adjustment: float = 0.0
 var drift_power: float = 1.5
+var health_drain_rate: float = 1.0
 
 var current_skid_left: TireMark
 var current_skid_right: TireMark
@@ -238,7 +239,7 @@ func _physics_process(delta: float) -> void:
 					braking = false
 					
 	if not (on_track or jumping):
-		life -= delta
+		life -= delta * health_drain_rate
 		if is_dead:
 			i_died.emit()
 

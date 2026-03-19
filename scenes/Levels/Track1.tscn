@@ -119,6 +119,18 @@ position = Vector2(316, -143)
 [node name="Barrel10" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
 position = Vector2(330, -155)
 
+[node name="Barrel27" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(104, -368)
+
+[node name="Barrel30" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(157, -368)
+
+[node name="Barrel28" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(122, -368)
+
+[node name="Barrel29" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(139, -368)
+
 [node name="Barrel11" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
 position = Vector2(342, -169)
 
@@ -128,8 +140,59 @@ position = Vector2(-58, -102)
 [node name="Barrel3" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
 position = Vector2(-43, -111)
 
+[node name="Barrel13" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(78, 192)
+
 [node name="Barrel4" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
 position = Vector2(-42, -96)
 
 [node name="Barrel5" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
 position = Vector2(-25, -106)
+
+[node name="Barrel14" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(65, 204)
+
+[node name="Barrel23" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(369, 478)
+
+[node name="Barrel24" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(355, 468)
+
+[node name="Barrel25" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(343, 457)
+
+[node name="Barrel26" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(329, 448)
+
+[node name="Barrel15" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(93, 181)
+
+[node name="Barrel16" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-525, 301)
+
+[node name="Barrel21" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-525, 287)
+
+[node name="Barrel22" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-538, 277)
+
+[node name="Barrel17" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-554, 284)
+
+[node name="Barrel18" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-537, 295)
+
+[node name="Barrel19" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-539, 308)
+
+[node name="Barrel31" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-401, 466)
+
+[node name="Barrel32" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-385, 466)
+
+[node name="Barrel33" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-368, 466)
+
+[node name="Barrel20" parent="Obstacles/Barrels" instance=ExtResource("9_6tico")]
+position = Vector2(-554, 297)

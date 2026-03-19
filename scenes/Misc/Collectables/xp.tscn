@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmh15r26xs82l"]
+[gd_scene load_steps=7 format=3 uid="uid://dmh15r26xs82l"]
 
 [ext_resource type="Texture2D" uid="uid://cp47nkoljr5fh" path="res://Sprites/Misc/Collectable/xp_collectable.png" id="1_lyenw"]
 [ext_resource type="Script" uid="uid://cfvfqyrxhrge4" path="res://Scripts/Misc/Collectables/xp_collectable.gd" id="1_ppvqk"]
@@ -21,6 +21,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_nb8j8"]
 radius = 4.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ppvqk"]
+
 [node name="XP" type="Node2D"]
 script = ExtResource("1_ppvqk")
 
@@ -33,4 +35,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_nb8j8")
 
+[node name="MagnetArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MagnetArea"]
+shape = SubResource("CircleShape2D_ppvqk")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="MagnetArea" to="." method="_on_magnet_area_body_entered"]

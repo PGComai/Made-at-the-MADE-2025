@@ -25,8 +25,13 @@ func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_inde
 			log.global_position = cell_global_pos
 			get_parent().add_child(log)
 			body.erase_cell(tile_coords)
+		#rock
+		elif(atlas_coords == Vector2i(1,0)):
+			var cell_global_pos = body.to_global(body.map_to_local(tile_coords))
+			await get_tree().create_timer(.4).timeout
+			body.erase_cell(tile_coords)
 	else:
-		#normal object
+		#normal non-tilemap object
 		if(body.get_parent() is Destructible):
 			body.get_parent()._on_projectile_entered()
 		

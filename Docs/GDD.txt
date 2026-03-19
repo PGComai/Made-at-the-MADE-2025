@@ -1,9 +1,49 @@
+Tutorial/Loop Start
+===
+You are the new heir to the family racing legacy, 
+
+Gameplay needs: Tutorial once, then quick story beat on subsequent loops.
+
+you go through a class with a master racer to earn your racing permit?
+
+Instead of a class: Some kind of preparation event for a long-form rally/race series
+
+Learning track requires you to stay on the track at all times or otherwise only incure a minimum threshold amount of off-track time.
+
+Turns out the master racer is from a rival family whose sole mission is to sabotage young drivers from our racer's family
+once they come of age and have kids of their own.
+
+Drivers from our family always end up failing this important race in *some way*, and have never won.
+
+What if the sabotage method is different each generation, randomly? So narratively there is no reason
+the protagonist family should know about these sabotages.
+
+-no control of acceleration (always accelerating)
+-no throttle (faster speed and accel each lap)
+-no brakes (reliant on car's linear drag/tire friction to slow)
+-bad/weak tires (occasional random tire blow which causes a spinout)
+-loose screws (car takes damage easily/ occasionally takes massive damage from collisions)
+-weak recharge (self-explanatory, but kind of weak gameplay implication)
+-smoking engine (limited visibility ahead - not sure exactly how to simulate in overhead 2d)
+-something to do with the way it interacts with powerups (maybe random misfires?)
+
 ===
 RACES
 ===
 Some number of laps, and there is a max top-speed, which we gradually climb towards, each consecutive lap.
 
-Once top-speed lap has completed, an exit ramp opens up to move on to the next race.
+What is the motivation for completing laps? 
+How could completing a lap relate to changing the car's driving?
+Going so fast, some kind of resource is acquired? How?
+
+Intake system is powered by electricity, and it has been sabotaged such that it is
+always open if not powered. Must collect electric charge via checkpoints and collecting it each lap
+in order to power the intake system enough to slow down to move on to the next area.
+
+Electric charge also resets car's ability system, therefore replenishing ability power.
+BUT the ability is swapped randomly due to the sabotage?
+
+Once top-speed lap has completed, player is able to move on to the next race.
 
 But you can choose not to take it yet and try to keep driving around to pick up unclaimed collectables to
 help yourself more. (inspired by NT here)
@@ -36,7 +76,7 @@ Defensive Ability
 ---
 Class Ideas
  - Stock (base starting class, all-arounder)
- - Off-Road truck (kind of larger, good off-road handling, maybe a bit slow, damage resistant)
+ - Off-Road truck (weak jump? power hog - abilities consume more energy. kind of larger, good off-road handling, maybe a bit slow, damage resistant)
  - Dragster (thin, high speed/accel, track: high grip/low turn, offroad: low grip/high turn, excellent braking, can't drift?, damage resistant?)
  - Catamaran (wide, big, maybe high accel?, good braking? handles certain terrain like bumps well?, damage resistant?)
  - ATV - smaller, better turn and accel, good off-road handling, takes way more damage
@@ -85,6 +125,7 @@ terrain
 	oil - hard to grip, gets set on fire
 	bumps - steering weirdness, a little slowdown, light damage?
 	leaves/twigs/long grass? - gets set on fire
+fires
 ---
 
 

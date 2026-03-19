@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0o2qlnyynrd1"]
+[gd_scene load_steps=18 format=3 uid="uid://d0o2qlnyynrd1"]
 
 [ext_resource type="Script" uid="uid://ql5fgk7fubbe" path="res://car/car.gd" id="1_2gitb"]
 [ext_resource type="PackedScene" uid="uid://cf5lx17j41dd" path="res://scenes/Ability/projectile.tscn" id="2_bkrhx"]
@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cepc801q0224o" path="res://scenes/toast/toast.tscn" id="2_h3fet"]
 [ext_resource type="PackedScene" uid="uid://30gtxo2tdg4p" path="res://scenes/vehicle_sound/vehicle_player.tscn" id="2_jpe8o"]
 [ext_resource type="PackedScene" uid="uid://sy7cihov55fu" path="res://scenes/vehicle/wheel.tscn" id="3_hkabp"]
-[ext_resource type="Texture2D" uid="uid://bbj8ooknsxcdr" path="res://Sprites/Car/body_dragster1.png" id="6_vl2bd"]
+[ext_resource type="Shape2D" uid="uid://dd5xflmvoxe72" path="res://car/CarCollisionShapes/truck1.tres" id="5_72ido"]
+[ext_resource type="Texture2D" uid="uid://csrglcbvkgt40" path="res://Sprites/Car/body_truck1.png" id="6_coc8s"]
 [ext_resource type="Shape2D" uid="uid://bjckbmb0ny7bg" path="res://car/CarCollisionShapes/stock1.tres" id="8_vl2bd"]
 
 [sub_resource type="Curve" id="Curve_bkrhx"]
@@ -65,30 +66,30 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = ExtResource("8_vl2bd")
+shape = ExtResource("5_72ido")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 3
-texture = ExtResource("6_vl2bd")
+texture = ExtResource("6_coc8s")
 
 [node name="WheelFL" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(-6, -19)
-animation = &"thin2"
+position = Vector2(-14, -14)
+animation = &"large1"
 
 [node name="WheelFR" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(5, -19)
-animation = &"thin2"
+position = Vector2(12, -14)
+animation = &"large1"
 
 [node name="WheelBL" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(-12, 17)
+position = Vector2(-14, 17)
 animation = &"large1"
 
 [node name="WheelBR" parent="Sprite2D" instance=ExtResource("3_hkabp")]
 z_index = 3
-position = Vector2(10, 17)
+position = Vector2(12, 17)
 animation = &"large1"
 
 [node name="Sprite2DShadow" type="Sprite2D" parent="."]

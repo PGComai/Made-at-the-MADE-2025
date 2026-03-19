@@ -25,3 +25,5 @@ class_name CharacterClass
 @export var base_health_range: Array[int]
 @export var health_drain_range: Array[int]
 @export var health_regen_range: Array[int]
+
+@export var brake_effect_range: Array[float]

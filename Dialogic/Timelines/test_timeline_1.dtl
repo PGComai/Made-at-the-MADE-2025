@@ -1,0 +1,7 @@
+join test_character_1 left [animation="Fade In Up"]
+test_character_1: yo! whaddup
+join test_character_2 right [animation="Bounce In"]
+test_character_2: nada. chillin bru
+test_character_1 (OtherPortrait): i smol now
+leave test_character_1 [animation="Fade Out Down"]
+leave test_character_2 [animation="Fade Out"]

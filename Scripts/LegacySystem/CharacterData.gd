@@ -22,9 +22,11 @@ class_name CharacterData
 
 @export var base_item_ammo: int
 
-@export var base_health: float
-@export var health_drain: float
-@export var health_regen: float
+@export var base_health: int
+@export var health_drain: int
+@export var health_regen: int
+
+@export var brake_effect: float
 
 #portrait
 @export var portrait_face_shape: int
